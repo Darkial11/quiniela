@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="hero">
+    <h1>
+        QUINIELA MUNDIAL 2026
+    </h1>
+    <p class="hero-text">
+
+        Demuestra quién sabe más de fútbol.
+
+        Compite con amigos, oficina y familia.
+    </p>
+    <div class="hero-buttons">
+
+        {% if request.user.is_authenticated %}
+
+        <a
+            href="/quiniela/"
+            class="hero-btn"
+        >
+
+            Entrar a Quiniela
+
+        </a>
+
+        {% else %}
+
+        <a
+            href="/login/"
+            class="hero-btn"
+        >
+
+            Iniciar Sesión
+
+        </a>
+
+        <a
+            href="/registro/"
+            class="hero-btn secondary"
+        >
+
+            Crear Cuenta
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="home-stats">
+
+    <div class="home-stat-card">
+        <h2>{{ participantes }}</h2>
+        <p>Participantes</p>
+    </div>
+
+    <div class="home-stat-card">
+        <h2>{{ partidos }}</h2>
+        <p>Partidos</p>
+    </div>
+
+    <div class="home-stat-card warning">
+        <h2>{{ resultados }}/{{ partidos }}</h2>
+        <p>Resultados</p>
+    </div>
+
+</div>
+
+<div class="features">
+
+    <div class="feature-card">
+
+        <h2>
+
+            Jornadas Dinámicas
+
+        </h2>
+
+        <p>
+
+            Pronósticos por jornada
+            con resultados en vivo.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <h2>
+
+            Ranking Competitivo
+
+        </h2>
+
+        <p>
+
+            Descubre quién es
+            el verdadero experto.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <h2>
+
+            Responsive
+
+        </h2>
+
+        <p>
+
+            Juega desde móvil,
+            tablet o PC.
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

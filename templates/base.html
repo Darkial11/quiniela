@@ -1,0 +1,140 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+
+        Quiniela Mundial 2026
+
+    </title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/quiniela.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    {% if request.user.is_authenticated %}
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="sidebar-logo">
+
+                Quiniela 2026
+
+            </div>
+
+            <div class="sidebar-user">
+
+                {{ request.user.perfil.nick }}
+
+            </div>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="/dashboard/"
+                class="
+                    {% if '/dashboard' in request.path %}
+                        active-link
+                    {% endif %}
+                "
+            >
+
+                Dashboard
+
+            </a>
+
+            <a
+                href="/quiniela/"
+                class="
+                    {% if '/quiniela' in request.path or '/jornada/' in request.path %}
+                        active-link
+                    {% endif %}
+                "
+            >
+
+                Quiniela
+
+            </a>
+
+            <a
+                href="/pronosticos/"
+                class="
+                    {% if '/pronosticos' in request.path %}
+                        active-link
+                    {% endif %}
+                "
+            >
+
+                Pronósticos
+
+            </a>
+
+            <a
+                href="/ranking/"
+                class="
+                    {% if '/ranking' in request.path %}
+                        active-link
+                    {% endif %}
+                "
+            >
+
+                Ranking
+
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/logout/" class="logout-btn">
+
+                Salir
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    {% endif %}
+
+    <main class="main-area">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

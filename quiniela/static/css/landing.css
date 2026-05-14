@@ -1,0 +1,317 @@
+/* =========================
+   NAVBAR PUBLICA
+========================= */
+
+.navbar{
+
+    width:100%;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 34px;
+
+    background:
+        rgba(15,23,42,.92);
+
+    backdrop-filter:blur(14px);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.05);
+}
+
+.nav-logo{
+
+    color:#38ef7d;
+
+    font-size:26px;
+
+    font-weight:800;
+
+    line-height:1;
+}
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:24px;
+}
+
+.nav-links a{
+
+    color:#cbd5e1;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.nav-links a:hover{
+
+    color:#38ef7d;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    min-height:53vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:40px 20px 20px;
+}
+
+.hero::before{
+
+    content:'';
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    background:
+        radial-gradient(
+            rgba(56,239,125,.12),
+            transparent 70%
+        );
+
+    top:-220px;
+
+    right:-220px;
+
+    pointer-events:none;
+}
+
+.hero h1{
+
+    font-size:92px;
+
+    line-height:.95;
+
+    margin-bottom:26px;
+
+    max-width:1200px;
+
+    letter-spacing:-4px;
+}
+
+.hero-text{
+
+    max-width:760px;
+
+    font-size:20px;
+
+    color:#cbd5e1;
+
+    line-height:1.6;
+
+    margin-bottom:34px;
+}
+
+/* =========================
+   HERO BUTTONS
+========================= */
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+}
+
+.hero-btn{
+
+    background:#38ef7d;
+
+    color:#020617;
+
+    padding:18px 34px;
+
+    border-radius:18px;
+
+    font-size:18px;
+
+    font-weight:800;
+
+    transition:.25s;
+
+    box-shadow:
+        0 0 20px rgba(56,239,125,.18);
+}
+
+.hero-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 0 30px rgba(56,239,125,.28);
+}
+
+.hero-btn.secondary{
+
+    background:
+        rgba(15,23,42,.92);
+
+    color:white;
+
+    border:
+        1px solid rgba(56,239,125,.18);
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(260px,1fr));
+
+    gap:22px;
+
+    margin-top:20px;
+
+    margin-bottom:50px;
+
+    width:min(1400px,92%);
+
+    margin-left:auto;
+
+    margin-right:auto;
+}
+
+.feature-card{
+
+    background:
+        rgba(15,23,42,.9);
+
+    border:
+        1px solid rgba(255,255,255,.05);
+
+    border-radius:28px;
+
+    padding:34px 28px;
+
+    text-align:center;
+
+    backdrop-filter:blur(10px);
+
+    transition:.25s;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.18);
+}
+
+.feature-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border:
+        1px solid rgba(56,239,125,.14);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.28),
+        0 0 20px rgba(56,239,125,.06);
+}
+
+.feature-card h2{
+
+    color:#38ef7d;
+
+    margin-bottom:16px;
+
+    font-size:22px;
+}
+
+.feature-card p{
+
+    color:#94a3b8;
+
+    line-height:1.6;
+
+    font-size:16px;
+}
+
+.home-stats{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    margin-top:-10px;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+}
+
+.home-stat-card{
+    width: 110px;
+    height: 85px;
+    background: rgba(16, 24, 52, 0.95);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 18px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.30);
+}
+
+.home-stat-card h2{
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #39ff88;
+    margin-bottom: 2px;
+    line-height: 1;
+}
+
+.home-stat-card p{
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.45);
+}
+
+.home-stat-card:nth-child(2) h2{
+    color: #4db8ff;
+}
+
+.home-stat-card.warning h2{
+    color: #ffbe3d;
+}

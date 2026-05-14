@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-layout">
+
+    <div class="auth-left">
+
+        <p class="auth-mini">
+
+            Mundial 2026
+
+        </p>
+
+        <h1>
+
+            Únete a la Quiniela
+
+        </h1>
+
+        <p class="auth-description">
+
+            Crea tu cuenta,
+            participa en jornadas
+            y compite por el primer lugar del ranking.
+
+        </p>
+
+    </div>
+
+    <div class="auth-card register-card">
+
+        <h2>
+
+            Crear Cuenta
+
+        </h2>
+
+        {% if error %}
+
+        <p class="error">
+
+            {{ error }}
+
+        </p>
+
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Nombre"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    name="apellido"
+                    placeholder="Apellido"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    name="telefono"
+                    placeholder="Teléfono"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    name="nick"
+                    placeholder="Nick"
+                    pattern="[A-Za-z0-9_]+"
+                    title="El nick solo puede contener letras, números y _"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="auth-btn"
+            >
+
+                Registrarme
+
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+
+            ¿Ya tienes cuenta?
+
+            <a href="/login/">
+
+                Iniciar sesión
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

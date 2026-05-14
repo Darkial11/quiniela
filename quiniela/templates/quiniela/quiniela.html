@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<div class="quiniela-layout">
+
+    <div class="quiniela-header">
+
+        <div>
+
+            <p class="mini-title">
+
+                Jornada {{ jornada_actual }}
+
+            </p>
+
+            <h1>
+
+                Hola,
+
+                {{ request.user.perfil.nick }}
+
+            </h1>
+
+        </div>
+
+        <div class="header-right">
+
+            {% if jornada_obj.abierta %}
+
+            <div class="status abierta">
+
+                Jornada Abierta
+
+            </div>
+
+            {% else %}
+
+            <div class="status cerrada-status">
+
+                Jornada Cerrada
+
+            </div>
+
+            {% endif %}
+
+            <div class="progress-box">
+
+                <span id="contador">
+
+                    0/{{ partidos|length }}
+
+                </span>
+
+                seleccionados
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="jornadas-premium">
+
+        {% for j in jornadas %}
+
+        <a
+            href="/jornada/{{ j.numero }}/"
+            class="
+                jornada-pill
+
+                {% if jornada_actual == j.numero %}
+                    active-pill
+                {% endif %}
+            "
+        >
+
+            J{{ j.numero }}
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="matches-grid">
+
+        {% for partido in partidos %}
+
+        <div
+            class="match-card"
+            data-id="{{ partido.id }}"
+        >
+
+            <div class="match-top">
+
+                <span class="grupo-badge">
+
+                    Grupo {{ partido.grupo }}
+
+                </span>
+
+                {% if partido.resultado_real %}
+
+                <span class="
+                    resultado-pill
+
+                    {% if partido.resultado_real == 'L' %}
+                        local
+                    {% elif partido.resultado_real == 'E' %}
+                        empate
+                    {% else %}
+                        visita
+                    {% endif %}
+                ">
+
+                    {{ partido.resultado_real }}
+
+                </span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="teams-row">
+
+                <div class="team-block">
+
+                    <img
+                        src="{% static 'img/banderas/' %}{{ partido.local|slugify }}.png"
+                        class="flag"
+                    >
+
+                    <div class="team-name">
+
+                        {{ partido.local }}
+
+                    </div>
+
+                </div>
+
+                <div class="versus">
+
+                    VS
+
+                </div>
+
+                <div class="team-block">
+
+                    <img
+                        src="{% static 'img/banderas/' %}{{ partido.visitante|slugify }}.png"
+                        class="flag"
+                    >
+
+                    <div class="team-name">
+
+                        {{ partido.visitante }}
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="match-meta">
+
+                <span>
+
+                    📅 {{ partido.fecha_partido|date:"d M Y" }}
+
+                </span>
+
+                <span>
+
+                    🕒 {{ partido.hora_partido|time:"H:i" }}
+
+                </span>
+
+                <span>
+
+                    📍 {{ partido.ciudad }}
+
+                </span>
+
+            </div>
+
+            <div class="stadium-line">
+
+                🏟️ {{ partido.estadio }}
+
+            </div>
+            <div class="opciones premium-options">
+
+                <button
+                    class="btn local opcion"
+
+                    {% if not jornada_obj.abierta %}
+                        disabled
+                    {% endif %}
+                >
+
+                    L
+
+                </button>
+
+                <button
+                    class="btn empate opcion"
+
+                    {% if not jornada_obj.abierta %}
+                        disabled
+                    {% endif %}
+                >
+
+                    E
+
+                </button>
+
+                <button
+                    class="btn visita opcion"
+
+                    {% if not jornada_obj.abierta %}
+                        disabled
+                    {% endif %}
+                >
+
+                    V
+
+                </button>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <button
+        id="guardar"
+        class="floating-save"
+    >
+
+        Guardar Quiniela
+
+    </button>
+
+</div>
+
+<script>
+
+    window.jornadaActual =
+
+        {{ jornada_actual }};
+
+</script>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+{% endblock %}

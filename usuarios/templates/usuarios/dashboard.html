@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <div class="dashboard-hero">
+
+        <h1>
+
+            Hola,
+
+            {{ request.user.perfil.nick }}
+
+        </h1>
+
+        <p>
+
+            Bienvenido a la Quiniela Mundial 2026
+
+        </p>
+
+        <a
+            href="/quiniela/"
+            class="hero-btn"
+        >
+
+            IR A QUINIELA
+
+        </a>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <h2>
+
+                {{ posicion }}
+
+            </h2>
+
+            <p>
+
+                Posición Ranking
+
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>
+
+                {{ total_aciertos }}
+
+            </h2>
+
+            <p>
+
+                Aciertos
+
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2>
+
+                {{ total_pronosticos }}
+
+            </h2>
+
+            <p>
+
+                Pronósticos Enviados
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="ranking-box">
+
+        <h2>
+
+            Top 5 Ranking
+
+        </h2>
+
+        <table class="tabla-ranking">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Nick</th>
+
+                    <th>Puntos</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for jugador in top5 %}
+
+                <tr>
+
+                    <td>
+
+                        {{ forloop.counter }}
+
+                    </td>
+
+                    <td>
+
+                        {{ jugador.0 }}
+
+                    </td>
+
+                    <td>
+
+                        {{ jugador.1 }}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

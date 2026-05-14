@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="container">
+
+    <h1>
+        QUINIELA GENERAL
+    </h1>
+
+    {% for bloque in tabla_jornadas %}
+
+    <div class="jornada-box">
+
+        <h2 class="titulo-jornada">
+
+            Jornada {{ bloque.jornada.numero }}
+
+        </h2>
+
+        <div class="tabla-wrapper">
+
+            <table class="tabla-quiniela">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>
+                            Participante
+                        </th>
+
+                        {% for partido in bloque.partidos %}
+
+                        <th>
+
+                            {{ partido.local }}
+
+                            <br>
+
+                            vs
+
+                            <br>
+
+                            {{ partido.visitante }}
+
+                        </th>
+
+                        {% endfor %}
+
+                        <th>
+                            Total
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for fila in bloque.tabla %}
+
+                    <tr>
+
+                        <td class="
+                            posicion
+
+                            {% if forloop.counter == 1 %}
+                                oro
+                            {% elif forloop.counter == 2 %}
+                                plata
+                            {% elif forloop.counter == 3 %}
+                                bronce
+                            {% endif %}
+                        ">
+
+                            {{ forloop.counter }}
+
+                        </td>
+
+                        <td class="nombre-player">
+
+                            {{ fila.nombre }}
+
+                        </td>
+
+                        {% for pronostico in fila.pronosticos %}
+
+                        <td class="
+                            celda-pronostico
+
+                            {% if pronostico.acierto %}
+                                acierto
+                            {% endif %}
+                        ">
+
+                            {{ pronostico.seleccion }}
+
+                        </td>
+
+                        {% endfor %}
+
+                        <td class="total">
+
+                            {{ fila.total }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

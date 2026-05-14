@@ -1,0 +1,661 @@
+/* =========================
+   QUINIELA LAYOUT
+========================= */
+
+.quiniela-layout{
+
+    max-width:1280px;
+
+    margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.quiniela-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:24px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:26px;
+}
+
+.mini-title{
+
+    color:#64748b;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    font-size:12px;
+
+    margin-bottom:10px;
+}
+
+.quiniela-header h1{
+
+    font-size:54px;
+
+    line-height:1;
+
+    word-break:break-word;
+}
+
+/* =========================
+   HEADER RIGHT
+========================= */
+
+.header-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+}
+
+.status{
+
+    padding:12px 18px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:700;
+}
+
+.abierta{
+
+    background:#166534;
+}
+
+.cerrada-status{
+
+    background:#991b1b;
+}
+
+.progress-box{
+
+    background:
+        rgba(15,23,42,.9);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius:16px;
+
+    padding:12px 18px;
+
+    font-size:15px;
+}
+
+/* =========================
+   JORNADAS
+========================= */
+
+.jornadas-premium{
+
+    display:flex;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+}
+
+.jornada-pill{
+
+    background:#172554;
+
+    color:white;
+
+    padding:14px 22px;
+
+    border-radius:18px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.active-pill{
+
+    background:#22c55e;
+
+    color:#020617;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.matches-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(420px,1fr));
+
+    gap:18px;
+
+    padding-bottom:120px;
+}
+
+/* =========================
+   MATCH CARD
+========================= */
+
+.match-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        rgba(15,23,42,.92);
+
+    border:
+        1px solid rgba(255,255,255,.05);
+
+    border-radius:26px;
+
+    padding:22px;
+
+    backdrop-filter:blur(10px);
+
+    transition:.3s;
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.20);
+}
+
+.match-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border:
+        1px solid rgba(56,239,125,.14);
+
+    box-shadow:
+        0 16px 34px rgba(0,0,0,.28),
+        0 0 20px rgba(56,239,125,.06);
+}
+
+/* =========================
+   TOP CARD
+========================= */
+
+.match-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.grupo-badge{
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    font-size:12px;
+}
+
+.resultado-pill{
+
+    padding:8px 12px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+/* =========================
+   TEAMS
+========================= */
+
+.teams-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-bottom:18px;
+}
+
+.team-block{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    flex:1;
+
+    min-width:0;
+}
+
+.flag{
+
+    width:62px;
+
+    height:44px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    box-shadow:
+        0 0 14px rgba(255,255,255,.06);
+}
+
+.team-name{
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    line-height:1.1;
+}
+
+.versus{
+
+    color:#64748b;
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+/* =========================
+   MATCH META
+========================= */
+
+.match-meta{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+    margin-top:10px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+    opacity:.9;
+}
+
+.match-meta span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+}
+
+.stadium-line{
+
+    text-align:center;
+
+    margin-top:6px;
+
+    color:#64748b;
+
+    font-size:12px;
+
+    opacity:.85;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.opciones{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:14px;
+}
+
+.premium-options{
+
+    margin-top:20px;
+}
+
+/* =========================
+   BUTTONS L E V
+========================= */
+
+.btn{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:18px;
+
+    color:white;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    transition:.25s;
+
+    position:relative;
+}
+
+.btn:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+}
+
+/* =========================
+   COLORS
+========================= */
+
+.local{
+
+    background:#16a34a;
+}
+
+.empate{
+
+    background:#d97706;
+}
+
+.visita{
+
+    background:#2563eb;
+}
+
+/* =========================
+   SELECTED
+========================= */
+
+.seleccionado{
+
+    transform:scale(1.06);
+
+    border:
+        3px solid rgba(255,255,255,.9);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.40);
+}
+
+.apagado{
+
+    opacity:.35;
+
+    transform:scale(.95);
+}
+
+/* =========================
+   DISABLED
+========================= */
+
+.btn:disabled{
+
+    opacity:.28;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+}
+
+.btn.seleccionado:disabled{
+
+    opacity:1;
+
+    transform:scale(1.06);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.35);
+}
+
+/* =========================
+   FLOATING BUTTON
+========================= */
+
+.floating-save{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:24px;
+
+    background:#22c55e;
+
+    color:white;
+
+    border:none;
+
+    padding:18px 28px;
+
+    border-radius:20px;
+
+    font-size:18px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    z-index:999;
+
+    box-shadow:
+        0 12px 30px rgba(34,197,94,.22);
+
+    transition:.25s;
+}
+
+.floating-save:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 18px 36px rgba(34,197,94,.30);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-btn{
+
+    opacity:.85;
+
+    pointer-events:none;
+}
+
+.success-btn{
+
+    background:#16a34a !important;
+
+    box-shadow:
+        0 0 20px rgba(34,197,94,.28);
+}
+
+/* =========================
+   RESPONSIVE QUINIELA
+========================= */
+
+@media(max-width:768px){
+
+    .quiniela-layout{
+
+        padding:0 8px;
+    }
+
+    .quiniela-header{
+
+        gap:14px;
+    }
+
+    .quiniela-header h1{
+
+        font-size:30px;
+
+        line-height:1.1;
+    }
+
+    .header-right{
+
+        width:100%;
+
+        justify-content:space-between;
+    }
+
+    .status,
+    .progress-box{
+
+        font-size:13px;
+
+        padding:10px 14px;
+    }
+
+    .matches-grid{
+
+        grid-template-columns:1fr;
+
+        gap:16px;
+    }
+
+    .match-card{
+
+        padding:18px;
+
+        min-height:auto;
+    }
+
+    .teams-row{
+
+        gap:6px;
+    }
+
+    .flag{
+
+        width:54px;
+
+        height:38px;
+    }
+
+    .team-name{
+
+        font-size:14px;
+    }
+
+    .versus{
+
+        font-size:18px;
+    }
+
+    .match-meta{
+
+        gap:8px;
+
+        font-size:11px;
+    }
+
+    .btn{
+
+        width:58px;
+
+        height:58px;
+
+        font-size:24px;
+    }
+
+    .floating-save{
+
+        left:12px;
+
+        right:12px;
+
+        bottom:12px;
+
+        width:calc(100% - 24px);
+
+        border-radius:18px;
+
+        padding:16px;
+    }
+}
+@media(max-width:768px){
+
+    .teams-row{
+
+        flex-direction:row !important;
+
+        justify-content:space-between;
+
+        align-items:center;
+    }
+
+    .team-block{
+
+        flex:1;
+
+        max-width:120px;
+    }
+
+    .versus{
+
+        width:40px;
+
+        text-align:center;
+
+        flex:none;
+    }
+}

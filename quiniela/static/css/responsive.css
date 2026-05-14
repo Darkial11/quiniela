@@ -1,0 +1,355 @@
+/* =========================
+   LARGE TABLETS
+========================= */
+
+@media(max-width:1200px){
+
+    .sidebar{
+
+        width:280px;
+    }
+
+    .main-area{
+
+        padding:34px;
+    }
+
+    .dashboard-hero{
+
+        padding:50px;
+    }
+
+    .dashboard-hero h1{
+
+        font-size:52px;
+    }
+
+    .hero h1{
+
+        font-size:72px;
+    }
+
+    .auth-layout{
+
+        gap:50px;
+    }
+}
+
+/* =========================
+   TABLETS
+========================= */
+
+@media(max-width:1000px){
+
+    .app-layout{
+
+        flex-direction:column;
+    }
+
+    .sidebar{
+
+        width:100%;
+
+        height:auto;
+
+        position:relative;
+
+        border-right:none;
+
+        border-bottom:
+            1px solid rgba(255,255,255,.05);
+    }
+
+    .sidebar-nav{
+
+        flex-direction:row;
+
+        flex-wrap:wrap;
+
+        margin-top:30px;
+    }
+
+    .main-area{
+
+        padding:26px;
+    }
+
+    .auth-layout{
+
+        grid-template-columns:1fr;
+
+        gap:50px;
+    }
+
+    .auth-left{
+
+        text-align:center;
+    }
+
+    .auth-description{
+
+        margin:auto;
+    }
+
+    .hero{
+
+        min-height:auto;
+
+        padding:100px 0;
+    }
+
+    .hero h1{
+
+        font-size:62px;
+    }
+
+    .dashboard-hero{
+
+        padding:42px;
+    }
+
+    .dashboard-hero h1{
+
+        font-size:48px;
+    }
+
+    .podium{
+
+        justify-content:center;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .navbar{
+
+        padding:20px;
+    }
+
+    .nav-links{
+
+        gap:16px;
+    }
+
+    .hero{
+
+        padding:80px 20px;
+    }
+
+    .hero h1{
+
+        font-size:48px;
+    }
+
+    .hero-text{
+
+        font-size:18px;
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+        width:100%;
+    }
+
+    .hero-btn{
+
+        width:100%;
+    }
+
+    .quiniela-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:24px;
+    }
+
+    .quiniela-header h1{
+
+        font-size:42px;
+    }
+
+    .matches-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .match-card{
+
+        padding:20px;
+    }
+
+    .teams-row{
+
+        flex-direction:column;
+
+        gap:16px;
+    }
+
+    .team-name{
+
+        font-size:18px;
+    }
+
+    .match-meta{
+
+        gap:12px;
+
+        font-size:12px;
+    }
+
+    .dashboard-hero{
+
+        padding:34px 24px;
+    }
+
+    .dashboard-hero h1{
+
+        font-size:40px;
+    }
+
+    .dashboard-hero p{
+
+        font-size:18px;
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .ranking-header h1{
+
+        font-size:42px;
+    }
+
+    .podium{
+
+        flex-direction:column;
+
+        align-items:center;
+    }
+
+    .gold{
+
+        transform:none;
+    }
+
+    .auth-left h1{
+
+        font-size:52px;
+    }
+
+    .auth-description{
+
+        font-size:18px;
+    }
+
+    .auth-card{
+
+        padding:34px 26px;
+    }
+
+    .floating-save{
+
+        left:20px;
+
+        right:20px;
+
+        width:calc(100% - 40px);
+
+        bottom:20px;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:480px){
+
+    .main-area{
+
+        padding:18px;
+    }
+
+    .sidebar{
+
+        padding:24px 18px;
+    }
+
+    .sidebar-logo{
+
+        font-size:34px;
+    }
+
+    .sidebar-user{
+
+        font-size:16px;
+    }
+
+    .sidebar-nav a{
+
+        width:100%;
+
+        font-size:16px;
+
+        padding:18px;
+    }
+
+    .hero h1{
+
+        font-size:38px;
+    }
+
+    .dashboard-hero h1{
+
+        font-size:34px;
+    }
+
+    .quiniela-header h1{
+
+        font-size:36px;
+    }
+
+    .match-card{
+
+        border-radius:24px;
+    }
+
+    .btn{
+
+        width:64px;
+
+        height:64px;
+
+        font-size:28px;
+    }
+
+    .podium-card{
+
+        min-width:100%;
+    }
+
+    .ranking-table-box{
+
+        padding:24px;
+    }
+
+    .auth-left h1{
+
+        font-size:42px;
+    }
+
+    .auth-card h2{
+
+        font-size:34px;
+    }
+}

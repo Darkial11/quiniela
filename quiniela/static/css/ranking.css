@@ -1,0 +1,483 @@
+/* =========================
+   RANKING LAYOUT
+========================= */
+
+.ranking-layout{
+
+    max-width:1450px;
+
+    margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.ranking-header{
+
+    text-align:center;
+
+    margin-bottom:60px;
+}
+
+.ranking-header h1{
+
+    font-size:64px;
+
+    margin-bottom:16px;
+}
+
+.ranking-header p{
+
+    font-size:20px;
+
+    color:#cbd5e1;
+}
+
+/* =========================
+   PODIUM
+========================= */
+
+.podium{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-end;
+
+    gap:30px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:70px;
+}
+
+/* =========================
+   PODIUM CARD
+========================= */
+
+.podium-card{
+
+    position:relative;
+
+    min-width:240px;
+
+    text-align:center;
+
+    padding:42px;
+
+    border-radius:32px;
+
+    background:
+        rgba(15,23,42,.92);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:blur(10px);
+
+    transition:.3s;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+.podium-card:hover{
+
+    transform:
+        translateY(-8px);
+}
+
+/* =========================
+   MEDALS
+========================= */
+
+.gold{
+
+    transform:scale(1.12);
+
+    box-shadow:
+        0 0 40px rgba(255,215,0,.25);
+}
+
+.silver{
+
+    box-shadow:
+        0 0 30px rgba(192,192,192,.16);
+}
+
+.bronze{
+
+    box-shadow:
+        0 0 30px rgba(205,127,50,.16);
+}
+
+.medal{
+
+    font-size:60px;
+
+    margin-bottom:20px;
+}
+
+/* =========================
+   PODIUM CONTENT
+========================= */
+
+.podium-card h2{
+
+    font-size:32px;
+
+    margin-bottom:12px;
+
+    color:white;
+}
+
+.podium-card p{
+
+    font-size:22px;
+
+    font-weight:800;
+
+    color:#38ef7d;
+}
+
+/* =========================
+   TABLE BOX
+========================= */
+
+.ranking-table-box{
+
+    background:
+        rgba(15,23,42,.92);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    border-radius:34px;
+
+    padding:42px;
+
+    backdrop-filter:blur(10px);
+
+    overflow-x:auto;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.tabla-ranking-premium{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.tabla-ranking-premium th{
+
+    padding:22px;
+
+    color:#38ef7d;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    font-size:16px;
+}
+
+.tabla-ranking-premium td{
+
+    padding:22px;
+
+    text-align:center;
+
+    color:#cbd5e1;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.04);
+}
+
+.tabla-ranking-premium tbody tr{
+
+    transition:.25s;
+}
+
+.tabla-ranking-premium tbody tr:hover{
+
+    background:
+        rgba(255,255,255,.03);
+}
+
+/* =========================
+   TOP POSITIONS
+========================= */
+
+.first-place{
+
+    color:#facc15;
+
+    font-weight:800;
+}
+
+.second-place{
+
+    color:#cbd5e1;
+
+    font-weight:800;
+}
+
+.third-place{
+
+    color:#fb923c;
+
+    font-weight:800;
+}
+
+/* =========================
+   PRONOSTICOS
+========================= */
+
+.container{
+
+    width:100%;
+}
+
+/* =========================
+   TITULO
+========================= */
+
+.container h1{
+
+    font-size:52px;
+
+    margin-bottom:34px;
+
+    color:#38ef7d;
+
+    letter-spacing:-2px;
+}
+
+/* =========================
+   JORNADA BOX
+========================= */
+
+.jornada-box{
+
+    background:
+        rgba(15,23,42,.88);
+
+    border:
+        1px solid rgba(255,255,255,.05);
+
+    border-radius:28px;
+
+    padding:26px;
+
+    margin-bottom:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.20);
+}
+
+/* =========================
+   TITULO JORNADA
+========================= */
+
+.titulo-jornada{
+
+    font-size:28px;
+
+    margin-bottom:22px;
+
+    color:white;
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+
+.tabla-wrapper{
+
+    overflow-x:auto;
+}
+
+/* =========================
+   TABLA
+========================= */
+
+.tabla-quiniela{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:900px;
+}
+
+/* =========================
+   HEADERS
+========================= */
+
+.tabla-quiniela thead th{
+
+    background:
+        rgba(255,255,255,.03);
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    padding:18px 14px;
+
+    text-align:center;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+}
+
+.tabla-quiniela thead th:first-child{
+
+    border-top-left-radius:16px;
+}
+
+.tabla-quiniela thead th:last-child{
+
+    border-top-right-radius:16px;
+}
+
+/* =========================
+   BODY
+========================= */
+
+.tabla-quiniela tbody tr{
+
+    transition:.2s;
+}
+
+.tabla-quiniela tbody tr:hover{
+
+    background:
+        rgba(255,255,255,.02);
+}
+
+.tabla-quiniela tbody td{
+
+    padding:18px 14px;
+
+    text-align:center;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.04);
+
+    font-size:15px;
+}
+
+/* =========================
+   POSICION
+========================= */
+
+.posicion{
+
+    width:60px;
+
+    font-weight:800;
+
+    font-size:18px;
+}
+
+.oro{
+
+    color:#facc15;
+}
+
+.plata{
+
+    color:#cbd5e1;
+}
+
+.bronce{
+
+    color:#fb923c;
+}
+
+/* =========================
+   PLAYER
+========================= */
+
+.nombre-player{
+
+    text-align:left !important;
+
+    font-weight:700;
+
+    color:white;
+
+    min-width:180px;
+}
+
+/* =========================
+   PRONOSTICO
+========================= */
+
+.celda-pronostico{
+
+    font-weight:800;
+
+    font-size:18px;
+
+    color:#94a3b8;
+}
+
+.acierto{
+
+    color:#22c55e;
+
+    text-shadow:
+        0 0 10px rgba(34,197,94,.35);
+}
+
+/* =========================
+   TOTAL
+========================= */
+
+.total{
+
+    font-weight:800;
+
+    font-size:18px;
+
+    color:#38ef7d;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+.tabla-wrapper::-webkit-scrollbar{
+
+    height:8px;
+}
+
+.tabla-wrapper::-webkit-scrollbar-track{
+
+    background:
+        rgba(255,255,255,.04);
+
+    border-radius:999px;
+}
+
+.tabla-wrapper::-webkit-scrollbar-thumb{
+
+    background:
+        rgba(56,239,125,.35);
+
+    border-radius:999px;
+}

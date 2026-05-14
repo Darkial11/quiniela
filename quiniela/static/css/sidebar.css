@@ -1,0 +1,310 @@
+/* =========================
+   APP LAYOUT
+========================= */
+
+.app-layout{
+
+    display:flex;
+
+    min-height:100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+
+    width:240px;
+
+    background:
+        rgba(15,23,42,.92);
+
+    border-right:
+        1px solid rgba(255,255,255,.05);
+
+    backdrop-filter:blur(12px);
+
+    padding:26px 18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    position:sticky;
+
+    top:0;
+
+    height:100vh;
+}
+
+.sidebar-top{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.sidebar-logo{
+
+    color:#38ef7d;
+
+    font-size:32px;
+
+    font-weight:800;
+
+    line-height:1;
+}
+
+/* =========================
+   USER BOX
+========================= */
+
+.sidebar-user{
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid rgba(255,255,255,.05);
+
+    border-radius:16px;
+
+    padding:14px 16px;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:700;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.sidebar-nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    margin-top:50px;
+}
+
+.sidebar-nav a{
+
+    position:relative;
+
+    padding:16px 18px;
+
+    border-radius:18px;
+
+    color:#cbd5e1;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.sidebar-nav a:hover{
+
+    background:
+        rgba(56,239,125,.08);
+
+    color:#38ef7d;
+
+    transform:
+        translateX(3px);
+}
+
+/* =========================
+   ACTIVE LINK
+========================= */
+
+.active-link{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,239,125,.16),
+            rgba(56,239,125,.08)
+        );
+
+    border:
+        1px solid rgba(56,239,125,.14);
+
+    color:#38ef7d !important;
+
+    box-shadow:
+        0 0 20px rgba(56,239,125,.05);
+}
+
+.active-link::before{
+
+    content:'';
+
+    position:absolute;
+
+    left:-10px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:4px;
+
+    height:58%;
+
+    border-radius:30px;
+
+    background:#38ef7d;
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.logout-btn{
+
+    display:block;
+
+    text-align:center;
+
+    background:#dc2626;
+
+    color:white;
+
+    padding:16px;
+
+    border-radius:18px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.logout-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(220,38,38,.22);
+}
+
+/* =========================
+   MAIN AREA
+========================= */
+
+.main-area{
+
+    flex:1;
+
+    padding:38px;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================
+   MOBILE SIDEBAR FIX
+========================= */
+
+@media(max-width:768px){
+
+    .app-layout{
+
+        flex-direction:column;
+    }
+
+    .sidebar{
+
+        width:100%;
+
+        height:auto;
+
+        position:relative;
+
+        padding:16px;
+
+        border-right:none;
+
+        border-bottom:
+            1px solid rgba(255,255,255,.05);
+    }
+
+    .sidebar-top{
+
+        gap:14px;
+    }
+
+    .sidebar-logo{
+
+        font-size:24px;
+    }
+
+    .sidebar-user{
+
+        padding:12px 14px;
+
+        font-size:14px;
+    }
+
+    .sidebar-nav{
+
+        flex-direction:row;
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:10px;
+
+        margin-top:20px;
+    }
+
+    .sidebar-nav a{
+
+        padding:12px 16px;
+
+        font-size:14px;
+
+        border-radius:14px;
+
+        flex:none;
+    }
+
+    .active-link::before{
+
+        display:none;
+    }
+
+    .logout-btn{
+
+        margin-top:18px;
+
+        width:100%;
+    }
+
+    .main-area{
+
+        width:100%;
+
+        padding:18px 12px;
+    }
+}
