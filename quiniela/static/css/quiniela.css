@@ -468,14 +468,12 @@
 ========================= */
 
 .floating-save{
-
+    
     left:18px;
 
     right:18px;
 
     bottom:14px;
-
-    width:calc(100% - 36px);
 
     height:54px;
 
