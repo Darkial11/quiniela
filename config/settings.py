@@ -19,12 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 import dj_database_url
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if DATABASE_URL:
+if "RAILWAY_RUN_ID" in os.environ:
 
     DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL)
+        "default": dj_database_url.parse(os.getenv("DATABASE_URL"))
     }
 
 else:
