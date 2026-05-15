@@ -469,9 +469,11 @@
 
 .floating-save{
     
-    left:18px;
+    left:50%;
 
-    right:18px;
+    transform:translateX(-50%);
+
+    width:90%;
 
     bottom:14px;
 
