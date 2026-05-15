@@ -57,7 +57,7 @@ def registro(request):
 
         password = request.POST['password']
 
-                if User.objects.filter(username=nick).exists():
+        if User.objects.filter(username=nick).exists():
 
             return render(
 
