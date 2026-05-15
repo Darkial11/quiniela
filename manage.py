@@ -19,13 +19,7 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     
-    #-----------------------TEMPORAL AQUI----------------------------
 
-    if os.getenv("IMPORTAR_EXCEL") == "1":
-        from django.core.management import call_command
-        call_command("importar_excel")
-
-    #----------------------------------------------------------------
     execute_from_command_line(sys.argv)
 
 
