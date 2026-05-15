@@ -691,15 +691,13 @@
 
     .floating-save{
 
-    position:fixed;
+    left:18px;
 
-    left:14px;
-
-    right:14px;
+    right:18px;
 
     bottom:14px;
 
-    margin:auto;
+    width:calc(100% - 36px);
 
     height:54px;
 
@@ -707,7 +705,7 @@
 
     border-radius:16px;
 
-    display:block;
+    display:flex;
 
     align-items:center;
 
@@ -732,8 +730,6 @@
         0 8px 22px rgba(34,197,94,.22);
 
     backdrop-filter:blur(10px);
-
-    z-index:999;
 }
 
 @media(max-width:768px){
