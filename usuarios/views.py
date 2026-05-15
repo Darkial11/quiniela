@@ -57,6 +57,22 @@ def registro(request):
 
         password = request.POST['password']
 
+                if User.objects.filter(username=nick).exists():
+
+            return render(
+
+                request,
+
+                'usuarios/registro.html',
+
+                {
+
+                    'error': 'Ese nick ya está registrado'
+
+                }
+
+            )
+
         user = User.objects.create_user(
 
             username=nick,
