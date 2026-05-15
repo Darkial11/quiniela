@@ -469,34 +469,27 @@
 
 .floating-save{
 
-    position:fixed;
+    left:18px;
 
-    right:24px;
+    right:18px;
 
-    bottom:24px;
+    bottom:14px;
 
-    background:#22c55e;
+    width:calc(100% - 36px);
 
-    color:white;
+    border-radius:14px;
 
-    border:none;
+    padding:11px 16px;
 
-    padding:18px 28px;
+    font-size:15px;
 
-    border-radius:20px;
+    background:
+        rgba(34,197,94,.92);
 
-    font-size:18px;
-
-    font-weight:800;
-
-    cursor:pointer;
-
-    z-index:999;
+    backdrop-filter:blur(10px);
 
     box-shadow:
-        0 12px 30px rgba(34,197,94,.22);
-
-    transition:.25s;
+        0 8px 20px rgba(34,197,94,.18);
 }
 
 .floating-save:hover{
