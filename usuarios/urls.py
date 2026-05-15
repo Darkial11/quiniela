@@ -35,4 +35,7 @@ urlpatterns = [
         name='logout'
     ),
 
+    #----------TEMPORAL----------
+    path("crear-admin/", views.crear_admin),
+
 ]

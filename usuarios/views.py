@@ -22,7 +22,24 @@ from django.contrib.auth.models import User
 
 from .models import Perfil
 
+#-------------TEMPORAL-----------------
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
+def crear_admin(request):
+
+    if not User.objects.filter(username="admin").exists():
+
+        User.objects.create_superuser(
+            username="admin",
+            email="tucorreo@gmail.com",
+            password="TuPassword123"
+        )
+
+        return HttpResponse("Admin creado")
+
+    return HttpResponse("Admin ya existe")
+#--------------------------------------------------
 def registro(request):
 
     if request.method == 'POST':
