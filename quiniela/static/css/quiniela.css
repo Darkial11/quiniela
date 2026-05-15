@@ -469,13 +469,15 @@
 
 .floating-save{
 
-    left:50%;
+    position:fixed;
 
-    right:auto;
+    left:14px;
 
-    width:90%;
+    right:14px;
 
     bottom:14px;
+
+    margin:auto;
 
     height:54px;
 
@@ -508,6 +510,8 @@
         0 8px 22px rgba(34,197,94,.22);
 
     backdrop-filter:blur(10px);
+
+    z-index:999;
 }
 
 .floating-save:hover{
