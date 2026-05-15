@@ -19,10 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 import dj_database_url
 
-if "RAILWAY_RUN_ID" in os.environ:
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
 
     DATABASES = {
-        "default": dj_database_url.parse(os.getenv("DATABASE_URL"))
+        "default": dj_database_url.parse(DATABASE_URL)
     }
 
 else:
@@ -37,6 +39,8 @@ else:
             "PORT": "5432",
         }
     }
+
+
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
