@@ -41,10 +41,13 @@ else:
     }
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "quiniela.lukifix.mx",
+    "web-production-ac8c2.up.railway.app",
+]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://web-production-ac8c2.up.railway.app"
+    "https://quiniela.lukifix.mx",
 ]
 
 # Quick-start development settings - unsuitable for production
