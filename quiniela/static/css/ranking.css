@@ -326,6 +326,8 @@
 
 .tabla-quiniela thead th{
 
+    position:relative;
+
     background:
         rgba(255,255,255,.03);
 
@@ -414,6 +416,15 @@
 
 .nombre-player{
 
+    position:sticky;
+
+    left:0;
+
+    z-index:20;
+
+    background:
+        rgba(2,6,23,.98);
+
     text-align:left !important;
 
     font-weight:700;
@@ -421,6 +432,26 @@
     color:white;
 
     min-width:180px;
+
+    padding-left:18px;
+
+    box-shadow:
+        8px 0 18px rgba(0,0,0,.25);
+}
+
+.tabla-quiniela thead th:nth-child(2){
+
+    position:sticky;
+
+    left:60px;
+
+    z-index:25;
+
+    background:
+        rgba(15,23,42,.98);
+
+    box-shadow:
+        8px 0 18px rgba(0,0,0,.25);
 }
 
 /* =========================
