@@ -262,3 +262,152 @@
 
     font-weight:800;
 }
+
+/* =========================
+   NEW HERO
+========================= */
+
+.hero-mini{
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    letter-spacing:4px;
+
+    margin-bottom:16px;
+}
+
+/* =========================
+   HERO IMPROVED
+========================= */
+
+.dashboard-hero{
+
+    padding:42px 44px;
+
+    margin-bottom:28px;
+}
+
+.dashboard-hero h1{
+
+    font-size:58px;
+
+    margin-bottom:14px;
+}
+
+.dashboard-hero p{
+
+    font-size:18px;
+
+    margin-bottom:24px;
+
+    color:#cbd5e1;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stat-card{
+
+    padding:34px 22px;
+}
+
+.stat-icon{
+
+    font-size:34px;
+
+    margin-bottom:18px;
+}
+
+.stat-card h2{
+
+    font-size:54px;
+
+    margin-bottom:8px;
+}
+
+.stat-card p{
+
+    font-size:17px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .dashboard-hero{
+
+        padding:32px 24px;
+
+        border-radius:26px;
+
+        text-align:left;
+    }
+
+    .hero-mini{
+
+        font-size:11px;
+
+        letter-spacing:3px;
+
+        margin-bottom:12px;
+    }
+
+    .dashboard-hero h1{
+
+        font-size:42px;
+
+        line-height:1.05;
+    }
+
+    .dashboard-hero p{
+
+        font-size:15px;
+
+        line-height:1.5;
+    }
+
+    .hero-btn{
+
+        width:100%;
+
+        padding:14px;
+
+        font-size:16px;
+
+        border-radius:16px;
+    }
+
+    .stats-grid{
+
+        gap:16px;
+    }
+
+    .stat-card{
+
+        padding:26px 18px;
+
+        border-radius:24px;
+    }
+
+    .stat-icon{
+
+        font-size:28px;
+
+        margin-bottom:12px;
+    }
+
+    .stat-card h2{
+
+        font-size:42px;
+    }
+
+    .stat-card p{
+
+        font-size:15px;
+    }
+}

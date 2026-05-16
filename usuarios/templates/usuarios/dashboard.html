@@ -4,23 +4,46 @@
 
 <div class="dashboard">
 
+    <!-- HERO -->
+
     <div class="dashboard-hero">
+
+        <div class="hero-mini">
+
+            JORNADA 1 ABIERTA
+        </div>
 
         <h1>
 
-            {{ request.user.perfil.nick }}
+            Hola, {{ request.user.perfil.nick }} 👋
 
         </h1>
 
         <p>
 
-            Bienvenido a la Quiniela Mundial 2026
+            Ya tienes {{ total_pronosticos }} pronósticos enviados.
+            Tu posición actual es #{{ posicion }}.
         </p>
+
+        <a href="{% url 'quiniela' %}" class="hero-btn">
+
+            Continuar Quiniela
+
+        </a>
+
     </div>
+
+    <!-- STATS -->
 
     <div class="stats-grid">
 
         <div class="stat-card">
+
+            <div class="stat-icon">
+
+                🏆
+
+            </div>
 
             <h2>
 
@@ -30,13 +53,19 @@
 
             <p>
 
-                Posición Ranking
+                Ranking Global
 
             </p>
 
         </div>
 
         <div class="stat-card">
+
+            <div class="stat-icon">
+
+                🎯
+
+            </div>
 
             <h2>
 
@@ -54,6 +83,12 @@
 
         <div class="stat-card">
 
+            <div class="stat-icon">
+
+                ⚽
+
+            </div>
+
             <h2>
 
                 {{ total_pronosticos }}
@@ -62,69 +97,11 @@
 
             <p>
 
-                Pronósticos Enviados
+                Pronósticos
 
             </p>
 
         </div>
-
-    </div>
-
-    <div class="ranking-box">
-
-        <h2>
-
-            Top 5 Ranking
-
-        </h2>
-
-        <table class="tabla-ranking">
-
-            <thead>
-
-                <tr>
-
-                    <th>#</th>
-
-                    <th>Nick</th>
-
-                    <th>Puntos</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for jugador in top5 %}
-
-                <tr>
-
-                    <td>
-
-                        {{ forloop.counter }}
-
-                    </td>
-
-                    <td>
-
-                        {{ jugador.0 }}
-
-                    </td>
-
-                    <td>
-
-                        {{ jugador.1 }}
-
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
 
     </div>
 
