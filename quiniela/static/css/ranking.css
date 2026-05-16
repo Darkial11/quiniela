@@ -431,7 +431,11 @@
 
     color:white;
 
+    width:180px;
+
     min-width:180px;
+
+    max-width:180px;
 
     padding-left:18px;
 
@@ -443,12 +447,14 @@
 
     position:sticky;
 
-    left:60px;
+    left:0;
 
     z-index:25;
 
     background:
         rgba(15,23,42,.98);
+
+    min-width:180px;
 
     box-shadow:
         8px 0 18px rgba(0,0,0,.25);
