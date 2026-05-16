@@ -33,7 +33,7 @@ def inicio(request, jornada=1):
 
         jornada=jornada_obj
 
-    ).order_by('Fecha_partido')
+    ).order_by('fecha_partido')
 #----------------------------------------------
 
     jornadas_ids = Partido.objects.values_list(
