@@ -8,7 +8,7 @@
 
     position:sticky;
 
-    top:0;
+    top:20;
 
     z-index:999;
 
@@ -85,7 +85,7 @@
 
     overflow:hidden;
 
-    padding:20px 20px 20px;
+    padding:40px 20px 20px;
 }
 
 .hero::before{
@@ -374,7 +374,7 @@
 @media(max-width:768px){
 
     .hero-logo{
-
+        margin-top: 10px;
         margin-bottom:14px;
     }
 
