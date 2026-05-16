@@ -175,22 +175,15 @@
 ========================= */
 
 .datos-balon{
-
-    width:100%;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
     margin-top: 5px;
     margin-bottom:40px;
 }
 
 .datos-balon img{
-
     width:30%;
-
     object-fit:contain;
 
 }
