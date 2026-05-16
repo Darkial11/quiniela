@@ -113,11 +113,11 @@
 
 .hero h1{
 
-    font-size:92px;
+    font-size:78px;
 
     line-height:.95;
 
-    margin-bottom:26px;
+    margin-bottom:22px;
 
     max-width:1200px;
 
@@ -135,6 +135,39 @@
     line-height:1.6;
 
     margin-bottom:34px;
+}
+
+/* =========================
+   HERO LOGO
+========================= */
+
+.hero-logo{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:22px;
+}
+
+.hero-logo img{
+
+    width:100%;
+
+    max-width:620px;
+
+    height:auto;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(
+            0 0 24px rgba(34,211,238,.14)
+        );
 }
 
 /* =========================
@@ -314,4 +347,27 @@
 
 .home-stat-card.warning h2{
     color: #ffbe3d;
+}
+/* =========================
+   MOBILE HERO LOGO
+========================= */
+
+@media(max-width:768px){
+
+    .hero-logo{
+
+        margin-bottom:14px;
+    }
+
+    .hero-logo img{
+
+        max-width:340px;
+    }
+
+    .hero h1{
+
+        font-size:52px;
+
+        letter-spacing:-2px;
+    }
 }
