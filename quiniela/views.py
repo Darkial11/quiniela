@@ -28,11 +28,13 @@ def inicio(request, jornada=1):
 
     )
 
+#---------------------------------------------
     partidos = Partido.objects.filter(
 
         jornada=jornada_obj
 
-    ).order_by('fecha')
+    ).order_by('Fecha_partido')
+#----------------------------------------------
 
     jornadas_ids = Partido.objects.values_list(
 
