@@ -520,3 +520,151 @@
 
     border-radius:999px;
 }
+
+/* =========================
+   MOBILE RANKING
+========================= */
+
+@media(max-width:768px){
+
+    .ranking-layout{
+
+        padding:0 4px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .ranking-header{
+
+        margin-bottom:34px;
+    }
+
+    .ranking-header h1{
+
+        font-size:42px;
+
+        line-height:1;
+    }
+
+    .ranking-header p{
+
+        font-size:14px;
+
+        letter-spacing:4px;
+    }
+
+    /* =========================
+       PODIUM
+    ========================= */
+
+    .podium{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:18px;
+
+        margin-bottom:34px;
+    }
+
+    /* =========================
+       ORDER
+    ========================= */
+
+    .gold{
+
+        order:1;
+    }
+
+    .silver{
+
+        order:2;
+    }
+
+    .bronze{
+
+        order:3;
+    }
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .podium-card{
+
+        width:100%;
+
+        min-width:100%;
+
+        padding:28px 22px;
+
+        border-radius:26px;
+
+        min-height:auto;
+    }
+
+    .gold{
+
+        transform:none;
+    }
+
+    .podium-card:hover{
+
+        transform:none;
+    }
+
+    /* =========================
+       MEDALS
+    ========================= */
+
+    .medal{
+
+        font-size:52px;
+
+        margin-bottom:14px;
+    }
+
+    /* =========================
+       TEXT
+    ========================= */
+
+    .podium-card h2{
+
+        font-size:26px;
+
+        margin-bottom:8px;
+    }
+
+    .podium-card p{
+
+        font-size:18px;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .ranking-table-box{
+
+        padding:18px;
+
+        border-radius:24px;
+    }
+
+    .tabla-ranking-premium th{
+
+        padding:16px 10px;
+
+        font-size:14px;
+    }
+
+    .tabla-ranking-premium td{
+
+        padding:16px 10px;
+
+        font-size:14px;
+    }
+}
