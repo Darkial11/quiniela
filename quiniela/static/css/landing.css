@@ -85,7 +85,7 @@
 
     overflow:hidden;
 
-    padding:40px 20px 20px;
+    padding:20px 20px 20px;
 }
 
 .hero::before{
@@ -150,13 +150,13 @@
     justify-content:center;
 
     align-items:center;
-    margin-top: 0px;
+    margin-top: 5px;
     margin-bottom:40px;
 }
 
 .hero-logo img{
 
-    width:80%;
+    width:100%;
 
     max-width:620px;
 
@@ -169,6 +169,25 @@
             0 0 24px rgba(34,211,238,.14)
         );
 }
+
+/* =========================
+   BALON
+========================= */
+
+.datos-balon{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top: 0px;
+    margin-bottom:40px;
+}
+
+.datos-balon img{
+    width:150px;
+    object-fit:contain;
+
+}
+
 
 /* =========================
    HERO BUTTONS
