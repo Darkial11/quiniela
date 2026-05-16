@@ -191,16 +191,8 @@
 
     width:30%;
 
-    max-width:420px;
-
-    height:auto;
-
     object-fit:contain;
 
-    filter:
-        drop-shadow(
-            0 0 24px rgba(34,211,238,.14)
-        );
 }
 
 
