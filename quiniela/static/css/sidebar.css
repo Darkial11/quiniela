@@ -55,13 +55,18 @@
 
 .sidebar-logo{
 
-    color:#38ef7d;
+    display:flex;
 
-    font-size:32px;
+    align-items:center;
+}
 
-    font-weight:800;
+.sidebar-logo img{
 
-    line-height:1;
+    width:170px;
+
+    height:auto;
+
+    object-fit:contain;
 }
 
 /* =========================
@@ -305,11 +310,9 @@
         gap:12px;
     }
 
-    .sidebar-logo{
+    .sidebar-logo img{
 
-        font-size:22px;
-
-        line-height:1;
+        width:140px;
     }
 
     .sidebar-user{
