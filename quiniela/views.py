@@ -679,9 +679,9 @@ def exportar_pdf_jornada(request, jornada):
 
     bloques_partidos = [
 
-        partidos[i:i + 10]
+        partidos[i:i + 8]
 
-        for i in range(0, len(partidos), 10)
+        for i in range(0, len(partidos), 8)
 
     ]
 
@@ -811,7 +811,7 @@ def exportar_pdf_jornada(request, jornada):
 
         subtitulo = Paragraph(
 
-            f"<b>Partidos {indice_bloque * 10 + 1} - {indice_bloque * 10 + len(bloque)}</b>",
+            f"<b>Partidos {indice_bloque * 8 + 1} - {indice_bloque * 8 + len(bloque)}</b>",
 
             estilos['Heading2']
 
