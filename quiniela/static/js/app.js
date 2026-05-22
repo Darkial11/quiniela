@@ -56,135 +56,139 @@ const btnGuardar = document.getElementById(
 
 );
 
-btnGuardar.addEventListener("click", () => {
+if(btnGuardar){
 
-    let pronosticos = [];
+    btnGuardar.addEventListener("click", () => {
 
-    cards.forEach((card) => {
+        let pronosticos = [];
 
-        const partidoId = card.dataset.id;
+        cards.forEach((card) => {
 
-        const seleccionado = card.querySelector(
+            const partidoId = card.dataset.id;
 
-            ".seleccionado"
+            const seleccionado = card.querySelector(
 
-        );
-
-        if(seleccionado){
-
-            pronosticos.push({
-
-                partido_id: partidoId,
-
-                seleccion: seleccionado.innerText
-
-            });
-
-        }
-
-    });
-
-    if(pronosticos.length !== cards.length){
-
-        mostrarToast(
-
-            "Selecciona todos los partidos",
-
-            "error"
-
-        );
-
-        return;
-
-    }
-
-    btnGuardar.disabled = true;
-
-    btnGuardar.classList.add(
-
-        "loading-btn"
-
-    );
-
-    btnGuardar.innerHTML = `
-
-        <span class="spinner"></span>
-
-        Guardando...
-
-    `;
-
-    fetch("/guardar/", {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json",
-
-            "X-CSRFToken": document.querySelector(
-
-                '[name=csrfmiddlewaretoken]'
-
-            ).value
-
-        },
-
-        body: JSON.stringify({
-
-            pronosticos: pronosticos
-
-        })
-
-    })
-
-    .then(response => response.json())
-
-    .then(data => {
-
-        btnGuardar.innerHTML =
-
-            "✓ Guardado";
-
-        btnGuardar.classList.add(
-
-            "success-btn"
-
-        );
-
-        mostrarToast(
-
-            data.mensaje,
-
-            "success"
-
-        );
-
-        setTimeout(() => {
-
-            btnGuardar.disabled = false;
-
-            btnGuardar.classList.remove(
-
-                "loading-btn"
+                ".seleccionado"
 
             );
 
-            btnGuardar.classList.remove(
+            if(seleccionado){
+
+                pronosticos.push({
+
+                    partido_id: partidoId,
+
+                    seleccion: seleccionado.innerText
+
+                });
+
+            }
+
+        });
+
+        if(pronosticos.length !== cards.length){
+
+            mostrarToast(
+
+                "Selecciona todos los partidos",
+
+                "error"
+
+            );
+
+            return;
+
+        }
+
+        btnGuardar.disabled = true;
+
+        btnGuardar.classList.add(
+
+            "loading-btn"
+
+        );
+
+        btnGuardar.innerHTML = `
+
+            <span class="spinner"></span>
+
+            Guardando...
+
+        `;
+
+        fetch("/guardar/", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json",
+
+                "X-CSRFToken": document.querySelector(
+
+                    '[name=csrfmiddlewaretoken]'
+
+                ).value
+
+            },
+
+            body: JSON.stringify({
+
+                pronosticos: pronosticos
+
+            })
+
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            btnGuardar.innerHTML =
+
+                "✓ Guardado";
+
+            btnGuardar.classList.add(
 
                 "success-btn"
 
             );
 
-            btnGuardar.innerHTML =
+            mostrarToast(
 
-                "Guardar Quiniela";
+                data.mensaje,
 
-        }, 2000);
+                "success"
+
+            );
+
+            setTimeout(() => {
+
+                btnGuardar.disabled = false;
+
+                btnGuardar.classList.remove(
+
+                    "loading-btn"
+
+                );
+
+                btnGuardar.classList.remove(
+
+                    "success-btn"
+
+                );
+
+                btnGuardar.innerHTML =
+
+                    "Guardar Quiniela";
+
+            }, 2000);
+
+        });
 
     });
 
-});
+}
 
 fetch(
 

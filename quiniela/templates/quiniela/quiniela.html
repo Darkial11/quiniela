@@ -8,6 +8,15 @@
 
 <div class="quiniela-layout">
 
+        {% if request.user.perfil.pago_confirmado %}
+
+        <div class="payment-ok">
+
+            ✓ Participación confirmada
+
+        </div>
+
+        {% endif %}
     <div class="quiniela-header">
 
         <div>
@@ -238,16 +247,6 @@
 
     {% if request.user.perfil.pago_confirmado %}
 
-    <div class="payment-ok">
-
-        ✓ Participación confirmada
-
-    </div>
-
-    {% endif %}
-    
-    {% if request.user.perfil.pago_confirmado %}
-
     <button
         id="guardar"
         class="floating-save"
@@ -259,8 +258,7 @@
 
     <a
         href="/pagar/"
-        id="guardar"
-        class="floating-save"
+        class="floating-save pagar-btn"
     >
         Pagar $100 para participar
     </a>
