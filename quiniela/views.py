@@ -703,7 +703,7 @@ def exportar_pdf_jornada(request, jornada):
 
         'img',
 
-        'logo_fut.png'
+        'logo_fut_black.png'
 
     )
 
