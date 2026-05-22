@@ -19,6 +19,7 @@ from .models import (
 import json
 import mercadopago
 import os
+from django.utils import timezone
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -421,11 +422,45 @@ def crear_pago(request):
 @login_required(login_url='/login/')
 def pago_exitoso(request):
 
-    request.user.perfil.pago_confirmado = True
+    payment_id = request.GET.get("payment_id")
 
-    request.user.perfil.participando = True
+    status = request.GET.get("status")
 
-    request.user.perfil.save()
+    if not payment_id:
+
+        return redirect('/quiniela/')
+
+    sdk = mercadopago.SDK(
+
+        os.environ.get("MP_ACCESS_TOKEN")
+
+    )
+
+    try:
+
+        payment_response = sdk.payment().get(payment_id)
+
+        payment = payment_response["response"]
+
+    except Exception:
+
+        return redirect('/quiniela/')
+
+    if payment.get("status") == "approved":
+
+        perfil = request.user.perfil
+
+        perfil.pago_confirmado = True
+
+        perfil.participando = True
+
+        perfil.fecha_pago = timezone.now()
+
+        perfil.mercadopago_payment_id = payment_id
+
+        perfil.tipo_pago = "mercadopago"
+
+        perfil.save()
 
     return redirect('/quiniela/')
 
