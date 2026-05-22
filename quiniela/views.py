@@ -458,21 +458,7 @@ def pago_exitoso(request):
 
     if payment.get("status") == "approved":
 
-        perfil = request.user.perfil
-
-        pago_existente = Perfil.objects.filter(
-
-            mercadopago_payment_id=payment_id
-
-        ).exclude(
-
-            user__id=external_reference
-
-        ).exists()
-
-        if pago_existente:
-
-            return HttpResponse(status=200)
+        perfil = request.user.perfil      
 
         perfil.pago_confirmado = True
 
