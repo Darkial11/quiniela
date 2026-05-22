@@ -38,7 +38,9 @@ from reportlab.platypus import (
 
     Paragraph,
 
-    Spacer
+    Spacer,
+
+    Image
 
 )
 
@@ -47,6 +49,10 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
 from reportlab.lib.pagesizes import landscape, letter
+
+from django.conf import settings
+
+import os
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -688,6 +694,30 @@ def exportar_pdf_jornada(request, jornada):
     elementos = []
 
     estilos = getSampleStyleSheet()
+
+    ruta_logo = os.path.join(
+
+        settings.BASE_DIR,
+
+        'static',
+
+        'img',
+
+        'logo_fut.png'
+
+    )
+
+    logo = Image(
+
+        ruta_logo,
+
+        width=120,
+
+        height=40
+
+    )
+
+    elementos.append(logo)
 
     titulo = Paragraph(
 
