@@ -460,6 +460,20 @@ def pago_exitoso(request):
 
         perfil = request.user.perfil
 
+        pago_existente = Perfil.objects.filter(
+
+            mercadopago_payment_id=payment_id
+
+        ).exclude(
+
+            user__id=external_reference
+
+        ).exists()
+
+        if pago_existente:
+
+            return HttpResponse(status=200)
+
         perfil.pago_confirmado = True
 
         perfil.participando = True
