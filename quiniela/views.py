@@ -46,7 +46,7 @@ from reportlab.lib import colors
 
 from reportlab.lib.styles import getSampleStyleSheet
 
-from reportlab.lib.pagesizes import landscape, letter
+from reportlab.lib.pagesizes import landscape, legal
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -635,7 +635,7 @@ def exportar_pdf_jornada(request, jornada):
 
         response,
 
-        pagesize=landscape(letter),
+        pagesize=landscape(legal),
 
         rightMargin=20,
 
@@ -675,7 +675,7 @@ def exportar_pdf_jornada(request, jornada):
 
         encabezados.append(
 
-            f"{partido.local} vs {partido.visitante}"
+            f"{partido.local}\nvs\n{partido.visitante}"
 
         )
 
@@ -743,7 +743,27 @@ def exportar_pdf_jornada(request, jornada):
 
         posicion += 1
 
-    tabla = Table(data)
+    anchos_columnas = [
+
+        35,
+
+        110
+
+    ]
+
+    for _ in partidos:
+
+        anchos_columnas.append(65)
+
+    anchos_columnas.append(45)
+
+    tabla = Table(
+
+        data,
+
+        colWidths=anchos_columnas
+
+    )
 
     tabla.setStyle(TableStyle([
 
