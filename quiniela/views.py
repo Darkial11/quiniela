@@ -46,7 +46,7 @@ from reportlab.lib import colors
 
 from reportlab.lib.styles import getSampleStyleSheet
 
-from reportlab.lib.pagesizes import landscape, legal
+from reportlab.lib.pagesizes import landscape, letter
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -598,6 +598,30 @@ def webhook_mercadopago(request):
 
     return HttpResponse(status=200)
 
+def agregar_numero_pagina(canvas, doc):
+
+    pagina = canvas.getPageNumber()
+
+    texto = f"Página {pagina}"
+
+    canvas.setFont(
+
+        "Helvetica",
+
+        9
+
+    )
+
+    canvas.drawRightString(
+
+        760,
+
+        15,
+
+        texto
+
+    )
+
 @login_required(login_url='/login/')
 def exportar_pdf_jornada(request, jornada):
 
@@ -649,7 +673,7 @@ def exportar_pdf_jornada(request, jornada):
 
         response,
 
-        pagesize=landscape(legal),
+        pagesize=landscape(letter),
 
         rightMargin=20,
 
@@ -825,6 +849,14 @@ def exportar_pdf_jornada(request, jornada):
 
         elementos.append(Spacer(1, 30))
 
-    doc.build(elementos)
+    doc.build(
+
+        elementos,
+
+        onFirstPage=agregar_numero_pagina,
+
+        onLaterPages=agregar_numero_pagina
+
+    )
 
     return response
