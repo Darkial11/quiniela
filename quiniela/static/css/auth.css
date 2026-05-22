@@ -291,3 +291,53 @@
     }
 
 }
+
+.reglamento-layout{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    padding:40px 16px;
+
+}
+
+
+
+.regulamento-card{
+
+    width:100%;
+
+    max-width:1200px;
+
+}
+
+
+
+@media (max-width:768px){
+
+    .reglamento-layout{
+
+        padding:20px 10px;
+
+    }
+
+
+
+    .regulamento-card{
+
+        width:100%;
+
+        padding:24px 18px;
+
+        border-radius:24px;
+
+    }
+
+}
