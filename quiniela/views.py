@@ -543,6 +543,20 @@ def webhook_mercadopago(request):
     except Perfil.DoesNotExist:
 
         return HttpResponse(status=400)
+    
+    pago_existente = Perfil.objects.filter(
+
+        mercadopago_payment_id=payment_id
+
+    ).exclude(
+
+        user__id=external_reference
+
+    ).exists()
+
+    if pago_existente:
+
+        return HttpResponse(status=200)
 
     perfil.pago_confirmado = True
 
