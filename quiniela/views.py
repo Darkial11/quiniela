@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .models import (
 
@@ -20,6 +20,7 @@ import json
 import mercadopago
 import os
 from django.utils import timezone
+from usuarios.models import Perfil
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -402,6 +403,11 @@ def crear_pago(request):
         },
 
         "auto_return": "approved",
+        
+        "external_reference": str(request.user.id),
+
+        "notification_url":
+        "https://quiniela.lukifix.mx/webhook/mercadopago/",
 
     }
 
@@ -475,3 +481,75 @@ def pago_error(request):
 def pago_pendiente(request):
 
     return redirect('/quiniela/')
+
+def webhook_mercadopago(request):
+
+    if request.method != "POST":
+
+        return HttpResponse(status=400)
+
+    payment_id = request.GET.get("data.id")
+
+    if not payment_id:
+
+        return HttpResponse(status=400)
+
+    sdk = mercadopago.SDK(
+
+        os.environ.get("MP_ACCESS_TOKEN")
+
+    )
+
+    try:
+
+        payment_response = sdk.payment().get(
+
+            payment_id
+
+        )
+
+        payment = payment_response["response"]
+
+    except Exception:
+
+        return HttpResponse(status=400)
+
+    if payment.get("status") != "approved":
+
+        return HttpResponse(status=200)
+
+    external_reference = payment.get(
+
+        "external_reference"
+
+    )
+
+    if not external_reference:
+
+        return HttpResponse(status=400)
+
+    try:
+
+        perfil = Perfil.objects.get(
+
+            user__id=external_reference
+
+        )
+
+    except Perfil.DoesNotExist:
+
+        return HttpResponse(status=400)
+
+    perfil.pago_confirmado = True
+
+    perfil.participando = True
+
+    perfil.fecha_pago = timezone.now()
+
+    perfil.mercadopago_payment_id = payment_id
+
+    perfil.tipo_pago = "mercadopago"
+
+    perfil.save()
+
+    return HttpResponse(status=200)
