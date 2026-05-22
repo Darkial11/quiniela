@@ -3,9 +3,7 @@ from django.urls import path
 
 from . import views
 
-
 urlpatterns = [
-    
     path(
         'dashboard/',
         views.dashboard,
@@ -34,6 +32,9 @@ urlpatterns = [
         views.cerrar_sesion,
         name='logout'
     ),
- 
 
+    path(
+        'reglamento/',
+        views.reglamento
+    ),
 ]

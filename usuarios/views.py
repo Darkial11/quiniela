@@ -24,7 +24,31 @@ from .models import Perfil
 
 def registro(request):
 
-    if request.method == 'POST':
+        if request.method == 'POST':
+
+                if not request.POST.get(
+
+                    'acepta_reglamento'
+
+                 ):
+
+                    return render(
+
+                    request,
+
+                    'usuarios/registro.html',
+
+                    {
+
+                        'error': '''
+
+                        Debes aceptar el reglamento
+
+                        '''
+
+                    }
+
+                )
 
         nombre = request.POST['nombre']
 
@@ -315,5 +339,15 @@ def dashboard(request):
             'top5': top5
 
         }
+
+    )
+
+def reglamento(request):
+
+    return render(
+
+        request,
+
+        'usuarios/reglamento.html'
 
     )
