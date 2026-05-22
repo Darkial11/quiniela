@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.http import JsonResponse
 
@@ -21,6 +21,10 @@ import json
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
+
+    if not request.user.perfil.pago_confirmado:
+
+        return redirect('/')
 
     jornada_obj = Jornada.objects.get(
 
