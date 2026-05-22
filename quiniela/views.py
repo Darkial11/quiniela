@@ -711,7 +711,7 @@ def exportar_pdf_jornada(request, jornada):
 
         ruta_logo,
 
-        width=160,
+        width=170,
 
         height=40
 
