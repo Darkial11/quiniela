@@ -4,7 +4,13 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect
 
-from django.http import JsonResponse, HttpResponse
+from django.http import (
+
+    JsonResponse,
+
+    HttpResponse
+
+)
 
 from .models import (
 
@@ -21,6 +27,26 @@ import mercadopago
 import os
 from django.utils import timezone
 from usuarios.models import Perfil
+
+from reportlab.platypus import (
+
+    SimpleDocTemplate,
+
+    Table,
+
+    TableStyle,
+
+    Paragraph,
+
+    Spacer
+
+)
+
+from reportlab.lib import colors
+
+from reportlab.lib.styles import getSampleStyleSheet
+
+from reportlab.lib.pagesizes import landscape, letter
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -571,3 +597,176 @@ def webhook_mercadopago(request):
     perfil.save()
 
     return HttpResponse(status=200)
+
+@login_required(login_url='/login/')
+def exportar_pdf_jornada(request, jornada):
+
+    jornada_obj = Jornada.objects.get(
+
+        numero=jornada
+
+    )
+
+    partidos = Partido.objects.filter(
+
+        jornada=jornada_obj
+
+    ).order_by('id')
+
+    participantes = User.objects.filter(
+
+        pronostico__partido__jornada=jornada_obj
+
+    ).distinct()
+
+    response = HttpResponse(
+
+        content_type='application/pdf'
+
+    )
+
+    response['Content-Disposition'] = (
+
+        f'attachment; filename="jornada_{jornada}.pdf"'
+
+    )
+
+    doc = SimpleDocTemplate(
+
+        response,
+
+        pagesize=landscape(letter),
+
+        rightMargin=20,
+
+        leftMargin=20,
+
+        topMargin=20,
+
+        bottomMargin=20
+
+    )
+
+    elementos = []
+
+    estilos = getSampleStyleSheet()
+
+    titulo = Paragraph(
+
+        f"<b>Quiniela Mundial 2026 - Jornada {jornada}</b>",
+
+        estilos['Title']
+
+    )
+
+    elementos.append(titulo)
+
+    elementos.append(Spacer(1, 20))
+
+    encabezados = [
+
+        "#",
+
+        "Participante"
+
+    ]
+
+    for partido in partidos:
+
+        encabezados.append(
+
+            f"{partido.local} vs {partido.visitante}"
+
+        )
+
+    encabezados.append("Total")
+
+    data = [encabezados]
+
+    posicion = 1
+
+    for participante in participantes:
+
+        fila = []
+
+        total = 0
+
+        fila.append(str(posicion))
+
+        nick = getattr(
+
+            getattr(participante, 'perfil', None),
+
+            'nick',
+
+            participante.username
+
+        )
+
+        fila.append(nick)
+
+        for partido in partidos:
+
+            pronostico = Pronostico.objects.filter(
+
+                user=participante,
+
+                partido=partido
+
+            ).first()
+
+            if pronostico:
+
+                seleccion = pronostico.seleccion
+
+                if (
+
+                    partido.resultado_real
+
+                    ==
+
+                    seleccion
+
+                ):
+
+                    total += 1
+
+            else:
+
+                seleccion = "-"
+
+            fila.append(seleccion)
+
+        fila.append(str(total))
+
+        data.append(fila)
+
+        posicion += 1
+
+    tabla = Table(data)
+
+    tabla.setStyle(TableStyle([
+
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#111827")),
+
+        ('TEXTCOLOR', (0,0), (-1,0), colors.white),
+
+        ('GRID', (0,0), (-1,-1), 1, colors.gray),
+
+        ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
+
+        ('BACKGROUND', (0,1), (-1,-1), colors.HexColor("#F3F4F6")),
+
+        ('TEXTCOLOR', (0,1), (-1,-1), colors.black),
+
+        ('ALIGN', (0,0), (-1,-1), 'CENTER'),
+
+        ('BOTTOMPADDING', (0,0), (-1,0), 12),
+
+    ]))
+
+    elementos.append(tabla)
+
+    doc.build(elementos)
+
+    return response

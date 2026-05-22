@@ -6,6 +6,7 @@ urlpatterns = [
     path('quiniela/', views.inicio, name='inicio'),
     path('guardar/', views.guardar_pronosticos),
     path('pronosticos/', views.ver_pronosticos),
+    path('exportar-pdf/<int:jornada>/', views.exportar_pdf_jornada),
     path('cargar/<int:jornada>/', views.cargar_pronosticos, name='cargar_pronosticos'),
     path('ranking/', views.ranking),
     path('jornada/<int:jornada>/', views.inicio),
