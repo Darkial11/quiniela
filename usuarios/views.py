@@ -24,31 +24,31 @@ from .models import Perfil
 
 def registro(request):
 
-        if request.method == 'POST':
+    if request.method == 'POST':
 
-                if not request.POST.get(
+        if not request.POST.get(
 
-                    'acepta_reglamento'
+            'acepta_reglamento'
 
-                 ):
+            ):
 
-                    return render(
+            return render(
 
-                    request,
+            request,
 
-                    'usuarios/registro.html',
+            'usuarios/registro.html',
 
-                    {
+            {
 
-                        'error': '''
+                'error': '''
 
-                        Debes aceptar el reglamento
+                Debes aceptar el reglamento
 
-                        '''
+                '''
 
-                    }
+            }
 
-                )
+        )
 
         nombre = request.POST['nombre']
 
@@ -148,7 +148,6 @@ def registro(request):
         'usuarios/registro.html'
 
     )
-
 
 def iniciar_sesion(request):
 
