@@ -243,3 +243,51 @@
 
     font-weight:700;
 }
+
+.regulamento-card{
+
+    max-width:1000px;
+
+    width:100%;
+
+}
+
+
+
+.reglamento-title{
+
+    font-size:56px;
+
+}
+
+
+
+@media (max-width:768px){
+
+    .regulamento-card{
+
+        width:95%;
+
+        padding:24px;
+
+        border-radius:24px;
+
+    }
+
+    .reglamento-title{
+
+        font-size:34px !important;
+
+        line-height:1.1;
+
+    }
+
+    .regulamento-card p{
+
+        font-size:17px;
+
+        line-height:1.8;
+
+    }
+
+}
