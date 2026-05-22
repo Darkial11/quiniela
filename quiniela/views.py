@@ -17,7 +17,8 @@ from .models import (
 )
 
 import json
-
+import mercadopago
+import os
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
@@ -356,5 +357,63 @@ def ranking(request):
             'resto': resto
 
         }
+
+    )
+
+@login_required(login_url='/login/')
+def crear_pago(request):
+
+    sdk = mercadopago.SDK(
+
+        os.environ.get("MP_ACCESS_TOKEN")
+
+    )
+
+    preference_data = {
+
+        "items": [
+
+            {
+
+                "title": "Participacion Quiniela Mundial 2026",
+
+                "quantity": 1,
+
+                "currency_id": "MXN",
+
+                "unit_price": 100
+
+            }
+
+        ],
+
+        "back_urls": {
+
+            "success":
+                "https://quiniela.lukifix.mx/pago-exitoso/",
+
+            "failure":
+                "https://quiniela.lukifix.mx/pago-error/",
+
+            "pending":
+                "https://quiniela.lukifix.mx/pago-pendiente/"
+
+        },
+
+        "auto_return": "approved",
+
+    }
+
+    preference_response = sdk.preference().create(
+
+        preference_data
+
+    )
+
+    preference = preference_response["response"]
+
+    return redirect(
+
+        preference["init_point"]
 
     )
