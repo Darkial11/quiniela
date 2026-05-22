@@ -22,10 +22,6 @@ import json
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
 
-    if not request.user.perfil.pago_confirmado:
-
-        return redirect('/')
-
     jornada_obj = Jornada.objects.get(
 
         numero=jornada
@@ -83,6 +79,13 @@ def guardar_pronosticos(request):
         data = json.loads(request.body)
 
         user = request.user
+
+        if not user.perfil.pago_confirmado:
+
+            return JsonResponse({
+            'mensaje': 'Debes pagar para participar',
+            'pago_requerido': True
+            })
 
         pronosticos = data['pronosticos']
 

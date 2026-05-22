@@ -236,14 +236,26 @@
 
     </div>
 
+    {% if request.user.perfil.pago_confirmado %}
+
     <button
         id="guardar"
         class="floating-save"
     >
-
         Guardar Quiniela
-
     </button>
+
+    {% else %}
+
+    <a
+        href="/pagar/"
+        id="guardar"
+        class="floating-save"
+    >
+        Pagar $100 para participar
+    </a>
+
+    {% endif %}
 
 </div>
 
