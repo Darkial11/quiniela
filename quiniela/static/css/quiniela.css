@@ -54,6 +54,37 @@
    HEADER RIGHT
 ========================= */
 
+.payment-ok{
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        );
+
+    color:white;
+
+    padding:14px 20px;
+
+    border-radius:18px;
+
+    font-size:15px;
+
+    font-weight:800;
+
+    margin-bottom:22px;
+
+    box-shadow:
+        0 0 24px rgba(34,197,94,.22);
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
 .header-right{
 
     display:flex;
@@ -535,6 +566,19 @@
     .quiniela-layout{
 
         padding:0 4px;
+    }
+    
+    .payment-ok{
+
+    width:100%;
+
+    justify-content:center;
+
+    font-size:14px;
+
+    padding:12px 16px;
+
+    margin-bottom:16px;
     }
 
     .quiniela-header{

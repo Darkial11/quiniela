@@ -238,6 +238,16 @@
 
     {% if request.user.perfil.pago_confirmado %}
 
+    <div class="payment-ok">
+
+        ✓ Participación confirmada
+
+    </div>
+
+    {% endif %}
+    
+    {% if request.user.perfil.pago_confirmado %}
+
     <button
         id="guardar"
         class="floating-save"

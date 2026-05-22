@@ -365,6 +365,10 @@ def ranking(request):
 @login_required(login_url='/login/')
 def crear_pago(request):
 
+    if request.user.perfil.pago_confirmado:
+
+        return redirect('/quiniela/')
+
     sdk = mercadopago.SDK(
 
         os.environ.get("MP_ACCESS_TOKEN")
