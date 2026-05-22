@@ -417,3 +417,26 @@ def crear_pago(request):
         preference["init_point"]
 
     )
+
+@login_required(login_url='/login/')
+def pago_exitoso(request):
+
+    request.user.perfil.pago_confirmado = True
+
+    request.user.perfil.participando = True
+
+    request.user.perfil.save()
+
+    return redirect('/quiniela/')
+
+
+@login_required(login_url='/login/')
+def pago_error(request):
+
+    return redirect('/quiniela/')
+
+
+@login_required(login_url='/login/')
+def pago_pendiente(request):
+
+    return redirect('/quiniela/')

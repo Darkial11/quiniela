@@ -10,4 +10,7 @@ urlpatterns = [
     path('ranking/', views.ranking),
     path('jornada/<int:jornada>/', views.inicio),
     path('pagar/', views.crear_pago),
+    path('pago-exitoso/', views.pago_exitoso),
+    path('pago-error/', views.pago_error),
+    path('pago-pendiente/', views.pago_pendiente),
 ]
