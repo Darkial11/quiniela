@@ -72,6 +72,22 @@ def registro(request):
                 }
 
             )
+        
+        if User.objects.filter(email=email).exists():
+
+            return render(
+
+                request,
+
+                'usuarios/registro.html',
+
+                {
+
+                    'error': 'Ese correo ya está registrado'
+
+                }
+
+            )
 
         user = User.objects.create_user(
 
