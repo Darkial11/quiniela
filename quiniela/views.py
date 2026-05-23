@@ -376,7 +376,7 @@ def ranking(request):
 
     top3 = ranking_ordenado[:3]
 
-    resto = ranking_ordenado
+    resto = ranking_ordenado[3:]
 
     return render(
 

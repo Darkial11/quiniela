@@ -126,7 +126,15 @@
 
                 <tr>
 
-                    <td>
+                    <td class="
+                        {% if forloop.counter == 1 %}
+                            first-place
+                        {% elif forloop.counter == 2 %}
+                            second-place
+                        {% elif forloop.counter == 3 %}
+                            third-place
+                        {% endif %}
+                    ">
 
                         {{ forloop.counter|add:3 }}
 
@@ -138,9 +146,28 @@
 
                     </td>
 
-                    <td>
+                    <td class="total">
 
                         {{ jugador.1 }}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="3"
+                        style="
+                            text-align:center;
+                            color:#64748b;
+                            padding:34px;
+                        "
+                    >
+
+                        Aún no hay más participantes
 
                     </td>
 
