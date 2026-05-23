@@ -53,7 +53,7 @@
 
 .auth-left h1{
 
-    font-size:82px;
+    font-size:96px;
 
     line-height:1;
 
@@ -61,7 +61,9 @@
 
     color:#38ef7d;
 
-    letter-spacing:-3px;
+    letter-spacing:3px;
+
+    font-family:'Bebas Neue',sans-serif;
 }
 
 .auth-description{
@@ -101,11 +103,15 @@
 
     color:#38ef7d;
 
-    font-size:54px;
+    font-size:62px;
 
     margin-bottom:28px;
 
     line-height:1;
+
+    font-family:'Bebas Neue',sans-serif;
+
+    letter-spacing:2px;
 }
 
 /* =========================

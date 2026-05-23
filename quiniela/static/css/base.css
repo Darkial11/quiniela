@@ -18,7 +18,7 @@ html{
 
 body{
 
-    font-family:Arial,sans-serif;
+    font-family:'Outfit',sans-serif;
 
     background:
         radial-gradient(
@@ -49,7 +49,7 @@ a{
 
 button{
 
-    font-family:inherit;
+    font-family:'Outfit',sans-serif;
 }
 
 /* =========================
@@ -61,6 +61,10 @@ h1{
     color:#38ef7d;
 
     line-height:1;
+
+    font-family:'Bebas Neue',sans-serif;
+
+    letter-spacing:1px;
 }
 
 h2{
@@ -68,12 +72,17 @@ h2{
     color:#38ef7d;
 
     line-height:1;
+
+    font-family:'Bebas Neue',sans-serif;
 }
+
 h3,
 h4,
 h5{
 
     color:white;
+
+    font-family:'Outfit',sans-serif;
 }
 
 p{

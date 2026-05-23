@@ -113,7 +113,7 @@
 
 .hero h1{
 
-    font-size:78px;
+    font-size:96px;
 
     line-height:.95;
 
@@ -121,7 +121,9 @@
 
     max-width:1200px;
 
-    letter-spacing:-4px;
+    letter-spacing:5px;
+
+    font-family:'Bebas Neue',sans-serif;
 }
 
 .hero-text{

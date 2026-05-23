@@ -37,7 +37,7 @@
 
 .dashboard-hero h1{
 
-    font-size:72px;
+    font-size:82px;
 
     line-height:1;
 
@@ -45,7 +45,9 @@
 
     color:#38ef7d;
 
-    letter-spacing:-3px;
+    letter-spacing:3px;
+
+    font-family:'Bebas Neue',sans-serif;
 }
 
 .dashboard-hero p{
