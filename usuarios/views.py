@@ -203,7 +203,11 @@ def cerrar_sesion(request):
 
 def home(request):
 
-    participantes = Perfil.objects.count()
+    participantes = Perfil.objects.filter(
+
+    participando=True
+
+).count()
 
     partidos = Partido.objects.count()
 
