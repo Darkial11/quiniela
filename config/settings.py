@@ -32,19 +32,13 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "quiniela2026",
-            "USER": "postgres",
-            "PASSWORD": "messi182",
-            "HOST": "localhost",
-            "PORT": "5432",
+            "NAME": os.environ.get("DB_NAME"),
+            "USER": os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("DB_PASSWORD"),
+            "HOST": os.environ.get("DB_HOST"),
+            "PORT": os.environ.get("DB_PORT"),
         }
     }
-
-
-ALLOWED_HOSTS = [
-    "quiniela.lukifix.mx",
-    "web-production-ac8c2.up.railway.app",
-]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://quiniela.lukifix.mx",
@@ -175,3 +169,15 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+X_FRAME_OPTIONS = "DENY"
