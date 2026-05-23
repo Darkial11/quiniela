@@ -354,3 +354,13 @@ def reglamento(request):
         'usuarios/reglamento.html'
 
     )
+
+def contacto(request):
+
+    return render(
+
+        request,
+
+        "contacto.html"
+
+    )

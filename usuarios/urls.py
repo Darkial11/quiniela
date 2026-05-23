@@ -37,4 +37,14 @@ urlpatterns = [
         'reglamento/',
         views.reglamento
     ),
+
+    path(
+
+    "contacto/",
+
+    views.contacto,
+
+    name="contacto"
+
+    ),
 ]

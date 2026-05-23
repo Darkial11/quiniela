@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contacto.css' %}">
 </head>
 
 <body>
@@ -129,6 +130,19 @@
             >
 
                 Reglamento
+
+            </a>
+
+            <a
+                href="/contacto/"
+                class="
+                    {% if '/contacto' in request.path %}
+                        active-link
+                    {% endif %}
+                "
+            >
+
+                Contacto
 
             </a>
 
