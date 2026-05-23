@@ -1,25 +1,11 @@
 from django.contrib.auth.models import User 
-from quiniela.models import Partido
+from quiniela.models import Partido, Jornada
 from usuarios.models import Perfil
-
 from django.contrib.auth.decorators import login_required
-
 from quiniela.models import Pronostico
-
 from django.shortcuts import render, redirect
-
-from django.contrib.auth import (
-
-    authenticate,
-
-    login,
-
-    logout
-
-)
-
+from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.models import User
-
 from .models import Perfil
 
 def registro(request):
@@ -236,11 +222,16 @@ def dashboard(request):
 
     user = request.user
 
-    nick_usuario = getattr(
+nick_usuario = getattr(
         getattr(user, 'perfil', None),
         'nick',
         user.username
     )
+
+    # Jornada activa dinámica
+    jornada_activa = Jornada.objects.filter(
+        abierta=True
+    ).order_by('numero').first()
 
     # Query eficiente para pronósticos del usuario
     pronosticos = Pronostico.objects.filter(
@@ -299,7 +290,8 @@ def dashboard(request):
             'total_pronosticos': total_pronosticos,
             'total_aciertos': total_aciertos,
             'posicion': posicion,
-            'top5': top5
+            'top5': top5,
+            'jornada_activa': jornada_activa
         }
     )
 
