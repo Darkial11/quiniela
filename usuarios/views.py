@@ -222,7 +222,7 @@ def dashboard(request):
 
     user = request.user
 
-nick_usuario = getattr(
+    nick_usuario = getattr(
         getattr(user, 'perfil', None),
         'nick',
         user.username
