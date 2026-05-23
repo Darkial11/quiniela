@@ -23,36 +23,31 @@ from .models import (
 )
 
 import json
-import mercadopago
 import os
-from django.utils import timezone
-from usuarios.models import Perfil
 
-from reportlab.platypus import (
-
-    SimpleDocTemplate,
-
-    Table,
-
-    TableStyle,
-
-    Paragraph,
-
-    Spacer,
-
-    Image
-
-)
-
-from reportlab.lib import colors
-
-from reportlab.lib.styles import getSampleStyleSheet
-
-from reportlab.lib.pagesizes import landscape, letter
+import mercadopago
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponse
+from django.utils import timezone
 
-import os
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import landscape, letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import (
+    SimpleDocTemplate, # noqa: F401
+    Table, # noqa: F401
+    TableStyle, # noqa: F401
+    Paragraph, # noqa: F401
+    Spacer, # noqa: F401
+    Image # noqa: F401
+)
+
+from .models import Partido, Pronostico, Jornada
+from usuarios.models import Perfil
 
 @login_required(login_url='/login/')
 def inicio(request, jornada=1):
