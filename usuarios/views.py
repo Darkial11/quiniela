@@ -361,6 +361,6 @@ def contacto(request):
 
         request,
 
-        "contacto.html"
+        "usuarios/contacto.html"
 
     )
