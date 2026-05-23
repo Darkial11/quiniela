@@ -165,31 +165,38 @@ def guardar_pronosticos(request):
 
         })
 
-
 @login_required(login_url='/login/')
 def ver_pronosticos(request):
 
-    jornadas = Jornada.objects.all().order_by(
-
-        'numero'
-
-    )
+    jornadas = Jornada.objects.all().order_by('numero')
 
     tabla_jornadas = []
 
     for jornada in jornadas:
 
-        partidos = Partido.objects.filter(
+        partidos = list(
+            Partido.objects.filter(
+                jornada=jornada
+            ).order_by('id')
+        )
 
-            jornada=jornada
+        participantes = list(
+            User.objects.filter(
+                pronostico__partido__jornada=jornada
+            ).distinct().select_related('perfil')
+        )
 
-        ).order_by('id')
+        # Una sola query trae TODOS los pronósticos de esta jornada
+        pronosticos_jornada = Pronostico.objects.filter(
+            partido__jornada=jornada
+        ).select_related('partido', 'user')
 
-        participantes = User.objects.filter(
+        # Indexamos en diccionario para acceso O(1)
+        mapa = {}
 
-            pronostico__isnull=False
+        for p in pronosticos_jornada:
 
-        ).distinct()
+            mapa[(p.user_id, p.partido_id)] = p
 
         tabla = []
 
@@ -201,26 +208,16 @@ def ver_pronosticos(request):
 
             for partido in partidos:
 
-                pronostico = Pronostico.objects.filter(
-
-                    user=participante,
-
-                    partido=partido
-
-                ).first()
+                pronostico = mapa.get(
+                    (participante.id, partido.id)
+                )
 
                 if pronostico:
 
                     seleccion = pronostico.seleccion
 
                     acierto = (
-
-                        seleccion
-
-                        ==
-
-                        partido.resultado_real
-
+                        seleccion == partido.resultado_real
                     )
 
                     if acierto:
@@ -234,65 +231,40 @@ def ver_pronosticos(request):
                     acierto = False
 
                 fila_pronosticos.append({
-
                     'seleccion': seleccion,
-
                     'acierto': acierto
-
                 })
 
             nick = getattr(
-
                 getattr(participante, 'perfil', None),
-
                 'nick',
-
                 participante.username
-
             )
 
             tabla.append({
-
                 'nombre': nick,
-
                 'pronosticos': fila_pronosticos,
-
                 'total': total
-
             })
 
         tabla = sorted(
-
             tabla,
-
             key=lambda x: x['total'],
-
             reverse=True
-
         )
 
         tabla_jornadas.append({
-
             'jornada': jornada,
-
             'partidos': partidos,
-
             'tabla': tabla
-
         })
 
     return render(
-
         request,
-
         'quiniela/pronosticos.html',
-
         {
-
             'tabla_jornadas': tabla_jornadas
-
         }
-
     )
 
 
@@ -323,24 +295,23 @@ def cargar_pronosticos(request, jornada):
 
     return JsonResponse(data, safe=False)
 
-
 @login_required(login_url='/login/')
 def ranking(request):
 
-    pronosticos = Pronostico.objects.all()
+    # Una sola query con todo lo necesario
+    pronosticos = Pronostico.objects.select_related(
+        'user__perfil',
+        'partido'
+    ).all()
 
     tabla = {}
 
     for pronostico in pronosticos:
 
         nick = getattr(
-
             getattr(pronostico.user, 'perfil', None),
-
             'nick',
-
             pronostico.user.username
-
         )
 
         if nick not in tabla:
@@ -348,25 +319,16 @@ def ranking(request):
             tabla[nick] = 0
 
         if (
-
             pronostico.partido.resultado_real
-
-            ==
-
-            pronostico.seleccion
-
+            == pronostico.seleccion
         ):
 
             tabla[nick] += 1
 
     ranking_ordenado = sorted(
-
         tabla.items(),
-
         key=lambda x: x[1],
-
         reverse=True
-
     )
 
     top3 = ranking_ordenado[:3]
@@ -374,19 +336,12 @@ def ranking(request):
     resto = ranking_ordenado[3:]
 
     return render(
-
         request,
-
         'quiniela/ranking.html',
-
         {
-
             'top3': top3,
-
             'resto': resto
-
         }
-
     )
 
 @login_required(login_url='/login/')

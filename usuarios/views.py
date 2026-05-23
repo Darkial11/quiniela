@@ -231,118 +231,76 @@ def home(request):
         context
     )
 
-
 @login_required(login_url='/login/')
 def dashboard(request):
 
     user = request.user
 
     nick_usuario = getattr(
-
         getattr(user, 'perfil', None),
-
         'nick',
-
         user.username
-
     )
 
+    # Query eficiente para pronósticos del usuario
     pronosticos = Pronostico.objects.filter(
-
         user=user
-
-    )
+    ).select_related('partido')
 
     total_pronosticos = pronosticos.count()
 
-    total_aciertos = 0
+    total_aciertos = sum(
+        1 for p in pronosticos
+        if p.seleccion == p.partido.resultado_real
+    )
 
-    for pronostico in pronosticos:
-
-        if (
-
-            pronostico.seleccion
-
-            ==
-
-            pronostico.partido.resultado_real
-
-        ):
-
-            total_aciertos += 1
+    # Query eficiente para ranking global
+    todos = Pronostico.objects.select_related(
+        'user__perfil',
+        'partido'
+    ).all()
 
     ranking = {}
-
-    todos = Pronostico.objects.all()
 
     for item in todos:
 
         nick = getattr(
-
             getattr(item.user, 'perfil', None),
-
             'nick',
-
             item.user.username
-
         )
 
         if nick not in ranking:
 
             ranking[nick] = 0
 
-        if (
-
-            item.seleccion
-
-            ==
-
-            item.partido.resultado_real
-
-        ):
+        if item.seleccion == item.partido.resultado_real:
 
             ranking[nick] += 1
 
     ranking_ordenado = sorted(
-
         ranking.items(),
-
         key=lambda x: x[1],
-
         reverse=True
-
     )
 
-    posicion = 1
-
-    for i, item in enumerate(ranking_ordenado):
-
-        if item[0] == nick_usuario:
-
-            posicion = i + 1
-
-            break
+    posicion = next(
+        (i + 1 for i, item in enumerate(ranking_ordenado)
+         if item[0] == nick_usuario),
+        1
+    )
 
     top5 = ranking_ordenado[:5]
 
     return render(
-
         request,
-
         'usuarios/dashboard.html',
-
         {
-
             'total_pronosticos': total_pronosticos,
-
             'total_aciertos': total_aciertos,
-
             'posicion': posicion,
-
             'top5': top5
-
         }
-
     )
 
 def reglamento(request):
