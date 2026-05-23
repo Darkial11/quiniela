@@ -60,7 +60,7 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG") == "False"
+DEBUG = os.environ.get("DEBUG") == "True"
 
 # Application definition
 
@@ -161,7 +161,13 @@ STATICFILES_STORAGE = (
 )
 import whitenoise
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+
+    "quiniela.lukifix.mx",
+
+    "web-production-ac8c2.up.railway.app",
+
+]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://quiniela.lukifix.mx",
