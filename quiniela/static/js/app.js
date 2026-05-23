@@ -1,16 +1,12 @@
-const cards = document.querySelectorAll(
+// ================================
+// SELECCIÓN DE PRONÓSTICOS
+// ================================
 
-    ".match-card"
-
-);
+const cards = document.querySelectorAll(".match-card");
 
 cards.forEach((card) => {
 
-    const opciones = card.querySelectorAll(
-
-        ".opcion"
-
-    );
+    const opciones = card.querySelectorAll(".opcion");
 
     opciones.forEach((boton) => {
 
@@ -18,31 +14,17 @@ cards.forEach((card) => {
 
             opciones.forEach((btn) => {
 
-                btn.classList.remove(
+                btn.classList.remove("seleccionado");
 
-                    "seleccionado"
-
-                );
-
-                btn.classList.add(
-
-                    "apagado"
-
-                );
+                btn.classList.add("apagado");
 
             });
 
-            boton.classList.add(
+            boton.classList.add("seleccionado");
 
-                "seleccionado"
+            boton.classList.remove("apagado");
 
-            );
-
-            boton.classList.remove(
-
-                "apagado"
-
-            );
+            setTimeout(() => actualizarContador(), 50);
 
         });
 
@@ -50,35 +32,53 @@ cards.forEach((card) => {
 
 });
 
-const btnGuardar = document.getElementById(
+// ================================
+// CONTADOR DE SELECCIONES
+// ================================
 
-    "guardar"
+function actualizarContador() {
 
-);
+    const seleccionados = document.querySelectorAll(".seleccionado").length;
 
-if(btnGuardar){
+    const total = cards.length;
+
+    const contador = document.getElementById("contador");
+
+    if (contador) {
+
+        contador.innerText = `${seleccionados}/${total}`;
+
+    }
+
+}
+
+actualizarContador();
+
+// ================================
+// GUARDAR PRONÓSTICOS
+// ================================
+
+const btnGuardar = document.getElementById("guardar");
+
+if (btnGuardar) {
 
     btnGuardar.addEventListener("click", () => {
 
-        let pronosticos = [];
+        const pronosticos = [];
 
         cards.forEach((card) => {
 
             const partidoId = card.dataset.id;
 
-            const seleccionado = card.querySelector(
+            const seleccionado = card.querySelector(".seleccionado");
 
-                ".seleccionado"
-
-            );
-
-            if(seleccionado){
+            if (seleccionado) {
 
                 pronosticos.push({
 
                     partido_id: partidoId,
 
-                    seleccion: seleccionado.innerText
+                    seleccion: seleccionado.innerText.trim()
 
                 });
 
@@ -86,35 +86,32 @@ if(btnGuardar){
 
         });
 
-        if(pronosticos.length !== cards.length){
+        if (pronosticos.length !== cards.length) {
 
-            mostrarToast(
-
-                "Selecciona todos los partidos",
-
-                "error"
-
-            );
+            mostrarToast("Selecciona todos los partidos", "error");
 
             return;
 
         }
 
+        // Estado: cargando
         btnGuardar.disabled = true;
 
-        btnGuardar.classList.add(
+        btnGuardar.classList.add("loading-btn");
 
-            "loading-btn"
+        btnGuardar.innerHTML = `<span class="spinner"></span> Guardando...`;
 
-        );
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]");
 
-        btnGuardar.innerHTML = `
+        if (!csrfToken) {
 
-            <span class="spinner"></span>
+            mostrarToast("Error de seguridad, recarga la página", "error");
 
-            Guardando...
+            resetearBoton();
 
-        `;
+            return;
+
+        }
 
         fetch("/guardar/", {
 
@@ -124,65 +121,55 @@ if(btnGuardar){
 
                 "Content-Type": "application/json",
 
-                "X-CSRFToken": document.querySelector(
-
-                    '[name=csrfmiddlewaretoken]'
-
-                ).value
+                "X-CSRFToken": csrfToken.value
 
             },
 
-            body: JSON.stringify({
-
-                pronosticos: pronosticos
-
-            })
+            body: JSON.stringify({ pronosticos })
 
         })
 
-        .then(response => response.json())
+        .then((response) => {
 
-        .then(data => {
+            if (!response.ok) {
 
-            btnGuardar.innerHTML =
+                throw new Error(`Error del servidor: ${response.status}`);
 
-                "✓ Guardado";
+            }
 
-            btnGuardar.classList.add(
+            return response.json();
 
-                "success-btn"
+        })
 
-            );
+        .then((data) => {
 
-            mostrarToast(
+            if (data.pago_requerido) {
 
-                data.mensaje,
+                mostrarToast("Necesitas pagar para participar", "error");
 
-                "success"
+                resetearBoton();
 
-            );
+                return;
 
-            setTimeout(() => {
+            }
 
-                btnGuardar.disabled = false;
+            btnGuardar.innerHTML = "✓ Guardado";
 
-                btnGuardar.classList.remove(
+            btnGuardar.classList.add("success-btn");
 
-                    "loading-btn"
+            mostrarToast(data.mensaje || "Pronósticos guardados", "success");
 
-                );
+            setTimeout(() => resetearBoton(), 2500);
 
-                btnGuardar.classList.remove(
+        })
 
-                    "success-btn"
+        .catch((error) => {
 
-                );
+            console.error("Error al guardar:", error);
 
-                btnGuardar.innerHTML =
+            mostrarToast("Error de conexión, intenta de nuevo", "error");
 
-                    "Guardar Quiniela";
-
-            }, 2000);
+            resetearBoton();
 
         });
 
@@ -190,169 +177,102 @@ if(btnGuardar){
 
 }
 
-fetch(
+function resetearBoton() {
 
-    `/cargar/${window.jornadaActual}/`
+    if (!btnGuardar) return;
 
-)
+    btnGuardar.disabled = false;
 
-.then(response => response.json())
+    btnGuardar.classList.remove("loading-btn", "success-btn");
 
-.then(data => {
+    btnGuardar.innerHTML = "Guardar Quiniela";
 
-    data.forEach((item) => {
+}
 
-        const card = document.querySelector(
+// ================================
+// CARGAR PRONÓSTICOS GUARDADOS
+// ================================
 
-            `[data-id="${item.partido_id}"]`
+if (typeof window.jornadaActual !== "undefined") {
 
-        );
+    fetch(`/cargar/${window.jornadaActual}/`)
 
-        if(card){
+    .then((response) => {
 
-            const botones = card.querySelectorAll(
+        if (!response.ok) {
 
-                ".opcion"
+            throw new Error(`Error cargando: ${response.status}`);
 
-            );
+        }
+
+        return response.json();
+
+    })
+
+    .then((data) => {
+
+        data.forEach((item) => {
+
+            const card = document.querySelector(`[data-id="${item.partido_id}"]`);
+
+            if (!card) return;
+
+            const botones = card.querySelectorAll(".opcion");
 
             botones.forEach((btn) => {
 
-                if(
+                if (btn.innerText.trim() === item.seleccion) {
 
-                    btn.innerText.trim()
+                    btn.classList.add("seleccionado");
 
-                    ===
+                } else {
 
-                    item.seleccion
-
-                ){
-
-                    btn.classList.add(
-
-                        "seleccionado"
-
-                    );
-
-                }else{
-
-                    btn.classList.add(
-
-                        "apagado"
-
-                    );
+                    btn.classList.add("apagado");
 
                 }
 
             });
 
-        }
+        });
+
+        actualizarContador();
+
+    })
+
+    .catch((error) => {
+
+        console.error("Error cargando pronósticos:", error);
 
     });
-
-});
-
-function actualizarContador(){
-
-    const seleccionados = document.querySelectorAll(
-
-        ".seleccionado"
-
-    ).length;
-
-    const total = cards.length;
-
-    const contador = document.getElementById(
-
-        "contador"
-
-    );
-
-    if(contador){
-
-        contador.innerText =
-
-            `${seleccionados}/${total}`;
-
-    }
 
 }
 
-actualizarContador();
+// ================================
+// TOAST NOTIFICATIONS
+// ================================
 
-cards.forEach((card) => {
+function mostrarToast(mensaje, tipo) {
 
-    const botones = card.querySelectorAll(
+    // Elimina toast anterior si existe
+    const toastExistente = document.querySelector(".toast");
 
-        ".opcion"
+    if (toastExistente) toastExistente.remove();
 
-    );
+    const toast = document.createElement("div");
 
-    botones.forEach((btn) => {
-
-        btn.addEventListener("click", () => {
-
-            setTimeout(() => {
-
-                actualizarContador();
-
-            }, 50);
-
-        });
-
-    });
-
-});
-
-function mostrarToast(
-
-    mensaje,
-
-    tipo
-
-){
-
-    const toast = document.createElement(
-
-        "div"
-
-    );
-
-    toast.className =
-
-        `toast ${tipo}`;
+    toast.className = `toast ${tipo}`;
 
     toast.innerText = mensaje;
 
-    document.body.appendChild(
+    document.body.appendChild(toast);
 
-        toast
-
-    );
+    setTimeout(() => toast.classList.add("show"), 50);
 
     setTimeout(() => {
 
-        toast.classList.add(
+        toast.classList.remove("show");
 
-            "show"
-
-        );
-
-    }, 50);
-
-    setTimeout(() => {
-
-        toast.classList.remove(
-
-            "show"
-
-        );
-
-        setTimeout(() => {
-
-            toast.remove();
-
-        }, 300);
+        setTimeout(() => toast.remove(), 300);
 
     }, 2500);
 
