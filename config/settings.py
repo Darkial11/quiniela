@@ -40,10 +40,6 @@ else:
         }
     }
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://quiniela.lukifix.mx",
-]
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -153,8 +149,6 @@ STATICFILES_STORAGE = (
     'whitenoise.storage.CompressedStaticFilesStorage'
 
 )
-
-import whitenoise
 
 ALLOWED_HOSTS = [
 
