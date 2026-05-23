@@ -156,9 +156,10 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = (
 
-    'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    'whitenoise.storage.CompressedStaticFilesStorage'
 
 )
+
 import whitenoise
 
 ALLOWED_HOSTS = [
