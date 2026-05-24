@@ -37,139 +37,125 @@
 
     {% if request.user.is_authenticated %}
 
-    <aside class="sidebar">
+    <!-- OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
 
         <div class="sidebar-top">
 
             <div class="sidebar-logo">
-
                 <img src="{% static 'img/logo_fut_white.png' %}" alt="LukiFix">
-
             </div>
 
             <div class="sidebar-user">
-
-                <span>
-
-                    <center>Bienvenid@</center>
-
-                </span>
-
-                <h3>
-
-                    <center>{{ request.user.perfil.nick }}</center>
-
-                </h3>
-
+                <span>Bienvenid@</span>
+                <h3>{{ request.user.perfil.nick }}</h3>
             </div>
 
         </div>
 
         <nav class="sidebar-nav">
 
-            <a
-                href="/dashboard/"
-                class="
-                    {% if '/dashboard' in request.path %}
-                        active-link
-                    {% endif %}
-                "
-            >
-
+            <a href="/dashboard/" class="{% if '/dashboard' in request.path %}active-link{% endif %}">
                 Dashboard
-
             </a>
 
-            <a
-                href="/quiniela/"
-                class="
-                    {% if '/quiniela' in request.path or '/jornada/' in request.path %}
-                        active-link
-                    {% endif %}
-                "
-            >
-
+            <a href="/quiniela/" class="{% if '/quiniela' in request.path or '/jornada/' in request.path %}active-link{% endif %}">
                 Quiniela
-
             </a>
 
-            <a
-                href="/reglamento/"
-                class="
-                    {% if '/reglamento' in request.path %}
-                        active-link
-                    {% endif %}
-                "
-            >
-
-                Reglamento
-
-            </a>
-
-            <a
-                href="/pronosticos/"
-                class="
-                    {% if '/pronosticos' in request.path %}
-                        active-link
-                    {% endif %}
-                "
-            >
-
+            <a href="/pronosticos/" class="{% if '/pronosticos' in request.path %}active-link{% endif %}">
                 Pronósticos
-
             </a>
 
-            <a
-                href="/ranking/"
-                class="
-                    {% if '/ranking' in request.path %}
-                        active-link
-                    {% endif %}
-                "
-            >
-
+            <a href="/ranking/" class="{% if '/ranking' in request.path %}active-link{% endif %}">
                 Ranking
-
             </a>
 
-            <a
-                href="/contacto/"
-                class="
-                    {% if '/contacto' in request.path %}
-                        active-link
-                    {% endif %}
-                "
-            >
+            <a href="/reglamento/" class="{% if '/reglamento' in request.path %}active-link{% endif %}">
+                Reglamento
+            </a>
 
+            <a href="/contacto/" class="{% if '/contacto' in request.path %}active-link{% endif %}">
                 Contacto
-
             </a>
 
         </nav>
 
         <div class="sidebar-bottom">
-
-            <a href="/logout/" class="logout-btn">
-
-                Salir
-
-            </a>
-
+            <a href="/logout/" class="logout-btn">Salir</a>
         </div>
 
     </aside>
 
+    <!-- TOPBAR MÓVIL -->
+    <div class="mobile-topbar">
+
+        <div class="mobile-topbar-left">
+            <img src="{% static 'img/logo_fut_white.png' %}" alt="LukiFix" class="mobile-logo">
+        </div>
+
+        <div class="mobile-topbar-center">
+            <span class="mobile-welcome">Bienvenid@</span>
+            <span class="mobile-nick">{{ request.user.perfil.nick }}</span>
+        </div>
+
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
     {% endif %}
 
     <main class="main-area">
-
         {% block content %}
-
         {% endblock %}
-
     </main>
 
 </div>
+
+<script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    function abrirMenu() {
+        sidebar.classList.add('sidebar-open');
+        overlay.classList.add('overlay-visible');
+        hamburgerBtn.classList.add('hamburger-active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarMenu() {
+        sidebar.classList.remove('sidebar-open');
+        overlay.classList.remove('overlay-visible');
+        hamburgerBtn.classList.remove('hamburger-active');
+        document.body.style.overflow = '';
+    }
+
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.contains('sidebar-open')
+                ? cerrarMenu()
+                : abrirMenu();
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', cerrarMenu);
+    }
+
+    // Cierra el menú al tocar un link
+    if (sidebar) {
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', cerrarMenu);
+        });
+    }
+</script>
 
 </body>
 
