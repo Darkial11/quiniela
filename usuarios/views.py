@@ -1,11 +1,9 @@
-from django.contrib.auth.models import User 
-from quiniela.models import Partido, Jornada
-from usuarios.models import Perfil
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from quiniela.models import Pronostico
-from django.shortcuts import render, redirect
-from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+from quiniela.models import Partido, Jornada, Pronostico
 from .models import Perfil
 
 def registro(request):
