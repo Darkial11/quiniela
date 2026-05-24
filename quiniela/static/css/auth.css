@@ -1,4 +1,4 @@
-.auth-layout{/* =========================
+/* =========================
    AUTH LAYOUT
 ========================= */
 
@@ -19,10 +19,7 @@
 
     margin:auto;
 
-    padding:10px 40px 40px;
-
-    transform:
-        translateY(-40px);
+    padding:40px;
 }
 
 /* =========================
@@ -250,53 +247,9 @@
     font-weight:700;
 }
 
-.regulamento-card{
-
-    max-width:1000px;
-
-    width:100%;
-
-}
-
-
-
-.reglamento-title{
-
-    font-size:56px;
-
-}
-
-
-
-@media (max-width:768px){
-
-    .regulamento-card{
-
-        width:95%;
-
-        padding:24px;
-
-        border-radius:24px;
-
-    }
-
-    .reglamento-title{
-
-        font-size:34px !important;
-
-        line-height:1.1;
-
-    }
-
-    .regulamento-card p{
-
-        font-size:17px;
-
-        line-height:1.8;
-
-    }
-
-}
+/* =========================
+   REGLAMENTO
+========================= */
 
 .reglamento-layout{
 
@@ -311,30 +264,66 @@
     align-items:flex-start;
 
     padding:40px 16px;
-
 }
-
-
 
 .regulamento-card{
 
     width:100%;
 
     max-width:1200px;
-
 }
 
+.reglamento-title{
 
+    font-size:56px;
+}
 
-@media (max-width:768px){
+/* =========================
+   MOBILE AUTH
+========================= */
+
+@media(max-width:768px){
+
+    .auth-layout{
+
+        grid-template-columns:1fr;
+
+        padding:30px 20px;
+
+        gap:30px;
+    }
+
+    .auth-left{
+
+        text-align:center;
+    }
+
+    .auth-description{
+
+        margin:auto;
+
+        font-size:18px;
+    }
+
+    .auth-left h1{
+
+        font-size:52px;
+    }
+
+    .auth-card{
+
+        padding:34px 26px;
+    }
+
+    .auth-card h2{
+
+        font-size:42px;
+    }
 
     .reglamento-layout{
 
         padding:20px 10px;
-
     }
-
-
 
     .regulamento-card{
 
@@ -343,7 +332,19 @@
         padding:24px 18px;
 
         border-radius:24px;
-
     }
 
+    .reglamento-title{
+
+        font-size:34px !important;
+
+        line-height:1.1;
+    }
+
+    .regulamento-card p{
+
+        font-size:17px;
+
+        line-height:1.8;
+    }
 }
