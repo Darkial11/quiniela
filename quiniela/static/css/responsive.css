@@ -1,4 +1,41 @@
-       
+/* =========================
+   LARGE TABLETS
+========================= */
+
+@media(max-width:1200px){
+
+    .main-area{
+
+        padding:34px;
+    }
+
+    .dashboard-hero{
+
+        padding:50px;
+    }
+
+    .dashboard-hero h1{
+
+        font-size:52px;
+    }
+
+    .hero h1{
+
+        font-size:72px;
+    }
+
+    .auth-layout{
+
+        gap:50px;
+    }
+}
+
+/* =========================
+   TABLETS
+========================= */
+
+@media(max-width:1000px){
+
     .auth-layout{
 
         grid-template-columns:1fr;
