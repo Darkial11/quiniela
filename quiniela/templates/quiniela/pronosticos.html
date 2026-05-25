@@ -10,11 +10,31 @@
 
     <div class="jornada-box">
 
-        <h2 class="titulo-jornada">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
 
-            Jornada {{ bloque.jornada.numero }}
+            <h2 class="titulo-jornada" style="margin:0;">
 
-        </h2>
+                Jornada {{ bloque.jornada.numero }}
+
+            </h2>
+
+            
+                href="/exportar-pdf/{{ bloque.jornada.numero }}/"
+                style="
+                    background:#22c55e;
+                    color:#020617;
+                    font-weight:700;
+                    padding:8px 18px;
+                    border-radius:8px;
+                    text-decoration:none;
+                    font-size:14px;
+                    white-space:nowrap;
+                "
+            >
+                📄 Exportar PDF
+            </a>
+
+        </div>
 
         <div class="tabla-wrapper">
 
