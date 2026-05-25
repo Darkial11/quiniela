@@ -42,7 +42,7 @@ def registro(request):
 
         telefono = request.POST['telefono']
 
-        nick = request.POST['nick']
+        nick = request.POST['nick'].upper()
 
         if not nick.replace('_', '').isalnum():
 
@@ -139,7 +139,7 @@ def iniciar_sesion(request):
 
     if request.method == 'POST':
 
-        username = request.POST['username']
+        username = request.POST['username'].upper()
 
         password = request.POST['password']
 
