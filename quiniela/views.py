@@ -110,12 +110,11 @@ def guardar_pronosticos(request):
 
         user = request.user
 
-        if not user.perfil.pago_confirmado:
+        if not user.perfil.participando:
 
-            return JsonResponse({
-            'mensaje': 'Debes pagar para participar',
-            'pago_requerido': True
-            })
+            user.perfil.participando = True
+
+            user.perfil.save()
 
         pronosticos = data['pronosticos']
 
@@ -350,6 +349,34 @@ def crear_pago(request):
     if request.user.perfil.pago_confirmado:
 
         return redirect('/quiniela/')
+
+    # Guardar pronósticos enviados antes de ir a pagar
+    import json as _json
+    if request.method == 'POST':
+        try:
+            data = _json.loads(request.body)
+            pronosticos = data.get('pronosticos', [])
+            if pronosticos:
+                from .models import Partido, Pronostico
+                primer_partido = Partido.objects.get(
+                    id=pronosticos[0]['partido_id']
+                )
+                Pronostico.objects.filter(
+                    user=request.user,
+                    partido__jornada=primer_partido.jornada
+                ).delete()
+                for item in pronosticos:
+                    partido = Partido.objects.get(id=item['partido_id'])
+                    Pronostico.objects.create(
+                        user=request.user,
+                        partido=partido,
+                        seleccion=item['seleccion']
+                    )
+                if not request.user.perfil.participando:
+                    request.user.perfil.participando = True
+                    request.user.perfil.save()
+        except Exception:
+            pass
 
     sdk = mercadopago.SDK(
 

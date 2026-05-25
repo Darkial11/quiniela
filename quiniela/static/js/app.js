@@ -277,3 +277,83 @@ function mostrarToast(mensaje, tipo) {
     }, 2500);
 
 }
+
+// ================================
+// BOTÓN PAGAR — GUARDA Y REDIRIGE
+// ================================
+
+const btnPagar = document.getElementById("btnPagar");
+
+if (btnPagar) {
+
+    btnPagar.addEventListener("click", () => {
+
+        const pronosticos = [];
+
+        cards.forEach((card) => {
+
+            const partidoId = card.dataset.id;
+
+            const seleccionado = card.querySelector(".seleccionado");
+
+            if (seleccionado) {
+
+                pronosticos.push({
+
+                    partido_id: partidoId,
+
+                    seleccion: seleccionado.innerText.trim()
+
+                });
+
+            }
+
+        });
+
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]");
+
+        if (!csrfToken) {
+
+            mostrarToast("Error de seguridad, recarga la página", "error");
+
+            return;
+
+        }
+
+        btnPagar.disabled = true;
+
+        btnPagar.innerHTML = "⏳ Guardando...";
+
+        fetch("/guardar/", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json",
+
+                "X-CSRFToken": csrfToken.value
+
+            },
+
+            body: JSON.stringify({ pronosticos })
+
+        })
+
+        .then((response) => response.json())
+
+        .then(() => {
+
+            window.location.href = "/pagar/";
+
+        })
+
+        .catch(() => {
+
+            window.location.href = "/pagar/";
+
+        });
+
+    });
+
+}
