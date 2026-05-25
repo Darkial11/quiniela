@@ -587,23 +587,20 @@ def agregar_numero_pagina(canvas, doc):
 
     texto = f"Página {pagina}"
 
-    canvas.setFont(
+    canvas.setFont("Helvetica", 9)
 
-        "Helvetica",
+    canvas.drawRightString(760, 15, texto)
 
-        9
+    from django.utils import timezone
+    import pytz
 
+    hora_mexico = timezone.now().astimezone(
+        pytz.timezone("America/Mexico_City")
     )
 
-    canvas.drawRightString(
+    fecha_texto = hora_mexico.strftime("Generado: %d/%m/%Y %H:%M hrs")
 
-        760,
-
-        15,
-
-        texto
-
-    )
+    canvas.drawString(20, 15, fecha_texto)
 
 @login_required(login_url='/login/')
 def exportar_pdf_jornada(request, jornada):
