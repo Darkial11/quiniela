@@ -331,9 +331,9 @@ def ranking(request):
         reverse=True
     )
 
-    top3 = ranking_ordenado[:3]
+    top3 = ranking_ordenado[:1]
 
-    resto = ranking_ordenado[3:]
+    resto = ranking_ordenado[1:]
 
     return render(
         request,

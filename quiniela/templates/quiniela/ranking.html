@@ -22,32 +22,6 @@
 
     <div class="podium">
 
-        {% if top3|length > 1 %}
-
-        <div class="podium-card silver">
-
-            <div class="medal">
-
-                🥈
-
-            </div>
-
-            <h2>
-
-                {{ top3.1.0 }}
-
-            </h2>
-
-            <p>
-
-                {{ top3.1.1 }} pts
-
-            </p>
-
-        </div>
-
-        {% endif %}
-
         {% if top3|length > 0 %}
 
         <div class="podium-card gold">
@@ -72,33 +46,7 @@
 
         </div>
 
-        {% endif %}
-
-        {% if top3|length > 2 %}
-
-        <div class="podium-card bronze">
-
-            <div class="medal">
-
-                🥉
-
-            </div>
-
-            <h2>
-
-                {{ top3.2.0 }}
-
-            </h2>
-
-            <p>
-
-                {{ top3.2.1 }} pts
-
-            </p>
-
-        </div>
-
-        {% endif %}
+        {% endif %}        
 
     </div>
 
@@ -136,7 +84,7 @@
                         {% endif %}
                     ">
 
-                        {{ forloop.counter|add:3 }}
+                        {{ forloop.counter|add:1 }}
 
                     </td>
 
