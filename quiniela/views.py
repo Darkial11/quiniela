@@ -465,7 +465,7 @@ def pago_exitoso(request):
 
         return redirect('/quiniela/')
 
-    if payment.get("status") == "approved":
+    if payment.get("status") in ("approved", "in_process", "authorized"):
 
         perfil = request.user.perfil      
 
@@ -527,7 +527,7 @@ def webhook_mercadopago(request):
 
         return HttpResponse(status=400)
 
-    if payment.get("status") != "approved":
+    if payment.get("status") not in ("approved", "in_process", "authorized"):
 
         return HttpResponse(status=200)
 
