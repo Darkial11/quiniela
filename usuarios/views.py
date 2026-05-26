@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.core.mail import send_mail
 from django.conf import settings
+import resend
 
 from quiniela.models import Partido, Jornada, Pronostico
 from .models import Perfil
@@ -334,13 +334,14 @@ def recuperar_contrasena(request):
 
             link = f"https://quiniela.lukifix.mx/recuperar-contrasena/confirmar/{uid}/{token}/"
 
-            send_mail(
-                subject='Recuperación de contraseña — Quiniela Mundial 2026',
-                message=f'Hola {user.perfil.nick},\n\nRecibimos una solicitud para restablecer tu contraseña.\n\nEntra a este link para crear una nueva:\n{link}\n\nSi no fuiste tú, ignora este correo.\n\n— Equipo LukiFix',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False,
-            )
+            resend.api_key = settings.RESEND_API_KEY
+
+            resend.Emails.send({
+                "from": "Quiniela LukiFix <contacto@lukifix.mx>",
+                "to": [email],
+                "subject": "Recuperación de contraseña — Quiniela Mundial 2026",
+                "text": f"Hola {user.perfil.nick},\n\nRecibimos una solicitud para restablecer tu contraseña.\n\nEntra a este link para crear una nueva:\n{link}\n\nSi no fuiste tú, ignora este correo.\n\n— Equipo LukiFix",
+            })
 
         except User.DoesNotExist:
             pass
