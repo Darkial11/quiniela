@@ -16,25 +16,60 @@
         <p style="color:#94a3b8; font-size:13px; margin-bottom:10px;">
             🔍 Filtrar participantes
         </p>
-        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start;">
+
+            <div style="position:relative; min-width:260px;">
+                <input
+                    id="filtro-input"
+                    type="text"
+                    placeholder="Buscar participante..."
+                    style="
+                        width:100%;
+                        background:#1e293b;
+                        border:1px solid #334155;
+                        border-radius:8px;
+                        padding:8px 16px;
+                        color:white;
+                        font-family:'Outfit',sans-serif;
+                        font-size:14px;
+                        outline:none;
+                    "
+                >
+                <div id="filtro-dropdown" style="
+                    display:none;
+                    position:absolute;
+                    top:100%;
+                    left:0;
+                    right:0;
+                    background:#1e293b;
+                    border:1px solid #334155;
+                    border-radius:8px;
+                    margin-top:4px;
+                    max-height:220px;
+                    overflow-y:auto;
+                    z-index:999;
+                "></div>
+            </div>
+
+            <div id="filtro-tags" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
+
             <button
-                id="btnTodos"
                 onclick="filtrarTodos()"
                 style="
-                    background:#22c55e;
-                    color:#020617;
-                    border:none;
+                    background:transparent;
+                    color:#94a3b8;
+                    border:1px solid #334155;
                     border-radius:8px;
-                    padding:7px 16px;
-                    font-weight:700;
+                    padding:8px 16px;
+                    font-weight:600;
                     font-family:'Outfit',sans-serif;
                     cursor:pointer;
                     font-size:13px;
                 "
-            >Todos</button>
-            <div id="filtro-participantes" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+            >✕ Limpiar</button>
+
         </div>
-    </div>
+    </div>   
 
     {% for bloque in tabla_jornadas %}
 
@@ -154,66 +189,111 @@
 <script>
 (function() {
 
-    const contenedor = document.getElementById('filtro-participantes');
+    const input = document.getElementById('filtro-input');
+    const dropdown = document.getElementById('filtro-dropdown');
+    const tagsBox = document.getElementById('filtro-tags');
 
-    if (!contenedor) return;
+    if (!input) return;
 
     const nombres = new Set();
-
     document.querySelectorAll('.nombre-player').forEach(td => {
         nombres.add(td.innerText.trim());
     });
 
     const seleccionados = new Set();
 
-    nombres.forEach(nombre => {
+    // Mostrar dropdown al escribir
+    input.addEventListener('input', () => {
 
-        const btn = document.createElement('button');
-        btn.innerText = nombre;
-        btn.dataset.nombre = nombre;
-        btn.style.cssText = `
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 7px 16px;
-            font-weight: 600;
-            font-family: 'Outfit', sans-serif;
-            cursor: pointer;
-            font-size: 13px;
-            transition: .2s;
-        `;
+        const busqueda = input.value.trim().toLowerCase();
+        dropdown.innerHTML = '';
 
-        btn.addEventListener('click', () => {
+        if (busqueda === '') {
+            dropdown.style.display = 'none';
+            return;
+        }
 
-            if (seleccionados.has(nombre)) {
-                seleccionados.delete(nombre);
-                btn.style.background = '#1e293b';
-                btn.style.color = '#cbd5e1';
-                btn.style.borderColor = '#334155';
-            } else {
-                seleccionados.add(nombre);
-                btn.style.background = '#22c55e';
-                btn.style.color = '#020617';
-                btn.style.borderColor = '#22c55e';
-            }
+        const coincidencias = [...nombres].filter(n =>
+            n.toLowerCase().includes(busqueda) && !seleccionados.has(n)
+        );
 
-            aplicarFiltro();
+        if (coincidencias.length === 0) {
+            dropdown.style.display = 'none';
+            return;
+        }
+
+        coincidencias.forEach(nombre => {
+
+            const item = document.createElement('div');
+            item.innerText = nombre;
+            item.style.cssText = `
+                padding: 10px 16px;
+                cursor: pointer;
+                color: #cbd5e1;
+                font-size: 14px;
+                border-bottom: 1px solid #0f172a;
+                transition: .15s;
+            `;
+            item.addEventListener('mouseenter', () => item.style.background = '#0f172a');
+            item.addEventListener('mouseleave', () => item.style.background = 'transparent');
+            item.addEventListener('click', () => {
+                agregarSeleccion(nombre);
+                input.value = '';
+                dropdown.style.display = 'none';
+            });
+
+            dropdown.appendChild(item);
 
         });
 
-        contenedor.appendChild(btn);
+        dropdown.style.display = 'block';
 
     });
+
+    // Cerrar dropdown al hacer click fuera
+    document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    function agregarSeleccion(nombre) {
+
+        seleccionados.add(nombre);
+
+        const tag = document.createElement('div');
+        tag.style.cssText = `
+            background: #22c55e;
+            color: #020617;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        `;
+        tag.innerHTML = `${nombre} <span style="cursor:pointer;font-size:16px;" data-nombre="${nombre}">×</span>`;
+        tag.querySelector('span').addEventListener('click', () => {
+            seleccionados.delete(nombre);
+            tag.remove();
+            aplicarFiltro();
+        });
+
+        tagsBox.appendChild(tag);
+        aplicarFiltro();
+
+    }
 
     function aplicarFiltro() {
 
         document.querySelectorAll('.jornada-box tbody tr').forEach(fila => {
 
-            const nombre = fila.querySelector('.nombre-player');
-            if (!nombre) return;
+            const nombreEl = fila.querySelector('.nombre-player');
+            if (!nombreEl) return;
 
-            fila.style.display = seleccionados.size === 0 || seleccionados.has(nombre.innerText.trim())
+            fila.style.display = seleccionados.size === 0 || seleccionados.has(nombreEl.innerText.trim())
                 ? ''
                 : 'none';
 
@@ -222,19 +302,14 @@
     }
 
     window.filtrarTodos = function() {
-
         seleccionados.clear();
-
-        contenedor.querySelectorAll('button').forEach(btn => {
-            btn.style.background = '#1e293b';
-            btn.style.color = '#cbd5e1';
-            btn.style.borderColor = '#334155';
-        });
-
+        tagsBox.innerHTML = '';
+        input.value = '';
+        dropdown.style.display = 'none';
         aplicarFiltro();
-
     };
 
 })();
 </script>
+
 {% endblock %}
