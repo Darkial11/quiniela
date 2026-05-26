@@ -6,6 +6,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.conf import settings
+from django.core.cache import cache
 import resend
 
 from quiniela.models import Partido, Jornada, Pronostico
@@ -144,6 +145,22 @@ def iniciar_sesion(request):
 
     if request.method == 'POST':
 
+        ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', 'unknown'))
+        ip = ip.split(',')[0].strip()
+        cache_key = f'login_intentos_{ip}'
+
+        intentos = cache.get(cache_key, 0)
+
+        if intentos >= 5:
+
+            return render(
+                request,
+                'usuarios/login.html',
+                {
+                    'mensaje': 'Demasiados intentos fallidos. Espera 5 minutos antes de intentar de nuevo.'
+                }
+            )
+
         username = request.POST['username'].upper()
 
         password = request.POST['password']
@@ -160,11 +177,15 @@ def iniciar_sesion(request):
 
         if user is not None:
 
+            cache.delete(cache_key)
+
             login(request, user)
 
             return redirect('/quiniela/')
 
         else:
+
+            cache.set(cache_key, intentos + 1, timeout=300)
 
             mensaje = 'Usuario o contraseña incorrectos'
 
@@ -181,7 +202,6 @@ def iniciar_sesion(request):
         }
 
     )
-
 
 def cerrar_sesion(request):
 
