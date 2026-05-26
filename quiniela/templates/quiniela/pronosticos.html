@@ -6,6 +6,36 @@
 
 <div class="container">
 
+    <div style="
+        background:#0f172a;
+        border:1px solid #1e293b;
+        border-radius:16px;
+        padding:20px 24px;
+        margin-bottom:28px;
+    ">
+        <p style="color:#94a3b8; font-size:13px; margin-bottom:10px;">
+            🔍 Filtrar participantes
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+            <button
+                id="btnTodos"
+                onclick="filtrarTodos()"
+                style="
+                    background:#22c55e;
+                    color:#020617;
+                    border:none;
+                    border-radius:8px;
+                    padding:7px 16px;
+                    font-weight:700;
+                    font-family:'Outfit',sans-serif;
+                    cursor:pointer;
+                    font-size:13px;
+                "
+            >Todos</button>
+            <div id="filtro-participantes" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+        </div>
+    </div>
+
     {% for bloque in tabla_jornadas %}
 
     <div class="jornada-box">
