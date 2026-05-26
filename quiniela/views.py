@@ -583,6 +583,8 @@ def webhook_mercadopago(request):
 
 def agregar_numero_pagina(canvas, doc):
 
+    from zoneinfo import ZoneInfo
+
     pagina = canvas.getPageNumber()
 
     texto = f"Página {pagina}"
@@ -591,12 +593,7 @@ def agregar_numero_pagina(canvas, doc):
 
     canvas.drawRightString(760, 15, texto)
 
-from django.utils import timezone
-    from zoneinfo import ZoneInfo
-
-    hora_mexico = timezone.now().astimezone(
-        ZoneInfo("America/Mexico_City")
-    )
+    hora_mexico = timezone.now().astimezone(ZoneInfo("America/Mexico_City"))
 
     fecha_texto = hora_mexico.strftime("Generado: %d/%m/%Y %H:%M hrs")
 
