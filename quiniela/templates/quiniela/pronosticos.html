@@ -151,5 +151,90 @@
 
 </div>
 
+<script>
+(function() {
 
+    const contenedor = document.getElementById('filtro-participantes');
+
+    if (!contenedor) return;
+
+    const nombres = new Set();
+
+    document.querySelectorAll('.nombre-player').forEach(td => {
+        nombres.add(td.innerText.trim());
+    });
+
+    const seleccionados = new Set();
+
+    nombres.forEach(nombre => {
+
+        const btn = document.createElement('button');
+        btn.innerText = nombre;
+        btn.dataset.nombre = nombre;
+        btn.style.cssText = `
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 7px 16px;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            font-size: 13px;
+            transition: .2s;
+        `;
+
+        btn.addEventListener('click', () => {
+
+            if (seleccionados.has(nombre)) {
+                seleccionados.delete(nombre);
+                btn.style.background = '#1e293b';
+                btn.style.color = '#cbd5e1';
+                btn.style.borderColor = '#334155';
+            } else {
+                seleccionados.add(nombre);
+                btn.style.background = '#22c55e';
+                btn.style.color = '#020617';
+                btn.style.borderColor = '#22c55e';
+            }
+
+            aplicarFiltro();
+
+        });
+
+        contenedor.appendChild(btn);
+
+    });
+
+    function aplicarFiltro() {
+
+        document.querySelectorAll('.jornada-box tbody tr').forEach(fila => {
+
+            const nombre = fila.querySelector('.nombre-player');
+            if (!nombre) return;
+
+            fila.style.display = seleccionados.size === 0 || seleccionados.has(nombre.innerText.trim())
+                ? ''
+                : 'none';
+
+        });
+
+    }
+
+    window.filtrarTodos = function() {
+
+        seleccionados.clear();
+
+        contenedor.querySelectorAll('button').forEach(btn => {
+            btn.style.background = '#1e293b';
+            btn.style.color = '#cbd5e1';
+            btn.style.borderColor = '#334155';
+        });
+
+        aplicarFiltro();
+
+    };
+
+})();
+</script>
 {% endblock %}
