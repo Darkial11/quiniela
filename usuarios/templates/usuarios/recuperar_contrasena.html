@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-layout">
+
+    <div class="auth-left">
+
+        <p class="auth-mini">Mundial 2026</p>
+
+        <h1>Recuperar Contraseña</h1>
+
+        <p class="auth-description">
+            Te enviaremos un link a tu correo
+            para que puedas crear una nueva contraseña.
+        </p>
+
+    </div>
+
+    <div class="auth-card">
+
+        {% if enviado %}
+
+            <h2>¡Correo enviado!</h2>
+
+            <p style="color:#94a3b8; margin-top:16px; line-height:1.7;">
+                Si ese correo está registrado, recibirás un link
+                en los próximos minutos. Revisa también tu carpeta de spam.
+            </p>
+
+            <div class="auth-footer" style="margin-top:28px;">
+                <a href="/login/">Volver al inicio de sesión</a>
+            </div>
+
+        {% else %}
+
+            <h2>¿Olvidaste tu contraseña?</h2>
+
+            <form method="POST" style="margin-top:24px;">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Correo electrónico"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="auth-btn">
+                    Enviar link de recuperación
+                </button>
+
+            </form>
+
+            <div class="auth-footer">
+                <a href="/login/">Volver al inicio de sesión</a>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

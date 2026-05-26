@@ -34,6 +34,18 @@ urlpatterns = [
     ),
 
     path(
+        'recuperar-contrasena/',
+        views.recuperar_contrasena,
+        name='recuperar_contrasena'
+    ),
+
+    path(
+        'recuperar-contrasena/confirmar/<uidb64>/<token>/',
+        views.confirmar_contrasena,
+        name='confirmar_contrasena'
+    ),
+
+    path(
         'reglamento/',
         views.reglamento
     ),

@@ -2,6 +2,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import send_mail
+from django.conf import settings
 
 from quiniela.models import Partido, Jornada, Pronostico
 from .models import Perfil
@@ -311,4 +316,93 @@ def contacto(request):
 
         "usuarios/contacto.html"
 
+    )
+
+def recuperar_contrasena(request):
+
+    if request.method == 'POST':
+
+        email = request.POST.get('email', '').strip()
+
+        try:
+
+            user = User.objects.get(email=email)
+
+            token = default_token_generator.make_token(user)
+
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+            link = f"https://quiniela.lukifix.mx/recuperar-contrasena/confirmar/{uid}/{token}/"
+
+            send_mail(
+                subject='Recuperación de contraseña — Quiniela Mundial 2026',
+                message=f'Hola {user.perfil.nick},\n\nRecibimos una solicitud para restablecer tu contraseña.\n\nEntra a este link para crear una nueva:\n{link}\n\nSi no fuiste tú, ignora este correo.\n\n— Equipo LukiFix',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+        except User.DoesNotExist:
+            pass
+
+        return render(
+            request,
+            'usuarios/recuperar_contrasena.html',
+            {'enviado': True}
+        )
+
+    return render(request, 'usuarios/recuperar_contrasena.html')
+
+
+def confirmar_contrasena(request, uidb64, token):
+
+    try:
+
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+    except Exception:
+
+        user = None
+
+    if user is None or not default_token_generator.check_token(user, token):
+
+        return render(
+            request,
+            'usuarios/confirmar_contrasena.html',
+            {'error': 'El link es inválido o ya expiró.'}
+        )
+
+    if request.method == 'POST':
+
+        password = request.POST.get('password', '')
+        password2 = request.POST.get('password2', '')
+
+        if len(password) < 6:
+            return render(
+                request,
+                'usuarios/confirmar_contrasena.html',
+                {'error': 'La contraseña debe tener al menos 6 caracteres.', 'uidb64': uidb64, 'token': token}
+            )
+
+        if password != password2:
+            return render(
+                request,
+                'usuarios/confirmar_contrasena.html',
+                {'error': 'Las contraseñas no coinciden.', 'uidb64': uidb64, 'token': token}
+            )
+
+        user.set_password(password)
+        user.save()
+
+        return render(
+            request,
+            'usuarios/confirmar_contrasena.html',
+            {'exito': True}
+        )
+
+    return render(
+        request,
+        'usuarios/confirmar_contrasena.html',
+        {'uidb64': uidb64, 'token': token}
     )
