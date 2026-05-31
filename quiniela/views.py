@@ -301,7 +301,7 @@ def ranking(request):
     pronosticos = Pronostico.objects.select_related(
         'user__perfil',
         'partido'
-    ).all()
+    ).filter(user__perfil__pago_confirmado=True)
 
     tabla = {}
 
