@@ -214,9 +214,9 @@ def home(request):
 
     participantes = Perfil.objects.filter(
 
-    participando=True
+        pago_confirmado=True
 
-).count()
+    ).count()
 
     partidos = Partido.objects.count()
 
