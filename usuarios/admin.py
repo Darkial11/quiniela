@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib import messages
 from .models import Perfil
+from quiniela.models import Pronostico, Jornada
 import resend
 from django.conf import settings
 
@@ -93,6 +94,17 @@ enviar_recordatorio_quiniela.short_description = "⚽ Enviar recordatorio de QUI
 @admin.register(Perfil)
 class PerfilAdmin(admin.ModelAdmin):
 
+    def sin_pronosticos(self, obj):
+        if not obj.pago_confirmado:
+            return '-'
+        total = Pronostico.objects.filter(user=obj.user).count()
+        if total == 0:
+            return '⚠️ Sin pronósticos'
+        jornadas = Jornada.objects.all().count()
+        return f'{total} pronósticos'
+
+    sin_pronosticos.short_description = 'Pronósticos'
+
     list_display = (
         'user',
         'nick',
@@ -100,7 +112,8 @@ class PerfilAdmin(admin.ModelAdmin):
         'participando',
         'pago_confirmado',
         'fecha_pago',
-        'tipo_pago'
+        'tipo_pago',
+        'sin_pronosticos'
     )
 
     list_filter = (
