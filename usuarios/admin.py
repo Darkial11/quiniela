@@ -18,10 +18,10 @@ def enviar_recordatorio_pago(modeladmin, request, queryset):
             resend.Emails.send({
                 "from": "Quiniela LukiFix <contacto@lukifix.mx>",
                 "to": [perfil.user.email],
-                "subject": "⏳ Faltan 4 días — Confirma tu lugar en la Quiniela",
+                "subject": "⏳ Hoy Inicia el Mundial — Confirma tu lugar en la Quiniela",
                 "text": (
                     f"Hola {perfil.nick},\n\n"
-                    "El Mundial 2026 arranca el 11 de junio y aún no has confirmado tu participación.\n\n"
+                    "El Mundial 2026 arranca Hoy 11 de junio y aún no has confirmado tu participación.\n\n"
                     "Entra ahora y completa tu pago de $100 MXN para asegurar tu lugar:\n"
                     "https://quiniela.lukifix.mx/quiniela/\n\n"
                     "No te quedes fuera. ¡El que sabe, entra!\n\n"
@@ -37,6 +37,8 @@ def enviar_recordatorio_pago(modeladmin, request, queryset):
         f"Recordatorio de pago enviado a {enviados} usuarios.",
         messages.SUCCESS
     )
+
+enviar_recordatorio_pago.short_description = "📩 Enviar recordatorio de PAGO a no pagados"
 
 def enviar_pdfs_cierre(modeladmin, request, queryset):
     import io
@@ -146,27 +148,32 @@ def enviar_pdfs_cierre(modeladmin, request, queryset):
             "type": "application/pdf",
         })
 
-    try:
-        resend.Emails.send({
-            "from": "Quiniela LukiFix <contacto@lukifix.mx>",
-            "to": ["kike.cerv@gmail.com"],
-            "subject": "🏆 Quiniela Mundial 2026 — PDFs de todas las Jornadas",
-            "text": (
-                "Hola,\n\n"
-                "Adjunto encontrarás los PDFs con todos los pronósticos de las jornadas para su seguimiento."
-                "Suerte.\n\n"
-                "— Equipo LukiFix"
-            ),
-            "attachments": adjuntos,
-        })
-        modeladmin.message_user(request, "PDFs enviados correctamente a kike.cerv@gmail.com", messages.SUCCESS)
-    except Exception as e:
-        modeladmin.message_user(request, f"Error al enviar: {str(e)}", messages.ERROR)
+    pagados = Perfil.objects.filter(pago_confirmado=True)
+    enviados = 0
 
-enviar_pdfs_cierre.short_description = "📎 TEST — Enviar PDFs de todas las jornadas"    
+    for perfil in pagados:
+        if not perfil.user.email:
+            continue
+        try:
+            resend.Emails.send({
+                "from": "Quiniela LukiFix <contacto@lukifix.mx>",
+                "to": [perfil.user.email],
+                "subject": "🏆 Quiniela Mundial 2026 — PDFs de todas las Jornadas",
+                "text": (
+                    f"Hola {perfil.nick},\n\n"
+                    "¡El Mundial 2026 ha comenzado! Adjunto encontrarás los PDFs con todos los pronósticos de las jornadas.\n\n"
+                    "¡Mucha suerte y que gane el mejor!\n\n"
+                    "— Equipo LukiFix"
+                ),
+                "attachments": adjuntos,
+            })
+            enviados += 1
+        except Exception:
+            pass
 
-enviar_recordatorio_pago.short_description = "📩 Enviar recordatorio de PAGO a no pagados"
+    modeladmin.message_user(request, f"PDFs enviados correctamente a {enviados} participantes.", messages.SUCCESS)
 
+enviar_pdfs_cierre.short_description = "📎 Enviar PDFs de todas las jornadas a participantes"
 
 def enviar_recordatorio_quiniela(modeladmin, request, queryset):
     from quiniela.models import Pronostico, Jornada
@@ -198,9 +205,10 @@ def enviar_recordatorio_quiniela(modeladmin, request, queryset):
                     "subject": "⚽ ¡Te faltan pronósticos por llenar!",
                     "text": (
                         f"Hola {perfil.nick},\n\n"
-                        f"Ya pagaste tu participación pero aún tienes pronósticos sin llenar en la Jornada {jornada.numero}.\n\n"
+                        f"Ya pagaste tu participación pero aún tienes pronósticos sin llenar en las Jornadas {jornada.numero}.\n\n"
                         f"Llevas {pronosticos} de {total_partidos} partidos seleccionados.\n\n"
-                        "Entra ahora y completa tu quiniela antes del 11 de junio:\n"
+                        "Entra ahora y completa tu quiniela antes del 11 de junio 2026 a las 12:30pm.\n"
+                        "Ultima Oportunidad.\n"
                         "https://quiniela.lukifix.mx/quiniela/\n\n"
                         "— Equipo LukiFix"
                     ),
@@ -260,4 +268,3 @@ class PerfilAdmin(admin.ModelAdmin):
         enviar_recordatorio_quiniela,
         enviar_pdfs_cierre
     ]
-    
