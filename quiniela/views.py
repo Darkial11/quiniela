@@ -618,7 +618,7 @@ def exportar_pdf_jornada(request, jornada):
 
         User.objects.filter(
 
-            pronostico__partido__jornada=jornada_obj
+            perfil__pago_confirmado=True
 
         ).distinct(),
 
