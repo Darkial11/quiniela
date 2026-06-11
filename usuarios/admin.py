@@ -38,6 +38,133 @@ def enviar_recordatorio_pago(modeladmin, request, queryset):
         messages.SUCCESS
     )
 
+def enviar_pdfs_cierre(modeladmin, request, queryset):
+    import io
+    import os
+    import base64
+    from django.conf import settings
+    from django.contrib.auth.models import User
+    from quiniela.models import Jornada, Partido, Pronostico
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import landscape, letter
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
+    from zoneinfo import ZoneInfo
+    from django.utils import timezone
+
+    def generar_pdf_jornada(jornada_obj):
+
+        partidos = list(Partido.objects.filter(jornada=jornada_obj).order_by('id'))
+
+        participantes = sorted(
+            User.objects.filter(perfil__pago_confirmado=True).distinct(),
+            key=lambda u: getattr(getattr(u, 'perfil', None), 'nick', u.username).lower()
+        )
+
+        buffer = io.BytesIO()
+
+        doc = SimpleDocTemplate(
+            buffer,
+            pagesize=landscape(letter),
+            rightMargin=20, leftMargin=20,
+            topMargin=20, bottomMargin=20
+        )
+
+        elementos = []
+        estilos = getSampleStyleSheet()
+
+        ruta_logo = os.path.join(settings.BASE_DIR, 'static', 'img', 'logo_fut_black.png')
+        logo = Image(ruta_logo, width=170, height=40)
+        elementos.append(logo)
+
+        titulo = Paragraph(f"<b>Quiniela Mundial 2026 - Jornada {jornada_obj.numero}</b>", estilos['Title'])
+        elementos.append(titulo)
+        elementos.append(Spacer(1, 20))
+
+        bloques_partidos = [partidos[i:i+8] for i in range(0, len(partidos), 8)]
+
+        for indice_bloque, bloque in enumerate(bloques_partidos):
+
+            encabezados = ["#", "Participante"]
+            for partido in bloque:
+                encabezados.append(f"{partido.local}\nvs\n{partido.visitante}")
+            encabezados.append("Total")
+
+            data = [encabezados]
+            posicion = 1
+
+            for participante in participantes:
+                fila = [str(posicion), getattr(getattr(participante, 'perfil', None), 'nick', participante.username)]
+                total = 0
+                for partido in bloque:
+                    pronostico = Pronostico.objects.filter(user=participante, partido=partido).first()
+                    if pronostico:
+                        seleccion = pronostico.seleccion
+                        if partido.resultado_real == seleccion:
+                            total += 1
+                    else:
+                        seleccion = "-"
+                    fila.append(seleccion)
+                fila.append(str(total))
+                data.append(fila)
+                posicion += 1
+
+            anchos_columnas = [35, 110] + [65] * len(bloque) + [45]
+
+            tabla = Table(data, colWidths=anchos_columnas)
+            tabla.setStyle(TableStyle([
+                ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#111827")),
+                ('TEXTCOLOR', (0,0), (-1,0), colors.white),
+                ('GRID', (0,0), (-1,-1), 1, colors.gray),
+                ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
+                ('BACKGROUND', (0,1), (-1,-1), colors.HexColor("#F3F4F6")),
+                ('TEXTCOLOR', (0,1), (-1,-1), colors.black),
+                ('ALIGN', (0,0), (-1,-1), 'CENTER'),
+                ('BOTTOMPADDING', (0,0), (-1,0), 12),
+            ]))
+
+            subtitulo = Paragraph(f"<b>Partidos {indice_bloque*8+1} - {indice_bloque*8+len(bloque)}</b>", estilos['Heading2'])
+            elementos.append(subtitulo)
+            elementos.append(Spacer(1, 12))
+            elementos.append(tabla)
+            elementos.append(Spacer(1, 30))
+
+        doc.build(elementos)
+        buffer.seek(0)
+        return buffer.read()
+
+    resend.api_key = settings.RESEND_API_KEY
+
+    jornadas = Jornada.objects.all().order_by('numero')
+    adjuntos = []
+
+    for jornada in jornadas:
+        pdf_bytes = generar_pdf_jornada(jornada)
+        adjuntos.append({
+            "filename": f"Jornada_{jornada.numero}.pdf",
+            "content": list(pdf_bytes),
+            "type": "application/pdf",
+        })
+
+    try:
+        resend.Emails.send({
+            "from": "Quiniela LukiFix <contacto@lukifix.mx>",
+            "to": ["kike.cerv@gmail.com"],
+            "subject": "🏆 Quiniela Mundial 2026 — PDFs de todas las Jornadas",
+            "text": (
+                "Hola,\n\n"
+                "Adjunto encontrarás los PDFs con todos los pronósticos de las jornadas para su seguimiento."
+                "Suerte.\n\n"
+                "— Equipo LukiFix"
+            ),
+            "attachments": adjuntos,
+        })
+        modeladmin.message_user(request, "PDFs enviados correctamente a kike.cerv@gmail.com", messages.SUCCESS)
+    except Exception as e:
+        modeladmin.message_user(request, f"Error al enviar: {str(e)}", messages.ERROR)
+
+enviar_pdfs_cierre.short_description = "📎 TEST — Enviar PDFs de todas las jornadas"    
+
 enviar_recordatorio_pago.short_description = "📩 Enviar recordatorio de PAGO a no pagados"
 
 
@@ -130,5 +257,7 @@ class PerfilAdmin(admin.ModelAdmin):
 
     actions = [
         enviar_recordatorio_pago,
-        enviar_recordatorio_quiniela
+        enviar_recordatorio_quiniela,
+        enviar_pdfs_cierre
     ]
+    
