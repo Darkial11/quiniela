@@ -297,20 +297,19 @@ def cargar_pronosticos(request, jornada):
 @login_required(login_url='/login/')
 def ranking(request):
 
-from usuarios.models import Perfil as PerfilModel
+    from usuarios.models import Perfil as PerfilModel
 
-    # Inicializar tabla con todos los pagados en 0
-tabla = {}
-for perfil in PerfilModel.objects.filter(pago_confirmado=True).select_related('user'):
+    tabla = {}
+
+    for perfil in PerfilModel.objects.filter(pago_confirmado=True).select_related('user'):
         tabla[perfil.nick] = 0
 
-    # Sumar aciertos
-pronosticos = Pronostico.objects.select_related(
+    pronosticos = Pronostico.objects.select_related(
         'user__perfil',
         'partido'
     ).filter(user__perfil__pago_confirmado=True)
 
-for pronostico in pronosticos:
+    for pronostico in pronosticos:
 
         nick = getattr(
             getattr(pronostico.user, 'perfil', None),
@@ -328,17 +327,17 @@ for pronostico in pronosticos:
 
             tabla[nick] += 1
 
-ranking_ordenado = sorted(
+    ranking_ordenado = sorted(
         tabla.items(),
         key=lambda x: x[1],
         reverse=True
     )
 
-top3 = ranking_ordenado[:1]
+    top3 = ranking_ordenado[:1]
 
-resto = ranking_ordenado[1:]
+    resto = ranking_ordenado[1:]
 
-return render(
+    return render(
         request,
         'quiniela/ranking.html',
         {
