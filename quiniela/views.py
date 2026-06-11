@@ -181,7 +181,7 @@ def ver_pronosticos(request):
 
         participantes = list(
             User.objects.filter(
-                pronostico__partido__jornada=jornada
+                perfil__pago_confirmado=True
             ).distinct().select_related('perfil')
         )
 
