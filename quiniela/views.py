@@ -333,9 +333,22 @@ def ranking(request):
         reverse=True
     )
 
-    top3 = ranking_ordenado[:1]
+    if ranking_ordenado:
 
-    resto = ranking_ordenado[1:]
+        puntos_primer_lugar = ranking_ordenado[0][1]
+
+        top3 = [
+            jugador for jugador in ranking_ordenado
+            if jugador[1] == puntos_primer_lugar
+        ]
+
+        resto = ranking_ordenado[len(top3):]
+
+    else:
+
+        top3 = []
+
+        resto = []
 
     return render(
         request,

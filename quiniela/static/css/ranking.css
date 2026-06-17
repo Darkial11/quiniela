@@ -105,6 +105,40 @@
         0 0 40px rgba(255,215,0,.25);
 }
 
+/* =========================
+   PODIUM MULTI (empates)
+========================= */
+
+.podium-multi .podium-card.gold{
+
+    transform:scale(1);
+
+    min-width:160px;
+
+    padding:24px 18px;
+
+    border-radius:22px;
+}
+
+.podium-multi .medal{
+
+    font-size:38px;
+
+    margin-bottom:10px;
+}
+
+.podium-multi .podium-card h2{
+
+    font-size:22px;
+
+    margin-bottom:6px;
+}
+
+.podium-multi .podium-card p{
+
+    font-size:16px;
+}
+
 .silver{
 
     box-shadow:
@@ -617,6 +651,28 @@
     .gold{
 
         transform:none;
+    }
+
+    .podium-multi .podium-card.gold{
+
+        min-width:100%;
+
+        padding:22px 18px;
+    }
+
+    .podium-multi .medal{
+
+        font-size:42px;
+    }
+
+    .podium-multi .podium-card h2{
+
+        font-size:24px;
+    }
+
+    .podium-multi .podium-card p{
+
+        font-size:18px;
     }
 
     .podium-card:hover{
