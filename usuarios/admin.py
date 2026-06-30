@@ -175,6 +175,41 @@ def enviar_pdfs_cierre(modeladmin, request, queryset):
 
 enviar_pdfs_cierre.short_description = "📎 Enviar PDFs de todas las jornadas a participantes"
 
+def enviar_agradecimiento_mundial(modeladmin, request, queryset):
+    pagados = Perfil.objects.filter(pago_confirmado=True)
+    enviados = 0
+    resend.api_key = settings.RESEND_API_KEY
+
+    for perfil in pagados:
+        if not perfil.user.email:
+            continue
+        try:
+            resend.Emails.send({
+                "from": "Quiniela LukiFix <contacto@lukifix.mx>",
+                "to": [perfil.user.email],
+                "subject": "🏆 ¡Gracias por participar en la Quiniela Mundial 2026!",
+                "text": (
+                    f"Hola {perfil.nick},\n\n"
+                    "La fase de grupos del Mundial 2026 ha terminado y queremos agradecerte por ser parte de la Quiniela LukiFix.\n\n"
+                    "¡Felicidades a nuestros ganadores y gracias a todos por su entusiasmo y participación!\n\n"
+                    "Esto no termina aquí: muy pronto lanzaremos la Quiniela Liga MX, jornada por jornada, con la misma emoción de siempre.\n\n"
+                    "Mantente al pendiente, pronto tendrás más noticias.\n\n"
+                    "¡Gracias por confiar en nosotros!\n\n"
+                    "— Equipo LukiFix"
+                ),
+            })
+            enviados += 1
+        except Exception:
+            pass
+
+    modeladmin.message_user(
+        request,
+        f"Correo de agradecimiento enviado a {enviados} participantes.",
+        messages.SUCCESS
+    )
+
+enviar_agradecimiento_mundial.short_description = "🙏 Enviar agradecimiento — Cierre Mundial 2026"
+
 def enviar_recordatorio_quiniela(modeladmin, request, queryset):
     from quiniela.models import Pronostico, Jornada
 
@@ -266,5 +301,6 @@ class PerfilAdmin(admin.ModelAdmin):
     actions = [
         enviar_recordatorio_pago,
         enviar_recordatorio_quiniela,
-        enviar_pdfs_cierre
+        enviar_pdfs_cierre,
+        enviar_agradecimiento_mundial
     ]
