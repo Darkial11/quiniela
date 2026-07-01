@@ -3,15 +3,46 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Jornada(models.Model):
+class Torneo(models.Model):
 
-    numero = models.IntegerField(unique=True)
+    TIPO_COBRO_CHOICES = [
+        ('unico', 'Pago único'),
+        ('por_jornada', 'Pago por jornada'),
+    ]
 
-    abierta = models.BooleanField(default=True)
+    nombre = models.CharField(max_length=100)
+
+    slug = models.SlugField(max_length=100, unique=True)
+
+    tipo_cobro = models.CharField(
+        max_length=20,
+        choices=TIPO_COBRO_CHOICES
+    )
+
+    activo = models.BooleanField(default=True)
 
     def __str__(self):
 
-        return f"Jornada {self.numero}"
+        return self.nombre
+
+
+class Jornada(models.Model):
+
+    torneo = models.ForeignKey(
+        Torneo,
+        on_delete=models.CASCADE
+    )
+
+    numero = models.IntegerField()
+
+    abierta = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('torneo', 'numero')
+
+    def __str__(self):
+
+        return f"Jornada {self.numero} - {self.torneo.nombre if self.torneo else 'sin torneo'}"
 
 
 class Partido(models.Model):
@@ -148,3 +179,55 @@ class Pronostico(models.Model):
         {self.partido}
 
         '''
+
+class Pago(models.Model):
+
+    METODO_CHOICES = [
+        ('transferencia', 'Transferencia'),
+        ('efectivo', 'Efectivo'),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    jornada = models.ForeignKey(
+        Jornada,
+        on_delete=models.CASCADE
+    )
+
+    monto = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=30.00
+    )
+
+    metodo = models.CharField(
+        max_length=20,
+        choices=METODO_CHOICES,
+        null=True,
+        blank=True
+    )
+
+    confirmado = models.BooleanField(default=False)
+
+    fecha_confirmacion = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    confirmado_por = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='pagos_confirmados'
+    )
+
+    class Meta:
+        unique_together = ('user', 'jornada')
+
+    def __str__(self):
+
+        return f"{self.user.username} - {self.jornada}"

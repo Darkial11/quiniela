@@ -282,14 +282,12 @@ class PerfilAdmin(admin.ModelAdmin):
         'participando',
         'pago_confirmado',
         'fecha_pago',
-        'tipo_pago',
         'sin_pronosticos'
     )
 
     list_filter = (
         'participando',
-        'pago_confirmado',
-        'tipo_pago'
+        'pago_confirmado'
     )
 
     search_fields = (
