@@ -158,6 +158,10 @@ ALLOWED_HOSTS = [
 
 ]
 
+if DEBUG:
+
+    ALLOWED_HOSTS += ["localhost", "127.0.0.1"]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://quiniela.lukifix.mx",
 ]

@@ -1,10 +1,14 @@
 """ quiniela / admin """
 from django.contrib import admin
+from django.contrib import messages
+from django.utils import timezone
 
 from .models import (
     Partido,
     Pronostico,
-    Jornada
+    Jornada,
+    Torneo,
+    Pago
 )
 
 
@@ -30,6 +34,63 @@ class PronosticoAdmin(admin.ModelAdmin):
         return obj.partido.jornada
 
     get_jornada.short_description = 'Jornada'
+
+def confirmar_pago(modeladmin, request, queryset):
+
+    actualizados = queryset.filter(confirmado=False).update(
+        confirmado=True,
+        fecha_confirmacion=timezone.now(),
+        confirmado_por=request.user
+    )
+
+    modeladmin.message_user(
+        request,
+        f"{actualizados} pago(s) confirmado(s).",
+        messages.SUCCESS
+    )
+
+confirmar_pago.short_description = "✅ Confirmar pago"
+
+
+@admin.register(Pago)
+class PagoAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'user',
+        'jornada',
+        'monto',
+        'metodo',
+        'confirmado',
+        'fecha_confirmacion',
+    )
+
+    list_filter = (
+        'jornada',
+        'confirmado',
+        'metodo',
+    )
+
+    search_fields = (
+        'user__username',
+    )
+
+    actions = [confirmar_pago]
+
+
+@admin.register(Torneo)
+class TorneoAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'nombre',
+        'slug',
+        'tipo_cobro',
+        'activo',
+    )
+
+    list_filter = (
+        'tipo_cobro',
+        'activo',
+    )
 
 
 admin.site.register(Partido)

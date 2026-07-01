@@ -18,7 +18,9 @@ from .models import (
 
     Pronostico,
 
-    Jornada
+    Jornada,
+
+    Pago
 
 )
 
@@ -155,6 +157,24 @@ def guardar_pronosticos(request):
                 partido=partido,
 
                 seleccion=item['seleccion']
+
+            )
+
+        jornada_actual = primer_partido.jornada
+
+        if (
+
+            jornada_actual.torneo
+
+            and jornada_actual.torneo.tipo_cobro == 'por_jornada'
+
+        ):
+
+            Pago.objects.get_or_create(
+
+                user=user,
+
+                jornada=jornada_actual
 
             )
 
