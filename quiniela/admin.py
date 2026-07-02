@@ -93,5 +93,27 @@ class TorneoAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Partido)
+@admin.register(Partido)
+class PartidoAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'local',
+        'visitante',
+        'jornada',
+        'fecha_partido',
+        'hora_partido',
+        'resultado_real',
+    )
+
+    list_filter = (
+        'jornada__torneo',
+        'jornada',
+    )
+
+    search_fields = (
+        'local',
+        'visitante',
+    )
+
+
 admin.site.register(Jornada)
