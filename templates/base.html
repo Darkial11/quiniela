@@ -13,7 +13,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Quiniela Mundial 2026</title>
+    <title>Quiniela</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,21 +57,21 @@
 
         <nav class="sidebar-nav">
 
-            <a href="/dashboard/" class="{% if '/dashboard' in request.path %}active-link{% endif %}">
-                Dashboard
-            </a>
+            {% if torneo_actual %}
 
-            <a href="/quiniela/" class="{% if '/quiniela' in request.path or '/jornada/' in request.path %}active-link{% endif %}">
+            <a href="/{{ torneo_actual.slug }}/" class="{% if torneo_actual.slug in request.path and '/pronosticos' not in request.path and '/ranking' not in request.path %}active-link{% endif %}">
                 Quiniela
             </a>
 
-            <a href="/pronosticos/" class="{% if '/pronosticos' in request.path %}active-link{% endif %}">
+            <a href="/{{ torneo_actual.slug }}/pronosticos/" class="{% if '/pronosticos' in request.path %}active-link{% endif %}">
                 Pronósticos
             </a>
 
-            <a href="/ranking/" class="{% if '/ranking' in request.path %}active-link{% endif %}">
+            <a href="/{{ torneo_actual.slug }}/ranking/" class="{% if '/ranking' in request.path %}active-link{% endif %}">
                 Ranking
             </a>
+
+            {% endif %}
 
             <a href="/reglamento/" class="{% if '/reglamento' in request.path %}active-link{% endif %}">
                 Reglamento

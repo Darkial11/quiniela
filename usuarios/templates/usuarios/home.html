@@ -10,7 +10,7 @@
         <img src="{% static 'img/balon.png' %}" alt="balon de futbol">
     </div>
     <h1>
-        QUINIELA MUNDIAL 2026
+        QUINIELA
     </h1>
     <p class="hero-text">
 
@@ -22,56 +22,26 @@
 
         {% if request.user.is_authenticated %}
 
-        <a
-            href="/quiniela/"
-            class="hero-btn"
-        >
+        {% for torneo in torneos %}
 
-            Entrar a Quiniela
-
+        <a href="/{{ torneo.slug }}/" class="hero-btn{% if not torneo.activo %} secondary{% endif %}">
+            {{ torneo.nombre }}{% if not torneo.activo %} (cerrado){% endif %}
         </a>
+
+        {% endfor %}
 
         {% else %}
-
-        <a
-            href="/login/"
-            class="hero-btn"
-        >
-
+        
+        <a href="/login/" class="hero-btn">
             Iniciar Sesión
-
         </a>
 
-        <a
-            href="/registro/"
-            class="hero-btn secondary"
-        >
-
+        <a href="/registro/" class="hero-btn secondary">
             Crear Cuenta
-
         </a>
 
         {% endif %}
 
-    </div>
-
-</div>
-
-<div class="home-stats">
-
-    <div class="home-stat-card">
-        <h2>{{ participantes }}</h2>
-        <p>Participantes</p>
-    </div>
-
-    <div class="home-stat-card">
-        <h2>{{ partidos }}</h2>
-        <p>Partidos</p>
-    </div>
-
-    <div class="home-stat-card warning">
-        <h2>{{ resultados }}/{{ partidos }}</h2>
-        <p>Resultados</p>
     </div>
 
 </div>

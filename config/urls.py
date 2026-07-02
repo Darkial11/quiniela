@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('luki-panel/', admin.site.urls),
-    path('', include('quiniela.urls')),
     path('', include('usuarios.urls')),
+    path('', include('quiniela.urls')),
 ]

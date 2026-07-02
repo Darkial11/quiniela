@@ -3,16 +3,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('quiniela/', views.inicio, name='inicio'),
-    path('guardar/', views.guardar_pronosticos),
-    path('pronosticos/', views.ver_pronosticos),
-    path('exportar-pdf/<int:jornada>/', views.exportar_pdf_jornada),
-    path('cargar/<int:jornada>/', views.cargar_pronosticos, name='cargar_pronosticos'),
-    path('ranking/', views.ranking),
-    path('jornada/<int:jornada>/', views.inicio),
-    path('pagar/', views.crear_pago),
-    path('pago-exitoso/', views.pago_exitoso),
-    path('pago-error/', views.pago_error),
-    path('pago-pendiente/', views.pago_pendiente),
-    path('webhook/mercadopago/', views.webhook_mercadopago),
+    path('<slug:torneo_slug>/', views.inicio, name='inicio'),
+    path('<slug:torneo_slug>/jornada/<int:jornada>/', views.inicio),
+    path('<slug:torneo_slug>/guardar/', views.guardar_pronosticos),
+    path('<slug:torneo_slug>/pronosticos/', views.ver_pronosticos),
+    path('<slug:torneo_slug>/ranking/', views.ranking),
+    path('<slug:torneo_slug>/cargar/<int:jornada>/', views.cargar_pronosticos, name='cargar_pronosticos'),
+    path('<slug:torneo_slug>/exportar-pdf/<int:jornada>/', views.exportar_pdf_jornada),
 ]
