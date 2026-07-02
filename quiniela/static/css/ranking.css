@@ -35,7 +35,7 @@
 
     font-size:20px;
 
-    color:#cbd5e1;
+    color:var(--azul-300);
 }
 
 /* =========================
@@ -74,10 +74,10 @@
     border-radius:32px;
 
     background:
-        rgba(15,23,42,.92);
+        rgba(var(--azul-800-rgb),.92);
 
     border:
-        1px solid rgba(255,255,255,.06);
+        1px solid rgba(var(--azul-300-rgb),.10);
 
     backdrop-filter:blur(10px);
 
@@ -168,7 +168,7 @@
 
     margin-bottom:12px;
 
-    color:white;
+    color:var(--azul-100);
 
     font-family:'Bebas Neue',sans-serif;
 
@@ -181,7 +181,7 @@
 
     font-weight:800;
 
-    color:#38ef7d;
+    color:var(--azul-100);
 }
 
 /* =========================
@@ -191,10 +191,10 @@
 .ranking-table-box{
 
     background:
-        rgba(15,23,42,.92);
+        rgba(var(--azul-800-rgb),.92);
 
     border:
-        1px solid rgba(255,255,255,.06);
+        1px solid rgba(var(--azul-300-rgb),.10);
 
     border-radius:34px;
 
@@ -223,10 +223,10 @@
 
     padding:22px;
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     border-bottom:
-        1px solid rgba(255,255,255,.08);
+        1px solid rgba(var(--azul-300-rgb),.12);
 
     font-size:16px;
 }
@@ -237,10 +237,10 @@
 
     text-align:center;
 
-    color:#cbd5e1;
+    color:var(--azul-300);
 
     border-bottom:
-        1px solid rgba(255,255,255,.04);
+        1px solid rgba(var(--azul-300-rgb),.06);
 }
 
 .tabla-ranking-premium tbody tr{
@@ -251,7 +251,7 @@
 .tabla-ranking-premium tbody tr:hover{
 
     background:
-        rgba(255,255,255,.03);
+        rgba(var(--azul-300-rgb),.05);
 }
 
 /* =========================
@@ -267,7 +267,7 @@
 
 .second-place{
 
-    color:#cbd5e1;
+    color:var(--azul-300);
 
     font-weight:800;
 }
@@ -298,7 +298,7 @@
 
     margin-bottom:34px;
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     letter-spacing:-2px;
 }
@@ -310,10 +310,10 @@
 .jornada-box{
 
     background:
-        rgba(15,23,42,.88);
+        rgba(var(--azul-800-rgb),.88);
 
     border:
-        1px solid rgba(255,255,255,.05);
+        1px solid rgba(var(--azul-300-rgb),.08);
 
     border-radius:28px;
 
@@ -339,7 +339,7 @@
 
     margin-left: 20px;
 
-    color:white;
+    color:var(--azul-100);
 }
 
 /* =========================
@@ -373,9 +373,9 @@
     position:relative;
 
     background:
-        rgba(255,255,255,.03);
+        rgba(var(--azul-300-rgb),.05);
 
-    color:#94a3b8;
+    color:var(--azul-300);
 
     font-size:13px;
 
@@ -386,7 +386,7 @@
     text-align:center;
 
     border-bottom:
-        1px solid rgba(255,255,255,.06);
+        1px solid rgba(var(--azul-300-rgb),.10);
 }
 
 .tabla-quiniela thead th:first-child{
@@ -411,7 +411,7 @@
 .tabla-quiniela tbody tr:hover{
 
     background:
-        rgba(255,255,255,.02);
+        rgba(var(--azul-300-rgb),.04);
 }
 
 .tabla-quiniela tbody td{
@@ -421,7 +421,7 @@
     text-align:center;
 
     border-bottom:
-        1px solid rgba(255,255,255,.04);
+        1px solid rgba(var(--azul-300-rgb),.06);
 
     font-size:15px;
 }
@@ -446,7 +446,7 @@
 
 .plata{
 
-    color:#cbd5e1;
+    color:var(--azul-300);
 }
 
 .bronce{
@@ -467,13 +467,13 @@
     z-index:20;
 
     background:
-        rgba(14, 19, 36, 0.98);
+        rgba(var(--azul-950-rgb), 0.98);
 
     text-align:left !important;
 
     font-weight:700;
 
-    color:white;
+    color:var(--azul-100);
 
     width:180px;
 
@@ -496,7 +496,7 @@
     z-index:25;
 
     background:
-        rgba(15,23,42,.98);
+        rgba(var(--azul-800-rgb),.98);
 
     min-width:180px;
 
@@ -514,7 +514,7 @@
 
     font-size:18px;
 
-    color:#94a3b8;
+    color:var(--azul-300);
 }
 
 .acierto{
@@ -535,7 +535,7 @@
 
     font-size:18px;
 
-    color:#38ef7d;
+    color:var(--azul-100);
 }
 
 /* =========================
@@ -550,7 +550,7 @@
 .tabla-wrapper::-webkit-scrollbar-track{
 
     background:
-        rgba(255,255,255,.04);
+        rgba(var(--azul-300-rgb),.06);
 
     border-radius:999px;
 }
@@ -558,7 +558,7 @@
 .tabla-wrapper::-webkit-scrollbar-thumb{
 
     background:
-        rgba(56,239,125,.35);
+        rgba(var(--azul-600-rgb),.45);
 
     border-radius:999px;
 }

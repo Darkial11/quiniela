@@ -56,7 +56,7 @@
 
     margin-bottom:24px;
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     letter-spacing:3px;
 
@@ -98,7 +98,7 @@
 
 .auth-card h2{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     font-size:62px;
 
@@ -157,10 +157,10 @@
     outline:none;
 
     border:
-        1px solid rgba(56,239,125,.30);
+        1px solid rgba(var(--azul-600-rgb),.40);
 
     box-shadow:
-        0 0 18px rgba(56,239,125,.08);
+        0 0 18px rgba(var(--azul-600-rgb),.14);
 }
 
 /* =========================
@@ -179,9 +179,9 @@
 
     border-radius:18px;
 
-    background:#22c55e;
+    background:var(--azul-600);
 
-    color:white;
+    color:var(--azul-100);
 
     font-size:18px;
 
@@ -198,7 +198,7 @@
         translateY(-2px);
 
     box-shadow:
-        0 12px 24px rgba(34,197,94,.22);
+        0 12px 24px rgba(var(--azul-600-rgb),.28);
 }
 
 /* =========================
@@ -218,7 +218,7 @@
 
 .auth-footer a{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     font-weight:700;
 }

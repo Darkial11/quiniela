@@ -18,9 +18,9 @@
 
     max-width: 700px;
 
-    background: #07122b;
+    background: rgba(var(--azul-800-rgb),.92);
 
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(var(--azul-300-rgb),.10);
 
     border-radius: 30px;
 
@@ -36,7 +36,7 @@
 
     font-size: 52px;
 
-    color: #32f27b;
+    color: var(--azul-100);
 
     margin-bottom: 25px;
 
@@ -44,7 +44,7 @@
 
 .contact-text {
 
-    color: #cfd7e6;
+    color: var(--azul-300);
 
     font-size: 20px;
 
@@ -84,9 +84,9 @@
 
     font-weight: 700;
 
-    background: #32f27b;
+    background: var(--azul-600);
 
-    color: #07122b;
+    color: var(--azul-100);
 
     transition: 0.25s;
 
@@ -96,17 +96,17 @@
 
     transform: translateY(-2px);
 
-    box-shadow: 0 0 20px rgba(50,242,123,0.35);
+    box-shadow: 0 0 20px rgba(var(--azul-600-rgb),0.35);
 
 }
 
 .instagram {
 
-    background: #101b3c;
+    background: rgba(var(--azul-800-rgb),.92);
 
-    color: white;
+    color: var(--azul-100);
 
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(var(--azul-300-rgb),0.14);
 
 }
 
@@ -114,7 +114,7 @@
 
     margin-top: 40px;
 
-    color: #7f8ba3;
+    color: var(--azul-300);
 
     font-size: 14px;
 

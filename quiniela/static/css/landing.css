@@ -31,7 +31,7 @@
 
 .nav-logo{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     font-size:26px;
 
@@ -60,7 +60,7 @@
 
 .nav-links a:hover{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 }
 
 /* =========================
@@ -100,7 +100,7 @@
 
     background:
         radial-gradient(
-            rgba(56,239,125,.12),
+            rgba(var(--azul-600-rgb),.16),
             transparent 70%
         );
 
@@ -168,7 +168,7 @@
 
     filter:
         drop-shadow(
-            0 0 24px rgba(34,211,238,.14)
+            0 0 24px rgba(var(--azul-300-rgb),.18)
         );
 }
 
@@ -208,9 +208,9 @@
 
 .hero-btn{
 
-    background:#38ef7d;
+    background:var(--azul-600);
 
-    color:#020617;
+    color:var(--azul-100);
 
     padding:18px 34px;
 
@@ -223,7 +223,7 @@
     transition:.25s;
 
     box-shadow:
-        0 0 20px rgba(56,239,125,.18);
+        0 0 20px rgba(var(--azul-600-rgb),.22);
 }
 
 .hero-btn:hover{
@@ -232,18 +232,18 @@
         translateY(-3px);
 
     box-shadow:
-        0 0 30px rgba(56,239,125,.28);
+        0 0 30px rgba(var(--azul-600-rgb),.32);
 }
 
 .hero-btn.secondary{
 
     background:
-        rgba(15,23,42,.92);
+        rgba(var(--azul-800-rgb),.92);
 
-    color:white;
+    color:var(--azul-100);
 
     border:
-        1px solid rgba(56,239,125,.18);
+        1px solid rgba(var(--azul-300-rgb),.20);
 }
 
 /* =========================
@@ -273,10 +273,10 @@
 .feature-card{
 
     background:
-        rgba(15,23,42,.9);
+        rgba(var(--azul-800-rgb),.85);
 
     border:
-        1px solid rgba(255,255,255,.05);
+        1px solid rgba(var(--azul-300-rgb),.08);
 
     border-radius:28px;
 
@@ -298,16 +298,16 @@
         translateY(-5px);
 
     border:
-        1px solid rgba(56,239,125,.14);
+        1px solid rgba(var(--azul-600-rgb),.22);
 
     box-shadow:
         0 15px 35px rgba(0,0,0,.28),
-        0 0 20px rgba(56,239,125,.06);
+        0 0 20px rgba(var(--azul-600-rgb),.10);
 }
 
 .feature-card h2{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     margin-bottom:16px;
 
@@ -323,52 +323,6 @@
     font-size:16px;
 }
 
-.home-stats{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:16px;
-    margin-top:-10px;
-    margin-bottom:35px;
-    flex-wrap:wrap;
-}
-
-.home-stat-card{
-    width: 110px;
-    height: 85px;
-    background: rgba(16, 24, 52, 0.95);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 18px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.30);
-}
-
-.home-stat-card h2{
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #39ff88;
-    margin-bottom: 2px;
-    line-height: 1;
-}
-
-.home-stat-card p{
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.45);
-}
-
-.home-stat-card:nth-child(2) h2{
-    color: #4db8ff;
-}
-
-.home-stat-card.warning h2{
-    color: #ffbe3d;
-}
 /* =========================
    MOBILE HERO LOGO
 ========================= */

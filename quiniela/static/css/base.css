@@ -1,4 +1,27 @@
 /* =========================
+   PALETA — AZUL ACERO INDUSTRIAL
+========================= */
+
+:root{
+
+    --azul-950:#1C2B36;
+    --azul-950-rgb:28,43,54;
+
+    --azul-800:#34495E;
+    --azul-800-rgb:52,73,94;
+
+    --azul-600:#4A6378;
+    --azul-600-rgb:74,99,120;
+
+    --azul-300:#8C9BA8;
+    --azul-300-rgb:140,155,168;
+
+    --azul-100:#ECEFF1;
+    --azul-100-rgb:236,239,241;
+
+}
+
+/* =========================
    RESET / GLOBAL
 ========================= */
 
@@ -23,15 +46,15 @@ body{
     background:
         radial-gradient(
             circle at top left,
-            rgba(56,239,125,.10),
+            rgba(var(--azul-600-rgb),.10),
             transparent 30%
         ),
         radial-gradient(
             circle at bottom right,
-            rgba(59,130,246,.10),
+            rgba(var(--azul-800-rgb),.14),
             transparent 30%
         ),
-        #020617;
+        var(--azul-950);
 
     color:white;
 
@@ -58,7 +81,7 @@ button{
 
 h1{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     line-height:1;
 
@@ -69,7 +92,7 @@ h1{
 
 h2{
 
-    color:#38ef7d;
+    color:var(--azul-100);
 
     line-height:1;
 
@@ -80,14 +103,14 @@ h3,
 h4,
 h5{
 
-    color:white;
+    color:var(--azul-100);
 
     font-family:'Outfit',sans-serif;
 }
 
 p{
 
-    color:#cbd5e1;
+    color:var(--azul-300);
 
     line-height:1.6;
 }
