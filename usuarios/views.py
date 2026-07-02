@@ -12,6 +12,16 @@ import resend
 from quiniela.models import Partido, Torneo
 from .models import Perfil
 
+
+def _redirigir_torneo_activo():
+
+    torneo_activo = Torneo.objects.filter(activo=True).first()
+
+    if torneo_activo:
+        return redirect(f'/{torneo_activo.slug}/')
+
+    return redirect('/')
+
 def registro(request):
 
     if request.method == 'POST':
@@ -129,7 +139,7 @@ def registro(request):
 
         login(request, user)
 
-        return redirect('/quiniela/')
+        return _redirigir_torneo_activo()
 
     return render(
 
@@ -181,7 +191,7 @@ def iniciar_sesion(request):
 
             login(request, user)
 
-            return redirect('/quiniela/')
+            return _redirigir_torneo_activo()
 
         else:
 
