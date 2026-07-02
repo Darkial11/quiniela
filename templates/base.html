@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
     <link rel="stylesheet" href="{% static 'css/landing.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'css/quiniela.css' %}">
     <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
@@ -60,31 +59,39 @@
             {% if torneo_actual %}
 
             <a href="/{{ torneo_actual.slug }}/" class="{% if torneo_actual.slug in request.path and '/pronosticos' not in request.path and '/ranking' not in request.path %}active-link{% endif %}">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="8" y1="3" x2="8" y2="7"></line><line x1="16" y1="3" x2="16" y2="7"></line></svg>
                 Quiniela
             </a>
 
             <a href="/{{ torneo_actual.slug }}/pronosticos/" class="{% if '/pronosticos' in request.path %}active-link{% endif %}">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"></path></svg>
                 Pronósticos
             </a>
 
             <a href="/{{ torneo_actual.slug }}/ranking/" class="{% if '/ranking' in request.path %}active-link{% endif %}">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v4a6 6 0 0 1-12 0V4z"></path><path d="M6 6H3v1a4 4 0 0 0 4 4"></path><path d="M18 6h3v1a4 4 0 0 1-4 4"></path><line x1="12" y1="14" x2="12" y2="18"></line><line x1="9" y1="20" x2="15" y2="20"></line></svg>
                 Ranking
             </a>
 
             {% endif %}
 
             <a href="/reglamento/" class="{% if '/reglamento' in request.path %}active-link{% endif %}">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"></path><path d="M15 3v4h4"></path><line x1="9" y1="12" x2="15" y2="12"></line><line x1="9" y1="16" x2="15" y2="16"></line></svg>
                 Reglamento
             </a>
 
             <a href="/contacto/" class="{% if '/contacto' in request.path %}active-link{% endif %}">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
                 Contacto
             </a>
 
         </nav>
 
         <div class="sidebar-bottom">
-            <a href="/logout/" class="logout-btn">Salir</a>
+            <a href="/logout/" class="logout-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Salir
+            </a>
         </div>
 
     </aside>

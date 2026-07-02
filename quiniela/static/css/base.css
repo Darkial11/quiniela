@@ -1,23 +1,63 @@
 /* =========================
-   PALETA — AZUL ACERO INDUSTRIAL
+   PALETA — AZUL VIBRANTE (ESPN / SOFASCORE STYLE)
 ========================= */
 
 :root{
 
-    --azul-950:#1C2B36;
-    --azul-950-rgb:28,43,54;
+    --bg-main:#071425;
+    --bg-gradient-top:#0A2143;
+    --bg-gradient-bottom:#050E18;
 
-    --azul-800:#34495E;
-    --azul-800-rgb:52,73,94;
+    --bg-sidebar:#081A2E;
+    --bg-sidebar-rgb:8,26,46;
+    --bg-sidebar-hover:#102B48;
+    --bg-sidebar-active:#123C67;
 
-    --azul-600:#4A6378;
-    --azul-600-rgb:74,99,120;
+    --bg-card:#102641;
+    --bg-card-rgb:16,38,65;
+    --bg-card-hover:#173A5D;
+    --bg-card-hover-rgb:23,58,93;
 
-    --azul-300:#8C9BA8;
-    --azul-300-rgb:140,155,168;
+    --primary:#1976FF;
+    --primary-rgb:25,118,255;
+    --primary-hover:#2E8CFF;
+    --primary-pressed:#0F5BD6;
 
-    --azul-100:#ECEFF1;
-    --azul-100-rgb:236,239,241;
+    --secondary-blue:#56A8FF;
+    --secondary-blue-rgb:86,168,255;
+
+    --text:#FFFFFF;
+    --text-secondary:#D5E2EF;
+    --text-muted:#8EA5BC;
+    --text-muted-rgb:142,165,188;
+
+    --border:#25598D;
+    --border-rgb:37,89,141;
+
+    --jornada-normal:#17304C;
+    --jornada-hover:#235B92;
+    --jornada-selected:#1976FF;
+
+    --local:#1FB955;
+    --local-hover:#27D162;
+    --local-rgb:31,185,85;
+
+    --empate:#E79A12;
+    --empate-hover:#F3AE2E;
+    --empate-rgb:231,154,18;
+
+    --visita:#2C7DFF;
+    --visita-hover:#4D95FF;
+    --visita-rgb:44,125,255;
+
+    --success:#169B52;
+    --danger:#D14343;
+    --warning:#D4A017;
+
+    --card-gradient:linear-gradient(180deg, #14304F 0%, #102641 100%);
+    --shadow:0 12px 35px rgba(0,0,0,.35);
+
+}
 
 }
 
@@ -45,18 +85,13 @@ body{
 
     background:
         radial-gradient(
-            circle at top left,
-            rgba(var(--azul-600-rgb),.10),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            rgba(var(--azul-800-rgb),.14),
-            transparent 30%
-        ),
-        var(--azul-950);
+            circle at top,
+            var(--bg-gradient-top) 0%,
+            var(--bg-main) 45%,
+            var(--bg-gradient-bottom) 100%
+        );
 
-    color:white;
+    color:var(--text);
 
     min-height:100vh;
 
@@ -81,7 +116,7 @@ button{
 
 h1{
 
-    color:var(--azul-100);
+    color:var(--text);
 
     line-height:1;
 
@@ -92,7 +127,7 @@ h1{
 
 h2{
 
-    color:var(--azul-100);
+    color:var(--text);
 
     line-height:1;
 
@@ -103,14 +138,14 @@ h3,
 h4,
 h5{
 
-    color:var(--azul-100);
+    color:var(--text);
 
     font-family:'Outfit',sans-serif;
 }
 
 p{
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 
     line-height:1.6;
 }
@@ -201,12 +236,12 @@ p{
 
 .toast.success{
 
-    background:#16a34a;
+    background:var(--success);
 }
 
 .toast.error{
 
-    background:#dc2626;
+    background:var(--danger);
 }
 
 /* =========================

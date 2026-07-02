@@ -35,7 +35,7 @@
 
     font-size:20px;
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 }
 
 /* =========================
@@ -73,18 +73,16 @@
 
     border-radius:32px;
 
-    background:
-        rgba(var(--azul-800-rgb),.92);
+    background:var(--card-gradient);
 
     border:
-        1px solid rgba(var(--azul-300-rgb),.10);
+        1px solid rgba(var(--border-rgb),.20);
 
     backdrop-filter:blur(10px);
 
     transition:.3s;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.25);
+    box-shadow:var(--shadow);
 }
 
 .podium-card:hover{
@@ -168,7 +166,7 @@
 
     margin-bottom:12px;
 
-    color:var(--azul-100);
+    color:var(--text);
 
     font-family:'Bebas Neue',sans-serif;
 
@@ -181,7 +179,7 @@
 
     font-weight:800;
 
-    color:var(--azul-100);
+    color:var(--secondary-blue);
 }
 
 /* =========================
@@ -190,11 +188,10 @@
 
 .ranking-table-box{
 
-    background:
-        rgba(var(--azul-800-rgb),.92);
+    background:var(--card-gradient);
 
     border:
-        1px solid rgba(var(--azul-300-rgb),.10);
+        1px solid rgba(var(--border-rgb),.20);
 
     border-radius:34px;
 
@@ -204,8 +201,7 @@
 
     overflow-x:auto;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.25);
+    box-shadow:var(--shadow);
 }
 
 /* =========================
@@ -223,10 +219,10 @@
 
     padding:22px;
 
-    color:var(--azul-100);
+    color:var(--text);
 
     border-bottom:
-        1px solid rgba(var(--azul-300-rgb),.12);
+        1px solid rgba(var(--border-rgb),.24);
 
     font-size:16px;
 }
@@ -237,10 +233,10 @@
 
     text-align:center;
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 
     border-bottom:
-        1px solid rgba(var(--azul-300-rgb),.06);
+        1px solid rgba(var(--border-rgb),.12);
 }
 
 .tabla-ranking-premium tbody tr{
@@ -251,7 +247,7 @@
 .tabla-ranking-premium tbody tr:hover{
 
     background:
-        rgba(var(--azul-300-rgb),.05);
+        rgba(var(--primary-rgb),.06);
 }
 
 /* =========================
@@ -267,7 +263,7 @@
 
 .second-place{
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 
     font-weight:800;
 }
@@ -298,7 +294,7 @@
 
     margin-bottom:34px;
 
-    color:var(--azul-100);
+    color:var(--text);
 
     letter-spacing:-2px;
 }
@@ -309,11 +305,10 @@
 
 .jornada-box{
 
-    background:
-        rgba(var(--azul-800-rgb),.88);
+    background:var(--card-gradient);
 
     border:
-        1px solid rgba(var(--azul-300-rgb),.08);
+        1px solid rgba(var(--border-rgb),.16);
 
     border-radius:28px;
 
@@ -323,8 +318,7 @@
 
     overflow:hidden;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.20);
+    box-shadow:var(--shadow);
 }
 
 /* =========================
@@ -339,7 +333,7 @@
 
     margin-left: 20px;
 
-    color:var(--azul-100);
+    color:var(--text);
 }
 
 /* =========================
@@ -373,9 +367,9 @@
     position:relative;
 
     background:
-        rgba(var(--azul-300-rgb),.05);
+        rgba(var(--primary-rgb),.06);
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 
     font-size:13px;
 
@@ -386,7 +380,7 @@
     text-align:center;
 
     border-bottom:
-        1px solid rgba(var(--azul-300-rgb),.10);
+        1px solid rgba(var(--border-rgb),.20);
 }
 
 .tabla-quiniela thead th:first-child{
@@ -411,7 +405,7 @@
 .tabla-quiniela tbody tr:hover{
 
     background:
-        rgba(var(--azul-300-rgb),.04);
+        rgba(var(--primary-rgb),.05);
 }
 
 .tabla-quiniela tbody td{
@@ -421,7 +415,7 @@
     text-align:center;
 
     border-bottom:
-        1px solid rgba(var(--azul-300-rgb),.06);
+        1px solid rgba(var(--border-rgb),.10);
 
     font-size:15px;
 }
@@ -446,7 +440,7 @@
 
 .plata{
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 }
 
 .bronce{
@@ -467,13 +461,13 @@
     z-index:20;
 
     background:
-        rgba(var(--azul-950-rgb), 0.98);
+        rgba(var(--bg-sidebar-rgb), 0.98);
 
     text-align:left !important;
 
     font-weight:700;
 
-    color:var(--azul-100);
+    color:var(--text);
 
     width:180px;
 
@@ -496,7 +490,7 @@
     z-index:25;
 
     background:
-        rgba(var(--azul-800-rgb),.98);
+        rgba(var(--bg-card-rgb),.98);
 
     min-width:180px;
 
@@ -514,15 +508,15 @@
 
     font-size:18px;
 
-    color:var(--azul-300);
+    color:var(--text-secondary);
 }
 
 .acierto{
 
-    color:#22c55e;
+    color:var(--local);
 
     text-shadow:
-        0 0 10px rgba(34,197,94,.35);
+        0 0 10px rgba(var(--local-rgb),.35);
 }
 
 /* =========================
@@ -535,7 +529,7 @@
 
     font-size:18px;
 
-    color:var(--azul-100);
+    color:var(--text);
 }
 
 /* =========================
@@ -550,7 +544,7 @@
 .tabla-wrapper::-webkit-scrollbar-track{
 
     background:
-        rgba(var(--azul-300-rgb),.06);
+        rgba(var(--border-rgb),.10);
 
     border-radius:999px;
 }
@@ -558,7 +552,7 @@
 .tabla-wrapper::-webkit-scrollbar-thumb{
 
     background:
-        rgba(var(--azul-600-rgb),.45);
+        rgba(var(--primary-rgb),.45);
 
     border-radius:999px;
 }
@@ -573,10 +567,6 @@
 
         padding:0 4px;
     }
-
-    /* =========================
-       HEADER
-    ========================= */
 
     .ranking-header{
 
@@ -597,10 +587,6 @@
         letter-spacing:4px;
     }
 
-    /* =========================
-       PODIUM
-    ========================= */
-
     .podium{
 
         flex-direction:column;
@@ -611,10 +597,6 @@
 
         margin-bottom:34px;
     }
-
-    /* =========================
-       ORDER
-    ========================= */
 
     .gold{
 
@@ -630,10 +612,6 @@
 
         order:3;
     }
-
-    /* =========================
-       CARDS
-    ========================= */
 
     .podium-card{
 
@@ -680,20 +658,12 @@
         transform:none;
     }
 
-    /* =========================
-       MEDALS
-    ========================= */
-
     .medal{
 
         font-size:52px;
 
         margin-bottom:14px;
     }
-
-    /* =========================
-       TEXT
-    ========================= */
 
     .podium-card h2{
 
@@ -706,10 +676,6 @@
 
         font-size:18px;
     }
-
-    /* =========================
-       TABLE
-    ========================= */
 
     .ranking-table-box{
 

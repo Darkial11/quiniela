@@ -18,9 +18,9 @@
 
     max-width: 700px;
 
-    background: rgba(var(--azul-800-rgb),.92);
+    background: var(--card-gradient);
 
-    border: 1px solid rgba(var(--azul-300-rgb),.10);
+    border: 1px solid rgba(var(--border-rgb),0.20);
 
     border-radius: 30px;
 
@@ -28,7 +28,7 @@
 
     text-align: center;
 
-    box-shadow: 0 0 40px rgba(0,0,0,0.35);
+    box-shadow: var(--shadow);
 
 }
 
@@ -36,7 +36,7 @@
 
     font-size: 52px;
 
-    color: var(--azul-100);
+    color: var(--text);
 
     margin-bottom: 25px;
 
@@ -44,7 +44,7 @@
 
 .contact-text {
 
-    color: var(--azul-300);
+    color: var(--text-secondary);
 
     font-size: 20px;
 
@@ -84,9 +84,9 @@
 
     font-weight: 700;
 
-    background: var(--azul-600);
+    background: var(--primary);
 
-    color: var(--azul-100);
+    color: var(--text);
 
     transition: 0.25s;
 
@@ -94,19 +94,21 @@
 
 .contact-btn:hover {
 
+    background: var(--primary-hover);
+
     transform: translateY(-2px);
 
-    box-shadow: 0 0 20px rgba(var(--azul-600-rgb),0.35);
+    box-shadow: 0 8px 20px rgba(var(--primary-rgb),0.30);
 
 }
 
 .instagram {
 
-    background: rgba(var(--azul-800-rgb),.92);
+    background: rgba(var(--bg-card-rgb),.92);
 
-    color: var(--azul-100);
+    color: var(--text);
 
-    border: 1px solid rgba(var(--azul-300-rgb),0.14);
+    border: 1px solid rgba(var(--border-rgb),0.24);
 
 }
 
@@ -114,7 +116,7 @@
 
     margin-top: 40px;
 
-    color: var(--azul-300);
+    color: var(--text-muted);
 
     font-size: 14px;
 
