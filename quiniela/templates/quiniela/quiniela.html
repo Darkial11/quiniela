@@ -8,11 +8,19 @@
 
 <div class="quiniela-layout">
 
-        {% if request.user.perfil.pago_confirmado %}
+        {% if pago_confirmado_jornada %}
 
         <div class="payment-ok">
 
             ✓ Participación confirmada
+
+        </div>
+
+        {% else %}
+
+        <div class="payment-pending">
+
+            ⏳ Pago pendiente de confirmar
 
         </div>
 
@@ -29,7 +37,7 @@
 
             <h1>
 
-                Mundial 2026
+                {{ torneo.nombre }}
 
             </h1>
 
@@ -76,7 +84,7 @@
         {% for j in jornadas %}
 
         <a
-            href="/jornada/{{ j.numero }}/"
+            href="/{{ torneo.slug }}/jornada/{{ j.numero }}/"
             class="
                 jornada-pill
 
@@ -105,11 +113,15 @@
 
             <div class="match-top">
 
+                {% if partido.grupo %}
+
                 <span class="grupo-badge">
 
                     Grupo {{ partido.grupo }}
 
                 </span>
+
+                {% endif %}
 
                 {% if partido.resultado_real %}
 
@@ -245,25 +257,12 @@
 
     </div>
 
-    {% if request.user.perfil.pago_confirmado %}
-
     <button
         id="guardar"
         class="floating-save"
     >
         Guardar Quiniela
     </button>
-
-    {% else %}
-
-    <button
-        id="btnPagar"
-        class="floating-pay"
-    >
-        💳 Pagar $100 para participar
-    </button>
-
-    {% endif %}
 
 </div>
 
@@ -272,6 +271,10 @@
     window.jornadaActual =
 
         {{ jornada_actual }};
+
+    window.torneoSlug =
+
+        "{{ torneo.slug }}";
 
 </script>
 

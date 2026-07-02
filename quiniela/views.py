@@ -53,16 +53,40 @@ def inicio(request, torneo_slug, jornada=1):
         id__in=jornadas_ids
     ).order_by('numero')
 
+    if torneo_obj.tipo_cobro == 'unico':
+
+        pago_confirmado_jornada = request.user.perfil.pago_confirmado
+
+    else:
+
+        pago_confirmado_jornada = Pago.objects.filter(
+            user=request.user,
+            jornada=jornada_obj,
+            confirmado=True
+        ).exists()
+
     return render(
+
         request,
+
         'quiniela/quiniela.html',
+
         {
+
             'partidos': partidos,
+
             'jornadas': jornadas,
+
             'jornada_actual': jornada_obj.numero,
+
             'jornada_obj': jornada_obj,
+
             'torneo': torneo_obj,
+
+            'pago_confirmado_jornada': pago_confirmado_jornada,
+
         }
+
     )
 
 
