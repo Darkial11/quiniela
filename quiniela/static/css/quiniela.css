@@ -86,6 +86,36 @@
 
 }
 
+.payment-pending{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 16px;
+
+    margin-bottom: 18px;
+
+    border-radius: 999px;
+
+    background: rgba(245,158,11,.08);
+
+    border: 1px solid rgba(245,158,11,.22);
+
+    color: #fbbf24;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    letter-spacing: .5px;
+
+    backdrop-filter: blur(12px);
+
+}
+
 .header-right{
 
     display:flex;
@@ -571,7 +601,8 @@
         padding:0 4px;
     }
     
-    .payment-ok{
+    .payment-ok,
+    .payment-pending{
 
     width:100%;
 
