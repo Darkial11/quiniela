@@ -334,9 +334,9 @@
 
 .flag{
 
-    width:74px;
+    width:96px;
 
-    height:53px;
+    height:69px;
 
     object-fit:contain;
 
@@ -711,9 +711,9 @@
 
     .flag{
 
-        width:53px;
+        width:69px;
 
-        height:38px;
+        height:49px;
 
         border-radius:6px;
     }
