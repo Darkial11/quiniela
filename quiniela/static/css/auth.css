@@ -327,9 +327,16 @@
         gap:30px;
     }
 
+    .auth-layout.login-page{
+
+        margin-top:0;
+    }
+
     .auth-left{
 
         text-align:center;
+
+        margin-top:0;
     }
 
     .auth-description{
