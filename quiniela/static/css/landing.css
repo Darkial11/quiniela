@@ -67,6 +67,16 @@
    HERO
 ========================= */
 
+.home-hero-wrap{
+
+    background:
+        linear-gradient(
+            rgba(7,20,37,.78),
+            rgba(7,20,37,.88)
+        ),
+        url('/static/img/fondo_estadio.png') center/cover no-repeat;
+}
+
 .hero{
 
     min-height:auto;
@@ -86,13 +96,6 @@
     overflow:hidden;
 
     padding:0 20px 70px;
-
-    background:
-        linear-gradient(
-            rgba(7,20,37,.78),
-            rgba(7,20,37,.88)
-        ),
-        url('/static/img/fondo_estadio.png') center/cover no-repeat;
 }
 
 .hero::before{
