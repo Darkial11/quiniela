@@ -29,6 +29,11 @@
         url('/static/img/fondo_estadio.png') center/cover no-repeat;
 }
 
+.auth-layout.login-page{
+
+    margin-top:-90px;
+}
+
 /* =========================
    LEFT SIDE
 ========================= */
