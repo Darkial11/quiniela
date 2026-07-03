@@ -284,10 +284,10 @@
 
 .feature-card{
 
-    background:rgba(var(--bg-card-rgb),.32);
+    background:rgba(var(--bg-card-rgb),.16);
 
     border:
-        1px solid rgba(var(--border-rgb),.22);
+        1px solid rgba(var(--border-rgb),.28);
 
     border-radius:28px;
 
@@ -295,7 +295,7 @@
 
     text-align:center;
 
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(6px);
 
     transition:.25s;
 
@@ -321,7 +321,13 @@
 
     margin-bottom:16px;
 
-    font-size:22px;
+    font-size:19px;
+
+    font-family:'Outfit',sans-serif;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
 }
 
 .feature-card p{
