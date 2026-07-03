@@ -20,6 +20,13 @@
     margin:auto;
 
     padding:40px;
+
+    background:
+        linear-gradient(
+            rgba(7,20,37,.78),
+            rgba(7,20,37,.88)
+        ),
+        url('/static/img/fondo_estadio.png') center/cover no-repeat;
 }
 
 /* =========================
