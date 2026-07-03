@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load quiniela_extras %}
 
 {% block content %}
@@ -109,10 +110,18 @@
 
                 <div class="teams-row">
                     <div class="team-block">
+                        <img
+                            src="{% static 'img/banderas/' %}{{ partido.local|slugify }}.png"
+                            class="flag"
+                        >
                         <div class="team-name">{{ partido.local }}</div>
                     </div>
                     <div class="versus">VS</div>
                     <div class="team-block">
+                        <img
+                            src="{% static 'img/banderas/' %}{{ partido.visitante|slugify }}.png"
+                            class="flag"
+                        >
                         <div class="team-name">{{ partido.visitante }}</div>
                     </div>
                 </div>
@@ -186,12 +195,27 @@
     </form>
 
     <script>
+        document.querySelectorAll('.opciones').forEach(function(grupo) {
+            const yaSeleccionado = grupo.querySelector('.opcion-visual.seleccionado');
+            if (yaSeleccionado) {
+                grupo.querySelectorAll('.opcion-visual').forEach(function(s) {
+                    if (s !== yaSeleccionado) {
+                        s.classList.add('apagado');
+                    }
+                });
+            }
+        });
+
         document.querySelectorAll('.opcion-visual').forEach(function(span) {
             span.addEventListener('click', function() {
                 const radio = this.previousElementSibling;
                 radio.checked = true;
                 const grupo = this.closest('.opciones').querySelectorAll('.opcion-visual');
-                grupo.forEach(function(s) { s.classList.remove('seleccionado'); });
+                grupo.forEach(function(s) {
+                    s.classList.remove('seleccionado');
+                    s.classList.add('apagado');
+                });
+                this.classList.remove('apagado');
                 this.classList.add('seleccionado');
             });
         });
