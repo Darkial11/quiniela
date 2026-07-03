@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('panel-pronosticos/', views.admin_cargar_pronostico, name='panel_pronosticos'),
     path('<slug:torneo_slug>/', views.inicio, name='inicio'),
     path('<slug:torneo_slug>/jornada/<int:jornada>/', views.inicio),
     path('<slug:torneo_slug>/guardar/', views.guardar_pronosticos),

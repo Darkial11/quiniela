@@ -1,6 +1,7 @@
 """ quiniela / views """
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.template import TemplateDoesNotExist
 from django.http import JsonResponse, HttpResponse
@@ -625,4 +626,142 @@ def reglamento_torneo(request, torneo_slug):
             'quiniela/reglamento_generico.html',
             {'torneo': torneo_obj}
         )
-    
+
+
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def admin_cargar_pronostico(request):
+
+    jornadas = Jornada.objects.select_related('torneo').order_by(
+        'torneo__nombre', 'numero'
+    )
+
+    usuarios = User.objects.select_related('perfil').order_by('perfil__nick')
+
+    jornada_id = request.GET.get('jornada_id') or request.POST.get('jornada_id')
+    user_id = request.GET.get('user_id') or request.POST.get('user_id')
+
+    jornada_obj = None
+    usuario_obj = None
+    partidos = []
+    pronosticos_existentes = {}
+    ya_existian = False
+    pago_obj = None
+
+    if jornada_id:
+        jornada_obj = Jornada.objects.select_related('torneo').filter(
+            id=jornada_id
+        ).first()
+
+    if user_id:
+        usuario_obj = User.objects.select_related('perfil').filter(
+            id=user_id
+        ).first()
+
+    if jornada_obj:
+        partidos = Partido.objects.filter(jornada=jornada_obj).order_by('id')
+
+    if jornada_obj and usuario_obj:
+
+        existentes = Pronostico.objects.filter(
+            user=usuario_obj,
+            partido__jornada=jornada_obj
+        )
+
+        pronosticos_existentes = {
+            p.partido_id: p.seleccion for p in existentes
+        }
+
+        ya_existian = existentes.exists()
+
+        if jornada_obj.torneo.tipo_cobro == 'por_jornada':
+
+            pago_obj = Pago.objects.filter(
+                user=usuario_obj,
+                jornada=jornada_obj
+            ).first()
+
+    if request.method == 'POST' and jornada_obj and usuario_obj:
+
+        confirmar_sobrescritura = request.POST.get('confirmar_sobrescritura') == '1'
+
+        if ya_existian and not confirmar_sobrescritura:
+
+            messages.warning(
+                request,
+                f'{usuario_obj.perfil.nick} ya tiene pronósticos guardados '
+                f'en esta jornada. Revisa los valores precargados abajo y '
+                f'dale "Guardar y sobrescribir" si quieres reemplazarlos.'
+            )
+
+        else:
+
+            Pronostico.objects.filter(
+                user=usuario_obj,
+                partido__jornada=jornada_obj
+            ).delete()
+
+            guardados = 0
+
+            for partido in partidos:
+
+                seleccion = request.POST.get(f'partido_{partido.id}')
+
+                if seleccion in ('L', 'E', 'V'):
+
+                    Pronostico.objects.create(
+                        user=usuario_obj,
+                        partido=partido,
+                        seleccion=seleccion
+                    )
+
+                    guardados += 1
+
+            if not usuario_obj.perfil.participando:
+                usuario_obj.perfil.participando = True
+                usuario_obj.perfil.save()
+
+            if jornada_obj.torneo.tipo_cobro == 'por_jornada':
+
+                pago_obj, _ = Pago.objects.get_or_create(
+                    user=usuario_obj,
+                    jornada=jornada_obj
+                )
+
+                if request.POST.get('confirmar_pago') == '1':
+
+                    pago_obj.confirmado = True
+                    pago_obj.fecha_confirmacion = timezone.now()
+                    pago_obj.confirmado_por = request.user
+                    pago_obj.save()
+
+            messages.success(
+                request,
+                f'{guardados} pronósticos guardados para {usuario_obj.perfil.nick} '
+                f'— Jornada {jornada_obj.numero} ({jornada_obj.torneo.nombre}).'
+            )
+
+            existentes = Pronostico.objects.filter(
+                user=usuario_obj,
+                partido__jornada=jornada_obj
+            )
+
+            pronosticos_existentes = {
+                p.partido_id: p.seleccion for p in existentes
+            }
+
+            ya_existian = True
+
+    return render(
+        request,
+        'quiniela/admin_cargar_pronostico.html',
+        {
+            'jornadas': jornadas,
+            'usuarios': usuarios,
+            'jornada_obj': jornada_obj,
+            'usuario_obj': usuario_obj,
+            'partidos': partidos,
+            'pronosticos_existentes': pronosticos_existentes,
+            'ya_existian': ya_existian,
+            'pago_obj': pago_obj,
+        }
+    )

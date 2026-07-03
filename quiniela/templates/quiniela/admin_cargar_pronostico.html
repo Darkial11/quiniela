@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load quiniela_extras %}
+
+{% block content %}
+
+<div class="container" style="max-width:900px;">
+
+    <h1 style="margin-bottom:24px;">Cargar pronóstico manual</h1>
+
+    {% if messages %}
+
+    {% for message in messages %}
+
+    <div style="
+        padding:14px 18px;
+        border-radius:12px;
+        margin-bottom:18px;
+        {% if message.tags == 'success' %}
+            background:rgba(22,155,82,.15);
+            border:1px solid rgba(22,155,82,.35);
+            color:#4ade80;
+        {% else %}
+            background:rgba(212,160,23,.15);
+            border:1px solid rgba(212,160,23,.35);
+            color:#f3c04a;
+        {% endif %}
+    ">
+
+        {{ message }}
+
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+    <form method="GET" style="
+        display:flex;
+        gap:14px;
+        flex-wrap:wrap;
+        align-items:flex-end;
+        background:rgba(var(--bg-card-rgb),.4);
+        border:1px solid rgba(var(--border-rgb),.20);
+        border-radius:16px;
+        padding:20px;
+        margin-bottom:24px;
+    ">
+
+        <div>
+            <label style="display:block; color:var(--text-muted); font-size:13px; margin-bottom:6px;">Jornada</label>
+            <select name="jornada_id" style="
+                background:#1e293b; border:1px solid #334155; border-radius:8px;
+                padding:10px 14px; color:white; font-size:14px; min-width:260px;
+            ">
+                <option value="">-- Selecciona --</option>
+                {% for j in jornadas %}
+                <option value="{{ j.id }}" {% if jornada_obj.id == j.id %}selected{% endif %}>
+                    {{ j.torneo.nombre }} — Jornada {{ j.numero }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label style="display:block; color:var(--text-muted); font-size:13px; margin-bottom:6px;">Usuario</label>
+            <select name="user_id" style="
+                background:#1e293b; border:1px solid #334155; border-radius:8px;
+                padding:10px 14px; color:white; font-size:14px; min-width:220px;
+            ">
+                <option value="">-- Selecciona --</option>
+                {% for u in usuarios %}
+                <option value="{{ u.id }}" {% if usuario_obj.id == u.id %}selected{% endif %}>
+                    {{ u.perfil.nick }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="auth-btn" style="width:auto; padding:0 24px; height:44px;">
+            Ver partidos
+        </button>
+
+    </form>
+
+    {% if jornada_obj and usuario_obj %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input type="hidden" name="jornada_id" value="{{ jornada_obj.id }}">
+        <input type="hidden" name="user_id" value="{{ usuario_obj.id }}">
+
+        {% if ya_existian %}
+
+        <input type="hidden" name="confirmar_sobrescritura" value="1">
+
+        {% endif %}
+
+        <h2 style="margin-bottom:16px;">
+            {{ usuario_obj.perfil.nick }} — Jornada {{ jornada_obj.numero }} ({{ jornada_obj.torneo.nombre }})
+        </h2>
+
+        <div class="matches-grid">
+
+            {% for partido in partidos %}
+
+            <div class="match-card">
+
+                <div class="teams-row">
+                    <div class="team-block">
+                        <div class="team-name">{{ partido.local }}</div>
+                    </div>
+                    <div class="versus">VS</div>
+                    <div class="team-block">
+                        <div class="team-name">{{ partido.visitante }}</div>
+                    </div>
+                </div>
+
+                <div class="opciones premium-options">
+
+                    {% with actual=pronosticos_existentes|get_item:partido.id %}
+
+                    <label>
+                        <input type="radio" name="partido_{{ partido.id }}" value="L" {% if actual == 'L' %}checked{% endif %} style="display:none;" class="radio-opcion">
+                        <span class="btn local opcion-visual {% if actual == 'L' %}seleccionado{% endif %}">L</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="partido_{{ partido.id }}" value="E" {% if actual == 'E' %}checked{% endif %} style="display:none;" class="radio-opcion">
+                        <span class="btn empate opcion-visual {% if actual == 'E' %}seleccionado{% endif %}">E</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="partido_{{ partido.id }}" value="V" {% if actual == 'V' %}checked{% endif %} style="display:none;" class="radio-opcion">
+                        <span class="btn visita opcion-visual {% if actual == 'V' %}seleccionado{% endif %}">V</span>
+                    </label>
+
+                    {% endwith %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% if pago_obj is not None or jornada_obj.torneo.tipo_cobro == 'por_jornada' %}
+
+        <div style="
+            background:rgba(var(--bg-card-rgb),.4);
+            border:1px solid rgba(var(--border-rgb),.20);
+            border-radius:16px;
+            padding:18px 20px;
+            margin:24px 0;
+        ">
+
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+
+                <input
+                    type="checkbox"
+                    name="confirmar_pago"
+                    value="1"
+                    {% if pago_obj.confirmado %}checked{% endif %}
+                    style="width:18px; height:18px; cursor:pointer;"
+                >
+
+                <span>
+                    Confirmar pago de esta jornada
+                    {% if pago_obj.confirmado %}
+                        <span style="color:#4ade80;">(ya estaba confirmado)</span>
+                    {% endif %}
+                </span>
+
+            </label>
+
+        </div>
+
+        {% endif %}
+
+        <button type="submit" class="auth-btn" style="width:auto; padding:0 32px;">
+            {% if ya_existian %}Guardar y sobrescribir{% else %}Guardar pronóstico{% endif %}
+        </button>
+
+    </form>
+
+    <script>
+        document.querySelectorAll('.opcion-visual').forEach(function(span) {
+            span.addEventListener('click', function() {
+                const radio = this.previousElementSibling;
+                radio.checked = true;
+                const grupo = this.closest('.opciones').querySelectorAll('.opcion-visual');
+                grupo.forEach(function(s) { s.classList.remove('seleccionado'); });
+                this.classList.add('seleccionado');
+            });
+        });
+    </script>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
