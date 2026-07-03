@@ -10,4 +10,5 @@ urlpatterns = [
     path('<slug:torneo_slug>/ranking/', views.ranking),
     path('<slug:torneo_slug>/cargar/<int:jornada>/', views.cargar_pronosticos, name='cargar_pronosticos'),
     path('<slug:torneo_slug>/exportar-pdf/<int:jornada>/', views.exportar_pdf_jornada),
+    path('<slug:torneo_slug>/reglamento/', views.reglamento_torneo, name='reglamento_torneo'),
 ]

@@ -41,11 +41,6 @@ urlpatterns = [
     ),
 
     path(
-        'reglamento/',
-        views.reglamento
-    ),
-
-    path(
 
     "contacto/",
 

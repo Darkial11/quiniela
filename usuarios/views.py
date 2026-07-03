@@ -233,16 +233,6 @@ def home(request):
         context
     )
 
-def reglamento(request):
-
-    return render(
-
-        request,
-
-        'usuarios/reglamento.html'
-
-    )
-
 def contacto(request):
 
     return render(

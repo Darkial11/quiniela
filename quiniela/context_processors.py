@@ -25,6 +25,10 @@ def torneo_actual(request):
 
             torneo = Torneo.objects.filter(slug=ultimo_slug).first()
 
+    if not torneo:
+
+        torneo = Torneo.objects.filter(activo=True).first()
+
     return {
         'torneo_actual': torneo
     }

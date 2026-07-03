@@ -2,6 +2,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.template import TemplateDoesNotExist
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.utils import timezone
@@ -574,3 +575,31 @@ def exportar_pdf_jornada(request, torneo_slug, jornada):
     )
 
     return response
+
+
+@login_required(login_url='/login/')
+def reglamento_torneo(request, torneo_slug):
+
+    torneo_obj = Torneo.objects.filter(slug=torneo_slug).first()
+
+    if not torneo_obj:
+        return HttpResponse(status=404)
+
+    template_name = f'quiniela/reglamento_{torneo_obj.slug}.html'
+
+    try:
+
+        return render(
+            request,
+            template_name,
+            {'torneo': torneo_obj}
+        )
+
+    except TemplateDoesNotExist:
+
+        return render(
+            request,
+            'quiniela/reglamento_generico.html',
+            {'torneo': torneo_obj}
+        )
+    
