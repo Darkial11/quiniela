@@ -911,6 +911,23 @@
    TEAM NAME FONT
 ========================= */
 
+/* =========================
+   OPCION VISUAL (panel admin)
+========================= */
+
+.opcion-visual{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+/* =========================
+   TEAM NAME FONT
+========================= */
+
 .team-name{
 
     font-family:'Outfit',sans-serif;
