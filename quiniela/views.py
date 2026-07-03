@@ -165,100 +165,124 @@ def ver_pronosticos(request, torneo_slug):
     if not torneo_obj:
         return HttpResponse(status=404)
 
-    jornadas = Jornada.objects.filter(torneo=torneo_obj).order_by('numero')
+    todas_jornadas = Jornada.objects.filter(
+        torneo=torneo_obj
+    ).order_by('numero')
 
-    tabla_jornadas = []
+    jornada_param = request.GET.get('jornada')
 
-    for jornada in jornadas:
+    if jornada_param:
 
-        partidos = list(
-            Partido.objects.filter(jornada=jornada).order_by('id')
+        jornada = todas_jornadas.filter(numero=jornada_param).first()
+
+    else:
+
+        jornada = todas_jornadas.filter(abierta=True).order_by('numero').first()
+
+    if not jornada:
+
+        jornada = todas_jornadas.first()
+
+    if not jornada:
+
+        return render(
+            request,
+            'quiniela/pronosticos.html',
+            {
+                'torneo': torneo_obj,
+                'todas_jornadas': todas_jornadas,
+                'bloque': None,
+            }
         )
 
-        if torneo_obj.tipo_cobro == 'unico':
+    partidos = list(
+        Partido.objects.filter(jornada=jornada).order_by('id')
+    )
 
-            participantes = list(
-                User.objects.filter(
-                    perfil__pago_confirmado=True
-                ).distinct().select_related('perfil')
-            )
+    if torneo_obj.tipo_cobro == 'unico':
 
-        else:
+        participantes = list(
+            User.objects.filter(
+                perfil__pago_confirmado=True
+            ).distinct().select_related('perfil')
+        )
 
-            participantes = list(
-                User.objects.filter(
-                    pago__jornada=jornada,
-                    pago__confirmado=True
-                ).distinct().select_related('perfil')
-            )
+    else:
 
-        pronosticos_jornada = Pronostico.objects.filter(
-            partido__jornada=jornada
-        ).select_related('partido', 'user')
+        participantes = list(
+            User.objects.filter(
+                pago__jornada=jornada,
+                pago__confirmado=True
+            ).distinct().select_related('perfil')
+        )
 
-        mapa = {}
+    pronosticos_jornada = Pronostico.objects.filter(
+        partido__jornada=jornada
+    ).select_related('partido', 'user')
 
-        for p in pronosticos_jornada:
-            mapa[(p.user_id, p.partido_id)] = p
+    mapa = {}
 
-        tabla = []
+    for p in pronosticos_jornada:
+        mapa[(p.user_id, p.partido_id)] = p
 
-        for participante in participantes:
+    tabla = []
 
-            fila_pronosticos = []
-            total = 0
+    for participante in participantes:
 
-            for partido in partidos:
+        fila_pronosticos = []
+        total = 0
 
-                pronostico = mapa.get((participante.id, partido.id))
+        for partido in partidos:
 
-                if pronostico:
+            pronostico = mapa.get((participante.id, partido.id))
 
-                    seleccion = pronostico.seleccion
-                    acierto = (seleccion == partido.resultado_real)
+            if pronostico:
 
-                    if acierto:
-                        total += 1
+                seleccion = pronostico.seleccion
+                acierto = (seleccion == partido.resultado_real)
 
-                else:
+                if acierto:
+                    total += 1
 
-                    seleccion = "-"
-                    acierto = False
+            else:
 
-                fila_pronosticos.append({
-                    'seleccion': seleccion,
-                    'acierto': acierto
-                })
+                seleccion = "-"
+                acierto = False
 
-            nick = getattr(
-                getattr(participante, 'perfil', None),
-                'nick',
-                participante.username
-            )
-
-            tabla.append({
-                'nombre': nick,
-                'pronosticos': fila_pronosticos,
-                'total': total
+            fila_pronosticos.append({
+                'seleccion': seleccion,
+                'acierto': acierto
             })
 
-        tabla = sorted(tabla, key=lambda x: x['total'], reverse=True)
+        nick = getattr(
+            getattr(participante, 'perfil', None),
+            'nick',
+            participante.username
+        )
 
-        tabla_jornadas.append({
-            'jornada': jornada,
-            'partidos': partidos,
-            'tabla': tabla
+        tabla.append({
+            'nombre': nick,
+            'pronosticos': fila_pronosticos,
+            'total': total
         })
+
+    tabla = sorted(tabla, key=lambda x: x['total'], reverse=True)
+
+    bloque = {
+        'jornada': jornada,
+        'partidos': partidos,
+        'tabla': tabla
+    }
 
     return render(
         request,
         'quiniela/pronosticos.html',
         {
-            'tabla_jornadas': tabla_jornadas,
+            'bloque': bloque,
+            'todas_jornadas': todas_jornadas,
             'torneo': torneo_obj,
         }
     )
-
 
 @login_required(login_url='/login/')
 def cargar_pronosticos(request, torneo_slug, jornada):

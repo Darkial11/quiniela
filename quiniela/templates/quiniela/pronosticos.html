@@ -7,24 +7,25 @@
 <div class="container">
 
     <div style="
-        background:#0f172a;
+        background:var(--bg-sidebar);
         border:1px solid #1e293b;
         border-radius:16px;
         padding:20px 24px;
         margin-bottom:28px;
     ">
-        <p style="color:#94a3b8; font-size:13px; margin-bottom:10px;">
-            🔍 Filtrar participantes
-        </p>
-        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start;">
 
-            <div style="position:relative; min-width:260px;">
-                <input
-                    id="filtro-input"
-                    type="text"
-                    placeholder="Buscar participante..."
+        <div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
+
+            <div>
+
+                <p style="color:#94a3b8; font-size:13px; margin-bottom:10px;">
+                    📅 Jornada
+                </p>
+
+                <select
+                    id="selector-jornada"
+                    onchange="window.location.search = '?jornada=' + this.value"
                     style="
-                        width:100%;
                         background:#1e293b;
                         border:1px solid #334155;
                         border-radius:8px;
@@ -33,45 +34,93 @@
                         font-family:'Outfit',sans-serif;
                         font-size:14px;
                         outline:none;
+                        min-width:140px;
                     "
                 >
-                <div id="filtro-dropdown" style="
-                    display:none;
-                    position:absolute;
-                    top:100%;
-                    left:0;
-                    right:0;
-                    background:#1e293b;
-                    border:1px solid #334155;
-                    border-radius:8px;
-                    margin-top:4px;
-                    max-height:220px;
-                    overflow-y:auto;
-                    z-index:999;
-                "></div>
+
+                    {% for j in todas_jornadas %}
+
+                    <option
+                        value="{{ j.numero }}"
+                        {% if bloque and bloque.jornada.numero == j.numero %}selected{% endif %}
+                    >
+
+                        Jornada {{ j.numero }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
             </div>
 
-            <div id="filtro-tags" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
+            <div>
 
-            <button
-                onclick="filtrarTodos()"
-                style="
-                    background:transparent;
-                    color:#94a3b8;
-                    border:1px solid #334155;
-                    border-radius:8px;
-                    padding:8px 16px;
-                    font-weight:600;
-                    font-family:'Outfit',sans-serif;
-                    cursor:pointer;
-                    font-size:13px;
-                "
-            >✕ Limpiar</button>
+                <p style="color:#94a3b8; font-size:13px; margin-bottom:10px;">
+                    🔍 Filtrar participantes
+                </p>
+
+                <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start;">
+
+                    <div style="position:relative; min-width:260px;">
+                        <input
+                            id="filtro-input"
+                            type="text"
+                            placeholder="Buscar participante..."
+                            style="
+                                width:100%;
+                                background:#1e293b;
+                                border:1px solid #334155;
+                                border-radius:8px;
+                                padding:8px 16px;
+                                color:white;
+                                font-family:'Outfit',sans-serif;
+                                font-size:14px;
+                                outline:none;
+                            "
+                        >
+                        <div id="filtro-dropdown" style="
+                            display:none;
+                            position:absolute;
+                            top:100%;
+                            left:0;
+                            right:0;
+                            background:#1e293b;
+                            border:1px solid #334155;
+                            border-radius:8px;
+                            margin-top:4px;
+                            max-height:220px;
+                            overflow-y:auto;
+                            z-index:999;
+                        "></div>
+                    </div>
+
+                    <div id="filtro-tags" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
+
+                    <button
+                        onclick="filtrarTodos()"
+                        style="
+                            background:transparent;
+                            color:#94a3b8;
+                            border:1px solid #334155;
+                            border-radius:8px;
+                            padding:8px 16px;
+                            font-weight:600;
+                            font-family:'Outfit',sans-serif;
+                            cursor:pointer;
+                            font-size:13px;
+                        "
+                    >✕ Limpiar</button>
+
+                </div>
+
+            </div>
 
         </div>
-    </div>   
+    </div>
 
-    {% for bloque in tabla_jornadas %}
+    {% if bloque %}
 
     <div class="jornada-box">
 
@@ -182,7 +231,15 @@
 
     </div>
 
-    {% endfor %}
+    {% else %}
+
+    <p style="color:#94a3b8; text-align:center; padding:40px;">
+
+        Todavía no hay jornadas cargadas para este torneo.
+
+    </p>
+
+    {% endif %}
 
 </div>
 
@@ -202,7 +259,6 @@
 
     const seleccionados = new Set();
 
-    // Mostrar dropdown al escribir
     input.addEventListener('input', () => {
 
         const busqueda = input.value.trim().toLowerCase();
@@ -250,7 +306,6 @@
 
     });
 
-    // Cerrar dropdown al hacer click fuera
     document.addEventListener('click', (e) => {
         if (!input.contains(e.target) && !dropdown.contains(e.target)) {
             dropdown.style.display = 'none';
