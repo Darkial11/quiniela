@@ -153,12 +153,12 @@
     background: rgba(209,67,67,.10);
     border: 1px solid rgba(209,67,67,.22);
     color: #f87171;
-    padding: 8px 14px;
+    padding: 10px 14px;
     border-radius: 12px;
     font-size: 13px;
     font-weight: 700;
     transition: .25s;
-    width: auto;
+    width: 85%;
     align-self: center;
 }
 
