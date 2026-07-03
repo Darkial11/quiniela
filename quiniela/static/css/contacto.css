@@ -18,9 +18,9 @@
 
     max-width: 700px;
 
-    background: var(--card-gradient);
+    background: rgba(var(--bg-card-rgb),.4);
 
-    border: 1px solid rgba(var(--border-rgb),0.20);
+    border: 1px solid rgba(var(--border-rgb),.20);
 
     border-radius: 30px;
 
