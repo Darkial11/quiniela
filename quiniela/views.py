@@ -577,7 +577,6 @@ def exportar_pdf_jornada(request, torneo_slug, jornada):
     return response
 
 
-@login_required(login_url='/login/')
 def reglamento_torneo(request, torneo_slug):
 
     torneo_obj = Torneo.objects.filter(slug=torneo_slug).first()
