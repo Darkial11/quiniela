@@ -111,6 +111,11 @@
     box-shadow:var(--shadow);
 }
 
+.auth-card.regulamento-card{
+
+    background:rgba(var(--bg-card-rgb),.4);
+}
+
 .auth-card h2{
 
     color:var(--text);
