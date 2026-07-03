@@ -84,7 +84,7 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 .sidebar-nav a {
@@ -143,14 +143,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     text-align: center;
     background: rgba(209,67,67,.10);
     border: 1px solid rgba(209,67,67,.22);
     color: #f87171;
-    padding: 10px 16px;
-    border-radius: 14px;
-    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 13px;
     font-weight: 700;
     transition: .25s;
     width: 100%;

@@ -83,18 +83,20 @@ body{
 
     font-family:'Outfit',sans-serif;
 
-    background:
+    background-image:
         linear-gradient(
-            rgba(7,20,37,.85),
-            rgba(7,20,37,.85)
+            rgba(7,20,37,.82),
+            rgba(7,20,37,.90)
         ),
-        url('/static/img/fondo_estadio.png') no-repeat top right / 640px auto,
-        radial-gradient(
-            circle at top,
-            var(--bg-gradient-top) 0%,
-            var(--bg-main) 45%,
-            var(--bg-gradient-bottom) 100%
-        );
+        url('/static/img/fondo_estadio.png');
+
+    background-repeat:no-repeat,no-repeat;
+
+    background-position:center,center;
+
+    background-size:cover,cover;
+
+    background-attachment:fixed,fixed;
 
     color:var(--text);
 
