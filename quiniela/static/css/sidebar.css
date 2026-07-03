@@ -19,7 +19,6 @@
     padding: 18px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -111,6 +110,11 @@
     background: var(--bg-sidebar-hover);
     color: var(--text);
     transform: translateX(3px);
+}
+
+.sidebar-bottom{
+
+    margin-top:auto;
 }
 
 /* =========================
