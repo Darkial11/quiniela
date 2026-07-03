@@ -305,7 +305,7 @@
 
 .jornada-box{
 
-    background:var(--card-gradient);
+    background:rgba(var(--bg-card-rgb),.4);
 
     border:
         1px solid rgba(var(--border-rgb),.16);
