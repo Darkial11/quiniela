@@ -284,10 +284,10 @@
 
 .feature-card{
 
-    background:var(--card-gradient);
+    background:rgba(var(--bg-card-rgb),.32);
 
     border:
-        1px solid rgba(var(--border-rgb),.18);
+        1px solid rgba(var(--border-rgb),.22);
 
     border-radius:28px;
 
