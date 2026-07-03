@@ -14,6 +14,17 @@ def torneo_actual(request):
 
             torneo = Torneo.objects.filter(slug=torneo_slug).first()
 
+            if torneo:
+                request.session['ultimo_torneo_slug'] = torneo.slug
+
+    if not torneo:
+
+        ultimo_slug = request.session.get('ultimo_torneo_slug')
+
+        if ultimo_slug:
+
+            torneo = Torneo.objects.filter(slug=ultimo_slug).first()
+
     return {
         'torneo_actual': torneo
     }
