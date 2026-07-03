@@ -30,7 +30,7 @@
 
 .mini-title{
 
-    color:var(--text-muted);
+    color:var(--primary);
 
     letter-spacing:4px;
 
@@ -208,7 +208,7 @@
 
 .active-pill{
 
-    background:rgba(var(--primary-rgb),.22);
+    background:var(--primary);
 
     border:1px solid var(--primary);
 
@@ -291,7 +291,7 @@
 
 .grupo-badge{
 
-    color:var(--text-muted);
+    color:var(--primary);
 
     text-transform:uppercase;
 
@@ -447,15 +447,15 @@
 
 .btn{
 
-    width:64px;
+    width:52px;
 
-    height:64px;
+    height:52px;
 
-    border-radius:18px;
+    border-radius:14px;
 
     color:white;
 
-    font-size:28px;
+    font-size:22px;
 
     font-weight:800;
 
@@ -785,13 +785,13 @@
 
     .btn{
 
-        width:48px;
+        width:42px;
 
-        height:48px;
+        height:42px;
 
-        border-radius:14px;
+        border-radius:12px;
 
-        font-size:20px;
+        font-size:18px;
     }
 
     .floating-save{
