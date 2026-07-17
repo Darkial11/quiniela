@@ -568,7 +568,6 @@ def exportar_pdf_jornada(request, torneo_slug, jornada):
         ('ALIGN', (1, 1), (1, -1), 'LEFT'),
         ('FONTSIZE', (0, 1), (1, -1), 7.5),
         ('FONTSIZE', (2, 1), (-1, -1), 10),
-        ('FONTNAME', (2, 1), (-1, -1), 'Helvetica-Bold'),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
     ]))
 
