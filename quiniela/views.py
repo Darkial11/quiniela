@@ -393,32 +393,41 @@ def ranking(request, torneo_slug):
         reverse=True
     )
 
-    if ranking_ordenado:
+    puntos_unicos = []
 
-        puntos_primer_lugar = ranking_ordenado[0][1]
+    for nombre, puntos in ranking_ordenado:
+        if puntos not in puntos_unicos:
+            puntos_unicos.append(puntos)
 
-        top3 = [
-            jugador for jugador in ranking_ordenado
-            if jugador[1] == puntos_primer_lugar
-        ]
+    primero = []
+    segundo = []
+    tercero = []
 
-        resto = ranking_ordenado[len(top3):]
+    if len(puntos_unicos) >= 1:
+        primero = [j for j in ranking_ordenado if j[1] == puntos_unicos[0]]
 
-    else:
+    if len(puntos_unicos) >= 2:
+        segundo = [j for j in ranking_ordenado if j[1] == puntos_unicos[1]]
 
-        top3 = []
-        resto = []
+    if len(puntos_unicos) >= 3:
+        tercero = [j for j in ranking_ordenado if j[1] == puntos_unicos[2]]
+
+    podio_total = len(primero) + len(segundo) + len(tercero)
+
+    resto = ranking_ordenado[podio_total:]
 
     return render(
         request,
         'quiniela/ranking.html',
         {
-            'top3': top3,
+            'primero': primero,
+            'segundo': segundo,
+            'tercero': tercero,
+            'podio_total': podio_total,
             'resto': resto,
             'torneo': torneo_obj,
         }
     )
-
 
 def agregar_numero_pagina(canvas, doc):
 

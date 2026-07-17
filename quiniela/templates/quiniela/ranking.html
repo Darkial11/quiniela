@@ -20,15 +20,67 @@
 
     </div>
 
-    <div class="podium {% if top3|length > 1 %}podium-multi{% endif %}">
+    <div class="podium {% if podio_total > 3 %}podium-multi{% endif %}">
 
-        {% for jugador in top3 %}
+        {% for jugador in segundo %}
+
+        <div class="podium-card silver">
+
+            <div class="medal">
+
+                🥈
+
+            </div>
+
+            <h2>
+
+                {{ jugador.0 }}
+
+            </h2>
+
+            <p>
+
+                {{ jugador.1 }} pts
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        {% for jugador in primero %}
 
         <div class="podium-card gold">
 
             <div class="medal">
 
                 🥇
+
+            </div>
+
+            <h2>
+
+                {{ jugador.0 }}
+
+            </h2>
+
+            <p>
+
+                {{ jugador.1 }} pts
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+        {% for jugador in tercero %}
+
+        <div class="podium-card bronze">
+
+            <div class="medal">
+
+                🥉
 
             </div>
 
@@ -74,17 +126,9 @@
 
                 <tr>
 
-                    <td class="
-                        {% if forloop.counter == 1 %}
-                            first-place
-                        {% elif forloop.counter == 2 %}
-                            second-place
-                        {% elif forloop.counter == 3 %}
-                            third-place
-                        {% endif %}
-                    ">
+                    <td class="posicion">
 
-                        {{ forloop.counter|add:1 }}
+                        {{ forloop.counter|add:podio_total }}
 
                     </td>
 
@@ -102,7 +146,7 @@
 
                 </tr>
 
-                {% empty %}
+                {% endfor %}
 
                 <tr>
 
