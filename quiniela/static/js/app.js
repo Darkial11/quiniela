@@ -143,29 +143,7 @@ if (btnGuardar) {
 
         .then((data) => {
 
-            if (data.pago_requerido) {
-
-                throw new Error(`Error del servidor: ${response.status}`);
-
-            }
-
-            return response.json();
-
-        })
-
-        .then((data) => {
-
-            if (data.pago_requerido) {
-
-                mostrarToast("Necesitas pagar para participar", "error");
-
-                resetearBoton();
-
-                return;
-
-            }
-
-            btnGuardar.innerHTML = "✓ Guardado";
+            btnGuardar.innerHTML = "✓ Guardada";
 
             btnGuardar.classList.add("success-btn");
 
