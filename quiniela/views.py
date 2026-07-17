@@ -455,7 +455,7 @@ def exportar_pdf_jornada(request, torneo_slug, jornada):
     if not jornada_obj:
         return HttpResponse(status=404)
 
-    partidos = Partido.objects.filter(jornada=jornada_obj).order_by('id')
+    partidos = list(Partido.objects.filter(jornada=jornada_obj).order_by('id'))
 
     if torneo_obj.tipo_cobro == 'unico':
 
@@ -507,91 +507,70 @@ def exportar_pdf_jornada(request, torneo_slug, jornada):
     elementos.append(titulo)
     elementos.append(Spacer(1, 20))
 
-    bloques_partidos = [
-        partidos[i:i + 8]
-        for i in range(0, len(partidos), 8)
-    ]
+    encabezados = ["#", "Participante"]
 
-    for indice_bloque, bloque in enumerate(bloques_partidos):
+    for partido in partidos:
+        encabezados.append(f"{partido.local}\nvs\n{partido.visitante}")
 
-        encabezados = ["#", "Participante"]
+    data = [encabezados]
+    posicion = 1
 
-        for partido in bloque:
-            encabezados.append(f"{partido.local}\nvs\n{partido.visitante}")
+    for participante in participantes:
 
-        encabezados.append("Total")
+        fila = [str(posicion)]
 
-        data = [encabezados]
-        posicion = 1
-
-        for participante in participantes:
-
-            fila = []
-            total = 0
-
-            fila.append(str(posicion))
-
-            nick = getattr(
-                getattr(participante, 'perfil', None),
-                'nick',
-                participante.username
-            )
-
-            fila.append(nick)
-
-            for partido in bloque:
-
-                pronostico = Pronostico.objects.filter(
-                    user=participante,
-                    partido=partido
-                ).first()
-
-                if pronostico:
-
-                    seleccion = pronostico.seleccion
-
-                    if partido.resultado_real == seleccion:
-                        total += 1
-
-                else:
-
-                    seleccion = "-"
-
-                fila.append(seleccion)
-
-            fila.append(str(total))
-            data.append(fila)
-            posicion += 1
-
-        anchos_columnas = [35, 110]
-
-        for _ in bloque:
-            anchos_columnas.append(65)
-
-        anchos_columnas.append(45)
-
-        tabla = Table(data, colWidths=anchos_columnas)
-
-        tabla.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#111827")),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-            ('GRID', (0, 0), (-1, -1), 1, colors.gray),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor("#F3F4F6")),
-            ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ]))
-
-        subtitulo = Paragraph(
-            f"<b>Partidos {indice_bloque * 8 + 1} - {indice_bloque * 8 + len(bloque)}</b>",
-            estilos['Heading2']
+        nick = getattr(
+            getattr(participante, 'perfil', None),
+            'nick',
+            participante.username
         )
 
-        elementos.append(subtitulo)
-        elementos.append(Spacer(1, 12))
-        elementos.append(tabla)
-        elementos.append(Spacer(1, 30))
+        fila.append(nick)
+
+        for partido in partidos:
+
+            pronostico = Pronostico.objects.filter(
+                user=participante,
+                partido=partido
+            ).first()
+
+            seleccion = pronostico.seleccion if pronostico else "-"
+
+            fila.append(seleccion)
+
+        data.append(fila)
+        posicion += 1
+
+    ancho_pagina_util = landscape(letter)[0] - 40
+    ancho_posicion = 28
+    ancho_participante = 85
+    ancho_restante = ancho_pagina_util - ancho_posicion - ancho_participante
+
+    if partidos:
+        ancho_partido = ancho_restante / len(partidos)
+    else:
+        ancho_partido = 60
+
+    anchos_columnas = [ancho_posicion, ancho_participante]
+    anchos_columnas += [ancho_partido] * len(partidos)
+
+    tabla = Table(data, colWidths=anchos_columnas)
+
+    tabla.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#111827")),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('GRID', (0, 0), (-1, -1), 1, colors.gray),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 8),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor("#F3F4F6")),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('ALIGN', (1, 1), (1, -1), 'LEFT'),
+        ('FONTSIZE', (0, 1), (-1, -1), 7.5),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
+    ]))
+
+    elementos.append(tabla)
 
     doc.build(
         elementos,
