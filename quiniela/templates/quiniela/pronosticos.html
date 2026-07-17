@@ -178,16 +178,16 @@
                         <td class="
                             posicion
 
-                            {% if forloop.counter == 1 %}
+                            {% if fila.posicion == 1 %}
                                 oro
-                            {% elif forloop.counter == 2 %}
+                            {% elif fila.posicion == 2 %}
                                 plata
-                            {% elif forloop.counter == 3 %}
+                            {% elif fila.posicion == 3 %}
                                 bronce
                             {% endif %}
                         ">
 
-                            {{ forloop.counter }}
+                            {{ fila.posicion }}
 
                         </td>
 

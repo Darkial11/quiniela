@@ -269,6 +269,18 @@ def ver_pronosticos(request, torneo_slug):
 
     tabla = sorted(tabla, key=lambda x: x['total'], reverse=True)
 
+    posicion_actual = 0
+    total_anterior = None
+
+    for indice, fila in enumerate(tabla):
+
+        if fila['total'] != total_anterior:
+
+            posicion_actual = indice + 1
+            total_anterior = fila['total']
+
+        fila['posicion'] = posicion_actual
+
     bloque = {
         'jornada': jornada,
         'partidos': partidos,
