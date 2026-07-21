@@ -2,7 +2,10 @@
 
 A multi-tournament football prediction pool ("quiniela") web application built with Django. Users predict match outcomes for a tournament's matchdays, and the app automatically tracks scores and ranks participants.
 
-**Live demo:** [quiniela.lukifix.mx](https://quiniela.lukifix.mx)
+**Live demo:** [quiniela.lukifix.mx/mundial-2026/](https://quiniela.lukifix.mx/mundial-2026/) — the whole site requires an account to view, so use these demo credentials to log in and see a completed tournament with final standings and predictions:
+
+- **Username:** `Demo`
+- **Password:** `Demo`
 
 ## Features
 
