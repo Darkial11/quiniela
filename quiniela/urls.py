@@ -1,6 +1,7 @@
 """ quiniela / urls """
 from django.urls import path
 from . import views
+from . import api_views
 
 urlpatterns = [
     path('panel-pronosticos/', views.admin_cargar_pronostico, name='panel_pronosticos'),
@@ -12,4 +13,7 @@ urlpatterns = [
     path('<slug:torneo_slug>/cargar/<int:jornada>/', views.cargar_pronosticos, name='cargar_pronosticos'),
     path('<slug:torneo_slug>/exportar-pdf/<int:jornada>/', views.exportar_pdf_jornada),
     path('<slug:torneo_slug>/reglamento/', views.reglamento_torneo, name='reglamento_torneo'),
+    path('<slug:torneo_slug>/api/jornada/<int:jornada>/partidos/', api_views.partidos_jornada_api, name='api_partidos_jornada'),
+    path('<slug:torneo_slug>/api/jornada/<int:jornada>/pronosticos/', api_views.pronosticos_propios_api, name='api_pronosticos_propios'),
+    path('<slug:torneo_slug>/api/ranking/', api_views.ranking_api, name='api_ranking'),
 ]

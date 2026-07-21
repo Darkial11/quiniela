@@ -22,7 +22,7 @@ from reportlab.platypus import (
     Image,
 )
 from .models import Partido, Pronostico, Jornada, Pago, Torneo
-from usuarios.models import Perfil
+from .services import calcular_ranking
 
 
 @login_required(login_url="/login/")
@@ -200,78 +200,16 @@ def ranking(request, torneo_slug):
     torneo_obj = Torneo.objects.filter(slug=torneo_slug).first()
     if not torneo_obj:
         return HttpResponse(status=404)
-    tabla = {}
-    if torneo_obj.tipo_cobro == "unico":
-        for perfil in Perfil.objects.filter(pago_confirmado=True).select_related(
-            "user"
-        ):
-            tabla[perfil.nick] = 0
-        pronosticos = Pronostico.objects.select_related(
-            "user__perfil", "partido"
-        ).filter(
-            user__perfil__pago_confirmado=True, partido__jornada__torneo=torneo_obj
-        )
-        for pronostico in pronosticos:
-            nick = getattr(
-                getattr(pronostico.user, "perfil", None),
-                "nick",
-                pronostico.user.username,
-            )
-            if nick not in tabla:
-                tabla[nick] = 0
-            if pronostico.partido.resultado_real == pronostico.seleccion:
-                tabla[nick] += 1
-    else:
-        pagos_confirmados = Pago.objects.filter(
-            jornada__torneo=torneo_obj, confirmado=True
-        ).select_related("user__perfil")
-        jornadas_pagadas = set()
-        for pago in pagos_confirmados:
-            nick = getattr(
-                getattr(pago.user, "perfil", None), "nick", pago.user.username
-            )
-            if nick not in tabla:
-                tabla[nick] = 0
-            jornadas_pagadas.add((pago.user_id, pago.jornada_id))
-        pronosticos = Pronostico.objects.select_related(
-            "user__perfil", "partido"
-        ).filter(partido__jornada__torneo=torneo_obj)
-        for pronostico in pronosticos:
-            clave = (pronostico.user_id, pronostico.partido.jornada_id)
-            if clave not in jornadas_pagadas:
-                continue
-            nick = getattr(
-                getattr(pronostico.user, "perfil", None),
-                "nick",
-                pronostico.user.username,
-            )
-            if pronostico.partido.resultado_real == pronostico.seleccion:
-                tabla[nick] += 1
-    ranking_ordenado = sorted(tabla.items(), key=lambda x: x[1], reverse=True)
-    puntos_unicos = []
-    for nombre, puntos in ranking_ordenado:
-        if puntos not in puntos_unicos:
-            puntos_unicos.append(puntos)
-    primero = []
-    segundo = []
-    tercero = []
-    if len(puntos_unicos) >= 1:
-        primero = [j for j in ranking_ordenado if j[1] == puntos_unicos[0]]
-    if len(puntos_unicos) >= 2:
-        segundo = [j for j in ranking_ordenado if j[1] == puntos_unicos[1]]
-    if len(puntos_unicos) >= 3:
-        tercero = [j for j in ranking_ordenado if j[1] == puntos_unicos[2]]
-    podio_total = len(primero) + len(segundo) + len(tercero)
-    resto = ranking_ordenado[podio_total:]
+    resultado = calcular_ranking(torneo_obj)
     return render(
         request,
         "quiniela/ranking.html",
         {
-            "primero": primero,
-            "segundo": segundo,
-            "tercero": tercero,
-            "podio_total": podio_total,
-            "resto": resto,
+            "primero": resultado["primero"],
+            "segundo": resultado["segundo"],
+            "tercero": resultado["tercero"],
+            "podio_total": resultado["podio_total"],
+            "resto": resultado["resto"],
             "torneo": torneo_obj,
         },
     )
