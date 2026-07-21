@@ -55,15 +55,7 @@ class Pronostico(models.Model):
     seleccion = models.CharField(max_length=1)
 
     def __str__(self):
-        return f"""
-
-        {self.user.username}
-
-        -
-
-        {self.partido}
-
-        """
+        return f"{self.user.username} - {self.partido}"
 
 
 class Pago(models.Model):
