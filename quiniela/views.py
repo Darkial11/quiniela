@@ -94,7 +94,16 @@ def guardar_pronosticos(request, torneo_slug):
             )
         jornada_actual = primer_partido.jornada
         if jornada_actual.torneo.tipo_cobro == "por_jornada":
-            Pago.objects.get_or_create(user=user, jornada=jornada_actual)
+            Pago.objects.update_or_create(
+                user=user,
+                jornada=jornada_actual,
+                defaults={"confirmado": True, "fecha_confirmacion": timezone.now()},
+            )
+        else:
+            if not user.perfil.pago_confirmado:
+                user.perfil.pago_confirmado = True
+                user.perfil.fecha_pago = timezone.now()
+                user.perfil.save()
         return JsonResponse({"mensaje": "Pronósticos guardados"})
 
 

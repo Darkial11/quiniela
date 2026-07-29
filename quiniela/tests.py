@@ -9,7 +9,7 @@ import json
 import pytest
 from django.contrib.auth.models import User
 
-from .models import Torneo, Jornada, Partido, Pronostico
+from .models import Torneo, Jornada, Partido, Pronostico, Pago
 from .services import calcular_ranking
 from usuarios.models import Perfil
 
@@ -218,3 +218,109 @@ class TestGuardarPronosticosView:
 
         assert segundo_intento.json()["mensaje"] == "Jornada cerrada"
         assert Pronostico.objects.filter(user=usuario).count() == 1
+
+
+@pytest.mark.django_db
+class TestConfirmacionAutomaticaDePago:
+    """Al guardar pronosticos, el pago debe quedar confirmado
+    automaticamente, sin intervencion manual de un admin."""
+
+    def test_torneo_pago_unico_confirma_perfil(
+        self, client, torneo, jornada, partidos, usuario
+    ):
+        Perfil.objects.create(
+            user=usuario,
+            telefono="555",
+            nick="Tester",
+            participando=False,
+            pago_confirmado=False,
+        )
+        client.login(username="tester", password="clave12345")
+
+        response = client.post(
+            f"/{torneo.slug}/guardar/",
+            data=json.dumps(
+                {"pronosticos": [{"partido_id": partidos[0].id, "seleccion": "L"}]}
+            ),
+            content_type="application/json",
+        )
+
+        assert response.status_code == 200
+        usuario.perfil.refresh_from_db()
+        assert usuario.perfil.pago_confirmado is True
+        assert usuario.perfil.fecha_pago is not None
+
+    def test_torneo_pago_por_jornada_confirma_pago(self, client, usuario):
+        Perfil.objects.create(
+            user=usuario,
+            telefono="555",
+            nick="Tester",
+            participando=False,
+            pago_confirmado=False,
+        )
+        torneo_pj = Torneo.objects.create(
+            nombre="Torneo Por Jornada",
+            slug="torneo-por-jornada",
+            tipo_cobro="por_jornada",
+            activo=True,
+        )
+        jornada_pj = Jornada.objects.create(torneo=torneo_pj, numero=1, abierta=True)
+        partido_pj = Partido.objects.create(
+            local="Equipo A", visitante="Equipo B", grupo="A", jornada=jornada_pj
+        )
+
+        client.login(username="tester", password="clave12345")
+        response = client.post(
+            f"/{torneo_pj.slug}/guardar/",
+            data=json.dumps(
+                {"pronosticos": [{"partido_id": partido_pj.id, "seleccion": "L"}]}
+            ),
+            content_type="application/json",
+        )
+
+        assert response.status_code == 200
+        pago = Pago.objects.get(user=usuario, jornada=jornada_pj)
+        assert pago.confirmado is True
+        assert pago.fecha_confirmacion is not None
+
+    def test_no_desconfirma_un_pago_ya_confirmado_al_reguardar(
+        self, client, usuario
+    ):
+        """Si el usuario edita su pronostico (vuelve a guardar) despues
+        de que su pago ya estaba confirmado, el pago debe seguir
+        confirmado, no revertirse."""
+        Perfil.objects.create(
+            user=usuario,
+            telefono="555",
+            nick="Tester",
+            participando=False,
+            pago_confirmado=False,
+        )
+        torneo_pj = Torneo.objects.create(
+            nombre="Torneo Por Jornada 2",
+            slug="torneo-por-jornada-2",
+            tipo_cobro="por_jornada",
+            activo=True,
+        )
+        jornada_pj = Jornada.objects.create(torneo=torneo_pj, numero=1, abierta=True)
+        partido_pj = Partido.objects.create(
+            local="Equipo A", visitante="Equipo B", grupo="A", jornada=jornada_pj
+        )
+
+        client.login(username="tester", password="clave12345")
+        for seleccion in ["L", "V"]:
+            response = client.post(
+                f"/{torneo_pj.slug}/guardar/",
+                data=json.dumps(
+                    {
+                        "pronosticos": [
+                            {"partido_id": partido_pj.id, "seleccion": seleccion}
+                        ]
+                    }
+                ),
+                content_type="application/json",
+            )
+            assert response.status_code == 200
+
+        pago = Pago.objects.get(user=usuario, jornada=jornada_pj)
+        assert pago.confirmado is True
