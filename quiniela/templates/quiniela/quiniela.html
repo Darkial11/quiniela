@@ -8,23 +8,6 @@
 
 <div class="quiniela-layout">
 
-        {% if pago_confirmado_jornada %}
-
-        <div class="payment-ok">
-
-            ✓ Participación confirmada
-
-        </div>
-
-        {% else %}
-
-        <div class="payment-pending">
-
-            ⏳ Pago pendiente de confirmar
-
-        </div>
-
-        {% endif %}
     <div class="quiniela-header">
 
         <div>
@@ -257,12 +240,14 @@
 
     </div>
 
+    {% if jornada_obj.abierta %}
     <button
         id="guardar"
         class="floating-save"
     >
         Guardar Quiniela
     </button>
+    {% endif %}
 
 </div>
 

@@ -324,3 +324,41 @@ class TestConfirmacionAutomaticaDePago:
 
         pago = Pago.objects.get(user=usuario, jornada=jornada_pj)
         assert pago.confirmado is True
+
+
+@pytest.mark.django_db
+class TestBotonGuardarSegunEstadoJornada:
+    """La vista `inicio` (pagina principal de la quiniela) solo debe
+    mostrar el boton de Guardar si la jornada sigue abierta."""
+
+    def test_boton_guardar_visible_con_jornada_abierta(
+        self, client, torneo, jornada, partidos, usuario
+    ):
+        Perfil.objects.create(
+            user=usuario, telefono="555", nick="Tester", participando=True
+        )
+        client.login(username="tester", password="clave12345")
+
+        response = client.get(f"/{torneo.slug}/jornada/{jornada.numero}/")
+
+        assert response.status_code == 200
+        assert 'id="guardar"' in response.content.decode()
+
+    def test_boton_guardar_oculto_con_jornada_cerrada(
+        self, client, torneo, partidos, usuario
+    ):
+        jornada_cerrada = Jornada.objects.create(
+            torneo=torneo, numero=2, abierta=False
+        )
+        Partido.objects.create(
+            local="Equipo E", visitante="Equipo F", grupo="A", jornada=jornada_cerrada
+        )
+        Perfil.objects.create(
+            user=usuario, telefono="555", nick="Tester", participando=True
+        )
+        client.login(username="tester", password="clave12345")
+
+        response = client.get(f"/{torneo.slug}/jornada/{jornada_cerrada.numero}/")
+
+        assert response.status_code == 200
+        assert 'id="guardar"' not in response.content.decode()
