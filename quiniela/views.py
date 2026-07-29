@@ -82,11 +82,11 @@ def guardar_pronosticos(request, torneo_slug):
             return JsonResponse(
                 {"mensaje": "La jornada no pertenece a este torneo"}, status=400
             )
+        if not primer_partido.jornada.abierta:
+            return JsonResponse({"mensaje": "Jornada cerrada"})
         Pronostico.objects.filter(
             user=user, partido__jornada=primer_partido.jornada
         ).delete()
-        if not primer_partido.jornada.abierta:
-            return JsonResponse({"mensaje": "Jornada cerrada"})
         for item in pronosticos:
             partido = Partido.objects.get(id=item["partido_id"])
             Pronostico.objects.create(

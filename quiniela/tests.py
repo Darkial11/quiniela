@@ -2,7 +2,10 @@
 
 Pruebas de los endpoints de API (DRF) agregados en el punto 2 del roadmap:
 partidos por jornada, pronosticos propios del usuario, y ranking.
+Tambien cubre guardar_pronosticos (vista HTML), incluyendo una prueba
+de regresion para el bug de borrado de pronosticos al cerrar jornada.
 """
+import json
 import pytest
 from django.contrib.auth.models import User
 
@@ -157,3 +160,61 @@ class TestCalcularRankingService:
         nicks_primero = {entrada[0] for entrada in resultado["primero"]}
         assert nicks_primero == {"Nick1", "Nick2"}
         assert resultado["segundo"] == []
+
+
+@pytest.mark.django_db
+class TestGuardarPronosticosView:
+    """POST /<torneo>/guardar/ - guarda (o reemplaza) los pronosticos
+    del usuario para una jornada."""
+
+    def test_guarda_pronosticos_con_jornada_abierta(
+        self, client, torneo, jornada, partidos, usuario
+    ):
+        Perfil.objects.create(
+            user=usuario, telefono="555", nick="Tester", participando=False
+        )
+        client.login(username="tester", password="clave12345")
+        response = client.post(
+            f"/{torneo.slug}/guardar/",
+            data=json.dumps(
+                {"pronosticos": [{"partido_id": partidos[0].id, "seleccion": "L"}]}
+            ),
+            content_type="application/json",
+        )
+        assert response.status_code == 200
+        assert Pronostico.objects.filter(user=usuario).count() == 1
+
+    def test_no_borra_pronosticos_existentes_si_la_jornada_ya_cerro(
+        self, client, torneo, jornada, partidos, usuario
+    ):
+        """Regresion: si el usuario ya tenia un pronostico guardado y la
+        jornada se cierra, un intento posterior de guardado (ej. una
+        pestana vieja con doble clic) no debe borrar lo que ya tenia."""
+        Perfil.objects.create(
+            user=usuario, telefono="555", nick="Tester", participando=False
+        )
+        client.login(username="tester", password="clave12345")
+
+        primer_intento = client.post(
+            f"/{torneo.slug}/guardar/",
+            data=json.dumps(
+                {"pronosticos": [{"partido_id": partidos[0].id, "seleccion": "L"}]}
+            ),
+            content_type="application/json",
+        )
+        assert primer_intento.status_code == 200
+        assert Pronostico.objects.filter(user=usuario).count() == 1
+
+        jornada.abierta = False
+        jornada.save()
+
+        segundo_intento = client.post(
+            f"/{torneo.slug}/guardar/",
+            data=json.dumps(
+                {"pronosticos": [{"partido_id": partidos[0].id, "seleccion": "L"}]}
+            ),
+            content_type="application/json",
+        )
+
+        assert segundo_intento.json()["mensaje"] == "Jornada cerrada"
+        assert Pronostico.objects.filter(user=usuario).count() == 1
